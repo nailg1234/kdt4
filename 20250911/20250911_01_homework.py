@@ -6,5 +6,5 @@ else:
     print('썬크림을 바르세요!')
 
 
-if False or print('단축 평가'):
+if False or print('단축 펴엉가'):
     print('실행')
