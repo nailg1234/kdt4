@@ -101,8 +101,9 @@ print(last)
 print(type(middle))
 
 # 빈 리스트 생성
-first, *rest = (1, 2)  # * 붙이면 리스트화
+first, second, *rest = (1, 2)  # * 붙이면 리스트화
 print('first', first)  # 1
+print('second', second)  # 2
 print('rest', rest)  # []
 
 # tuple 메서드
