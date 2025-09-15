@@ -7,3 +7,9 @@
 
 # 제한사항
 #   0 < money ≤ 1,000,000
+
+def solution(money):
+    answer = []
+    coffee_price = 5500
+    # 커피 가격으로 나눈 몫, 커피 가격으로 나눈 나머지
+    return [money // coffee_price, money % coffee_price]
