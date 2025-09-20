@@ -42,7 +42,7 @@ def solution(bridge_length, weight, truck_weights):
                     if len(with_index_list):
                         # 다리가 견디는 무게 > 다리에 트럭 무게 + 다음 트럭무게 and 다리 길이 > 다리에 트럭 대수
                         if (weight >= sum([truck for [truck, time] in river_list] + [with_index_list[-1][0]]) and bridge_length > len(river_list)):
-                            pop_value = with_index_list.pop() # 대기 트럭 다리위로 올리기
-                            river_list.append([pop_value[0], 1]) # 대기 트럭 다리위로 올라갔으니 정차시간 1초
+                            pop_value = with_index_list.pop()
+                            river_list.append([pop_value[0], 1]) # 대기 트럭 다리위로 올리기
         sec += 1
     return sec
