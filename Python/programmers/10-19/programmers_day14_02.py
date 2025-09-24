@@ -11,15 +11,7 @@
 # 제한사항
 #   1 ≤ order ≤ 1,000,000
 
-# def solution(order):
-#     cnt = 0
-#     for _str in str(order):
-#         if _str in ['3','6','9']:
-#             cnt += 1
-#     return cnt
-
 def solution(order):
-    
     return len([_str for _str in str(order) if _str != '0' and not int(_str) % 3])
     
 print(solution(3609))
