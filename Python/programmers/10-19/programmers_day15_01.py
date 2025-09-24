@@ -13,6 +13,14 @@
 
 def solution(numbers):
     num_str_list = ['zero', 'one', 'two', 'three', 'four', 'five', 'six', 'seven', 'eight', 'nine']
-    for num_str in num_str_list:
-        numbers = numbers.replace(num_str, str(num_str_list.index(num_str)))
-    return int(numbers)
+    numbers_str = str(numbers)
+    
+    while len(num_str_list):
+        _str = num_str_list.pop()
+        numbers_str = numbers_str.replace(_str, str(len(num_str_list)))
+    else:
+        numbers_str = numbers_str.replace('zero', '0')
+
+    return int(numbers_str)
+
+print(solution('onetwothreefourfivesixseveneightnine'))

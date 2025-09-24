@@ -8,4 +8,4 @@
 #   my_string은 영어 대문자와 소문자로만 구성되어 있습니다.
 
 def solution(order):
-    return "".join([_str.upper() if _str.islower() else _str.lower() for _str in order])
+    return "".join([s.upper() if s.islower() else s.lower() for s in order])

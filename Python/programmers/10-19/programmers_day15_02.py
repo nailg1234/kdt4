@@ -12,7 +12,7 @@
 #   num1 ≠ num2
 
 def solution(my_string, num1, num2):
-    str_list = list(my_string)
-    str_list[num1], str_list[num2] = str_list[num2], str_list[num1]
-    return "".join(str_list)
+    lst = list(my_string)
+    lst[num1], lst[num2] = lst[num2], lst[num1]
+    return "".join(lst)
 print(solution("hello", 1, 2))

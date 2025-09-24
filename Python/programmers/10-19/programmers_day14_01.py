@@ -11,9 +11,13 @@
 #   가장 가까운 수가 여러 개일 경우 더 작은 수를 return 합니다.
 
 def solution(array, n):
+
+    if n in array:
+        return n
+    
     sort_list = sorted(array)
-    new_list = list(map(lambda x:abs(n - x), sort_list))
-    return n if n in sort_list else sort_list[new_list.index(min(new_list))]
+    new_list = [abs(n - i) for i in sort_list]
+    return sort_list[new_list.index(min(new_list))]
 
 print(solution([3, 10, 28], 20))
 print(solution([10, 11, 12], 13))

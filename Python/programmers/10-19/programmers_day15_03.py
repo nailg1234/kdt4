@@ -11,5 +11,8 @@
 #   s는 소문자로만 이루어져 있습니다.
 
 def solution(s):
-    return "".join(sorted(filter(lambda x:1==s.count(x), set(s))))
+    return "".join(sorted([_str for _str in set(s) if s.count(_str) == 1]))
+
+
 print(solution("abcabcadc"))
+print(solution("hello"))

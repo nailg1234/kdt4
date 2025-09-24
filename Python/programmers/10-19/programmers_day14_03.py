@@ -13,4 +13,4 @@
 #   공백도 하나의 문자로 취급합니다.
 
 def solution(cipher, code):
-    return "".join([cipher[i] for i in range(code - 1, len(cipher), code)])
+    return cipher[code-1::code]

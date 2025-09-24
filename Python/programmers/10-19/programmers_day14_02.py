@@ -12,7 +12,7 @@
 #   1 ≤ order ≤ 1,000,000
 
 def solution(order):
-    return len([_str for _str in str(order) if _str != '0' and not int(_str) % 3])
+    return len([_str for _str in str(order) if _str != '0' and int(_str) % 3 == 0])
     
 print(solution(3609))
 
