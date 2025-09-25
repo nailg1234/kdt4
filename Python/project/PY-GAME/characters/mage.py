@@ -5,7 +5,7 @@ from utils.helpers import is_special_attack
 class Mage(Character):
 
     def __init__(self, name):
-        super().__init__(name, 1, 80, 18, 18 * 1.5)
+        super().__init__(name, 1, 80, 18, int(18 * 1.5))
         self.mana = 100
 
     # 마법사 - 파이어볼
@@ -19,8 +19,8 @@ class Mage(Character):
             target.take_demage(self.attack_power)
 
     def attack(self, target):
-        if is_special_attack():  # 마법사는 마나 필요
-            target.special_attack(target)
+        if is_special_attack():
+            self.special_attack(target)
         else:
             print(f'{self.name}이(가) {target.name}에게 일반공격을 했습니다.')
             target.take_demage(self.attack_power)

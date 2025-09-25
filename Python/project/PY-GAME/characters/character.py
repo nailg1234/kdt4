@@ -28,10 +28,7 @@ class Character(ABC):
     def show_status(self):
         print('#######################################################')
         print(f'캐릭터명 : {self.name}')
-        print(f'레벨 : {self.level}')
         print(f'체력 : {self.health}')
-        print(f'공격력 : {self.attack_power}')
-        print(f'특수 공격력 : {self.special_attack_power}')
         print('#######################################################')
 
     def reset_health(self, health):

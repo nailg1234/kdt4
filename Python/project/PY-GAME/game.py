@@ -9,7 +9,7 @@ mine_char = None
 enemy_char = None
 
 while not is_mine_pick:
-    user_input1 = input(' "나" 의 캐릭터를 선택해주세요 예("마법사", "도적", "전사") 입력')
+    user_input1 = input(' "나" 의 캐릭터를 선택해주세요 예("마법사", "도적", "전사") 입력 :  ')
     if user_input1 not in job_name_list:  # 마법사, 도적, 전사 중에 고르지 않은 경우
         continue
 
@@ -21,7 +21,7 @@ while not is_mine_pick:
         mine_char = warrior.Warrior('전사(나)')
 
     while not is_enemy_pick:
-        user_input2 = input(' "적" 의 캐릭터를 선택해주세요 예("마법사", "도적", "전사") 입력')
+        user_input2 = input(' "적" 의 캐릭터를 선택해주세요 예("마법사", "도적", "전사") 입력 :  ')
         if user_input2 not in job_name_list:  # 마법사, 도적, 전사 중에 고르지 않은 경우
             continue
 
@@ -35,8 +35,15 @@ while not is_mine_pick:
             enemy_char = warrior.Warrior('전사(적)')
 
         if battle_manager.start_battle(mine_char, enemy_char):  # 승리
+            print('@@@@@@@@@@@@@@@@@@@@@@@@@')
+            print('@@@@@@   승   리    @@@@@')
+            print('@@@@@@@@@@@@@@@@@@@@@@@@@')
             is_enemy_pick = False
         else:  # 패배
+            print('@@@@@@@@@@@@@@@@@@@@@@@@@')
+            print('@@@@@@   패   배   @@@@@')
+            print('@@@@@@@@@@@@@@@@@@@@@@@@@')
+
             is_mine_pick = True
             break
 else:

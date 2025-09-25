@@ -1,29 +1,20 @@
 from characters import Warrior, Mage, Rogue
 import random
 
-battle_list = []
-
-
 def start_battle(mine_char, enemy_char):
 
-    attack_seq = random.randint(0, 1)
+    is_first = bool(random.randint(0, 1))
 
-    char_list = [mine_char, enemy_char]
+    char_list = [enemy_char, mine_char]
 
     while True:
-        print('선공 seq : ', attack_seq)
-        print('공격자 : ', char_list[attack_seq].name)
-        char_list[attack_seq].attack(char_list[not attack_seq])
+        print('공격자 : ',char_list[is_first].name)
+        char_list[is_first].attack(char_list[not is_first])
 
-        char_list[not attack_seq].show_status()
+        char_list[not is_first].show_status()
 
-        if char_list[not attack_seq].is_alive():
-            attack_seq = not attack_seq
-            continue
-        else:
-            if char_list[not attack_seq] == enemy_char:
-                print('승리')
-                return 1
-            else:
-                print('패배')
-                return 0
+        if not char_list[not is_first].is_alive():
+            return char_list[not is_first] == enemy_char 
+
+        is_first = not is_first
+        

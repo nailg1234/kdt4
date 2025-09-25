@@ -5,7 +5,7 @@ from utils.helpers import is_special_attack
 class Warrior(Character):
 
     def __init__(self, name):
-        super().__init__(name, 1, 100, 15, 15 * 2)
+        super().__init__(name, 1, 100, 15, int(15 * 2))
 
     # 강력한 일격
     def special_attack(self, target):
@@ -19,7 +19,7 @@ class Warrior(Character):
 
     def attack(self, target):
         if is_special_attack():
-            target.special_attack(target)
+            self.special_attack(target)
         else:
             print(f'{self.name}이(가) {target.name}에게 일반공격을 했습니다.')
             target.take_demage(self.attack_power)
