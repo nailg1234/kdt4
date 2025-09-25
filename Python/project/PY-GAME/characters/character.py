@@ -31,8 +31,8 @@ class Character(ABC):
         print(f'체력 : {self.health}')
         print('#######################################################')
 
-    def reset_health(self, health):
-        self.health = health
+    def reset_health(self):
+        self.health = 100
 
     def get_name(self):
         return self.name
