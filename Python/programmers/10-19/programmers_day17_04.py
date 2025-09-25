@@ -14,11 +14,5 @@
 #   [연산자]는 + 와 - 중 하나입니다.
 
 def solution(quiz):
-    cor_list = []
-    for s in quiz:
-        s_list = s.replace(' ', '').split('=')
-        if eval(s_list[0]) == int(s_list[1]):
-            cor_list.append('O')
-        else:
-            cor_list.append('X')
-    return cor_list
+    return ['O' if eval(s.split('=')[0]) == eval(s.split('=')[1]) else 'X' for s in quiz]
+print(solution(["3 - 4 = -3", "5 + 6 = 11"]))
