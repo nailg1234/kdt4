@@ -1,5 +1,5 @@
 from characters.character import Character
-from utils.helpers import is_special_attack
+from utils.helpers import is_special_attack, is_special_attack_rogue
 
 
 class Rogue(Character):
@@ -9,7 +9,7 @@ class Rogue(Character):
 
     # 도적 - 급습
     def special_attack(self, target):
-        if is_special_attack():
+        if is_special_attack_rogue():
             print(f'{self.name}이(가) {target.name}에게 특수공격(급습)을 했습니다.')
             target.take_demage(self.special_attack_power)
         else:
