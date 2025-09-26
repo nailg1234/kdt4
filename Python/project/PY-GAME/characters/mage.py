@@ -1,6 +1,5 @@
-from characters.character import Character
-from utils.helpers import is_special_attack
-
+from characters import Character
+from utils import is_special_attack
 
 class Mage(Character):
 
@@ -19,7 +18,7 @@ class Mage(Character):
             target.take_demage(self.attack_power)
 
     def attack(self, target):
-        if is_special_attack():
+        if is_special_attack(): # 30% 확률로 특수공격
             self.special_attack(target)
         else:
             print(f'{self.name}이(가) {target.name}에게 일반공격을 했습니다.')
