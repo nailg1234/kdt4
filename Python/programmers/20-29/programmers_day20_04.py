@@ -1,27 +1,41 @@
-# 외계어 사전
+# 다항식 더하기
 
 # 문제 설명
-    # PROGRAMMERS-962 행성에 불시착한 우주비행사 머쓱이는 외계행성의 언어를 공부하려고 합니다.
-    # 알파벳이 담긴 배열 spell과 외계어 사전 dic이 매개변수로 주어집니다.
-    # spell에 담긴 알파벳을 한번씩만 모두 사용한 단어가 dic에 존재한다면 1,
-    # 존재하지 않는다면 2를 return하도록 solution 함수를 완성해주세요.
+# 한 개 이상의 항의 합으로 이루어진 식을 다항식이라고 합니다.
+# 다항식을 계산할 때는 동류항끼리 계산해 정리합니다.
+# 덧셈으로 이루어진 다항식 polynomial이 매개변수로 주어질 때,
+# 동류항끼리 더한 결괏값을 문자열로 return 하도록 solution 함수를 완성해보세요. 같은 식이라면 가장 짧은 수식을 return 합니다.
 
 # 제한사항
-    # spell과 dic의 원소는 알파벳 소문자로만 이루어져있습니다.
-    # 2 ≤ spell의 크기 ≤ 10
-    # spell의 원소의 길이는 1입니다.
-    # 1 ≤ dic의 크기 ≤ 10
-    # 1 ≤ dic의 원소의 길이 ≤ 10
-    # spell의 원소를 모두 사용해 단어를 만들어야 합니다.
-    # spell의 원소를 모두 사용해 만들 수 있는 단어는 dic에 두 개 이상 존재하지 않습니다.
-    # dic과 spell 모두 중복된 원소를 갖지 않습니다.
+# 0 < polynomial에 있는 수 < 100
+# polynomial에 변수는 'x'만 존재합니다.
+# polynomial은 양의 정수, 공백, ‘x’, ‘+'로 이루어져 있습니다.
+# 항과 연산기호 사이에는 항상 공백이 존재합니다.
+# 공백은 연속되지 않으며 시작이나 끝에는 공백이 없습니다.
+# 하나의 항에서 변수가 숫자 앞에 오는 경우는 없습니다.
+# " + 3xx + + x7 + "와 같은 잘못된 입력은 주어지지 않습니다.
+# 0으로 시작하는 수는 없습니다.
+# 문자와 숫자 사이의 곱하기는 생략합니다.
+# polynomial에는 일차 항과 상수항만 존재합니다.
+# 계수 1은 생략합니다.
+# 결괏값에 상수항은 마지막에 둡니다.
+# 0 < polynomial의 길이 < 50
 
-def solution(spell, dic):
-    cnt = 0
-    for _d in dic:
-        for _s in spell:
-            if _d.count(_s) != 1:
-                break
-        else:
-            cnt += 1
-    return 1 if cnt else 2
+def solution(polynomial):
+    _list = polynomial.split(' + ')
+    x_list = []
+    c_list = []
+    for _str in _list:
+        if 'x' in _str:
+            x_list.append(int(_str[:-1])) if _str.index('x') else  x_list.append(1)
+        else: c_list.append(int(_str))
+    else:
+        sum_x = sum(x_list)
+        sum_c = sum(c_list)
+        
+        if sum_x and sum_c:
+            return f"{'' if 1 == sum_x else sum_x}x + {sum_c}"
+        if not sum_x:
+            return f"{sum_c}"
+        if not sum_c:
+            return f"{'' if 1 == sum_x else sum_x}x"
