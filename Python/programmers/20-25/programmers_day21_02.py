@@ -18,7 +18,6 @@ def solution(board):
                 
     for [w1, h1] in danger_list:
         for [w2, h2] in i_list:
-
             if 0 <= w1 + w2 < len(board) and 0 <= h1 + h2 < len(board):
                 if board[w1+w2][h1+h2] != 1:
                     board[w1+w2][h1+h2] = 1

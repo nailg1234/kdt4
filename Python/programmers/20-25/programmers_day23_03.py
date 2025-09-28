@@ -15,21 +15,15 @@
 def solution(babbling):
     s_list = ["aya", "ye", "woo", "ma"]
     cnt = 0
-    for _ba in babbling:
-        _ba_str = _ba
-        for _s in s_list:
-            _s_idx = _ba_str.find(_s)
-            if _s_idx > -1:
-                if _s_idx == 0:
-                    _ba_str = _ba_str[len(_s):]
-                elif _s_idx > 0:
-                    _ba_str = _ba_str[0 : _s_idx] + '*' * len(_s) + _ba_str[_s_idx + len(_s):]
-                    
-                if _ba_str.count('*') == len(_ba_str) or not _ba_str:
-                    cnt += 1
-                    break
+    for ba in babbling:
+        _ba = ba
+        for s in s_list:
+            if s in _ba:
+                _ba = _ba.replace(s, '*' * len(s))
+        else:
+            if len(_ba) == _ba.count('*'):
+                cnt += 1
     return cnt
 
 print('cnt : ', solution(["aya", "yee", "u", "maa", "wyeoo"])) # 1
-print('################################################################################')
 print('cnt : ', solution(["ayaye", "uuuma", "ye", "yemawoo", "ayaa"])) # 3

@@ -14,11 +14,9 @@
 def solution(chicken):
     coupon_list = []
     service_list = []
-    while True:
+    while chicken // 10:
         coupon_list.append(chicken // 10 + chicken % 10)
         service_list.append(chicken // 10)
         chicken = coupon_list[-1]
-        if not chicken // 10:
-            break
     return sum(service_list)
 print(solution(1081))
