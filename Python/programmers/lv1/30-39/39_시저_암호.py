@@ -15,4 +15,3 @@ def solution(s, n):
 print(solution("AB", 1)) # "BC"
 print(solution("z", 1)) # "a"
 print(solution("a B z", 4)) # "e F d"
-print(solution("ZXC XXFY", 25)) # "e F d"
