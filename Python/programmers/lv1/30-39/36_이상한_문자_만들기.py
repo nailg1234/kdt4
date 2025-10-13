@@ -1,13 +1,7 @@
 def solution(s):
-    s_list = []
-    for word in s.split(" "):
-        _ss = ''
-        for idx, _s in enumerate(word):
-            if idx % 2:
-                _ss += _s.lower()
-            else:
-                _ss += _s.upper()
-        else:
-            s_list.append(_ss)
-    
-    return " ".join(s_list)
+    new_str = ''
+    is_upper = True
+    for _s in s:
+        new_str += _s.upper() if is_upper else _s.lower()
+        is_upper = True if new_str[-1] == ' ' else not is_upper
+    return new_str

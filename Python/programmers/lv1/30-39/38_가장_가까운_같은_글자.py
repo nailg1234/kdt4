@@ -1,10 +1,9 @@
 def solution(s):
     s_list = []
-    calc_list = []
+    str_tmp = ''
     for _s in s:
-        if _s in s_list:
-            calc_list.append(list(reversed(s_list)).index(_s) + 1)
-        else:
-            calc_list.append(-1)
-        s_list.append(_s)
-    return calc_list
+        s_list.append(str_tmp[::-1].find(_s) + 1 or -1)
+        str_tmp += _s
+    return s_list
+print(solution("banana")) # [-1, -1, -1, 2, 2, 2]
+print(solution("foobar")) # [-1, -1, 1, -1, -1, -1]
