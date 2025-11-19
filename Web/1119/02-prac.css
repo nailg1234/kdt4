@@ -1,0 +1,36 @@
+.my-table {
+  border-collapse: collapse;
+  width: 300px;
+}
+
+/* 짝수 행 배경색 다르게 */
+
+.my-table tr:nth-child(even) {
+  background-color: #f2f2f2;
+}
+
+/* 첫 번째 행 굵게 */
+.my-table tr:first-child td {
+  font-weight: bold;
+}
+
+/* 셀 공통 스타일 */
+.my-table td {
+  border: 1px solid #ccc;
+}
+
+/* 마지막 행 테두리 없애기 */
+.my-table tr:last-child td {
+  border: none;
+}
+
+/* hover 시 강조 */
+.my-table td:hover {
+  background-color: cornsilk;
+}
+
+/* 첫 번째 셀에만 번호 스타일 */
+.my-table tr:first-child td:first-child {
+  font-weight: bold;
+  color: #ba0303;
+}

@@ -1,0 +1,142 @@
+/* CSS 선택자 심화 */
+
+/* 복합 선택자 */
+/* 그룹 선택자 (여러 요소에 동일 스타일) */
+h1,
+h2,
+h3 {
+  color: navy;
+}
+
+/* 자손과 자식 선택자 */
+
+/* 자손 선택자(Descendant - 공백) */
+/* 모든 하위 요소 선택 */
+.container p {
+  color: darkcyan;
+}
+
+/* 자식 선택자 (Child - > ) */
+/* 직계 자식만 선택 */
+.container > p {
+  color: red;
+}
+
+/* 모든 li 선택 */
+.menu li {
+  color: blue;
+}
+
+/* 직계 자식 li만 선택 */
+.menu > li {
+  color: red;
+}
+
+/* 형제 선택자 */
+/* 인접 형제 선택자 (Adjacent Sibling - +) */
+/* 바로 다음 형제 요소만 선택 */
+h2 + p {
+  font-weight: bold;
+  color: chartreuse;
+  /* 첫번째 문단만 */
+}
+
+/* 일반 형재 선택자 (General Sibling - ~) */
+/* 이후의 모든 형제 요소 선택 */
+h2 ~ p {
+  color: maroon;
+  /* 모든 문단 선택 */
+}
+
+/* 속성 선택자 */
+/* 속성 존재 여부 */
+input[type="text"] {
+  border: 1px solid gray;
+}
+
+input[type="password"] {
+  border: 2px dashed red;
+}
+
+/* 가상 클래스 선택자 (Pseudo-class) */
+/* 방문하지 않은 링크 */
+a:link {
+  color: blue;
+}
+/* 방문한 링크 */
+a:visited {
+  color: purple;
+}
+/* 마우스 올렸을 때 */
+a:hover {
+  color: red;
+}
+
+/* 클릭하는 순간 */
+a:active {
+  color: orange;
+}
+
+/* 순서 중요 : link -> visited -> hover -> active */
+
+/* 입력 요소 상태 */
+input:focus {
+  border-color: blue;
+  outline: 2px solid lightblue;
+}
+
+/* 비 활성화된 요소 */
+input:disabled {
+  background-color: blueviolet;
+}
+
+/* 체크된 체크박스/라디오 */
+input:checked {
+  transform: scale(2);
+}
+
+/* 구조적 가상 클래스 */
+/* 첫 번째 자식 */
+li:first-child {
+  font-weight: bold;
+}
+
+/* 마지막 자식 */
+li:last-child {
+  background-color: red;
+}
+
+/* n 번째 자식 */
+li:nth-child(3) {
+  color: blue;
+}
+
+/* 홀수 번째 */
+li:nth-child(odd) {
+  color: yellow;
+}
+
+/* 짝수 번째 */
+li:nth-child(even) {
+  color: red;
+}
+
+/* 3의 배수 */
+li:nth-child(3n) {
+  color: green;
+}
+
+/* 가상 요소 선택자 (Pseudo-element) */
+/* before */
+/* 엎에 내용 추가 */
+.quote::before {
+  content: '"';
+  font-size: 2em;
+  color: gray;
+}
+
+.quote::after {
+  content: '"';
+  font-size: 2em;
+  color: gray;
+}

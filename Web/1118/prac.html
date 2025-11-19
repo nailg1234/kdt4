@@ -4,7 +4,27 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Document</title>
+    <!-- 내부 스타일 시트 (Internal Style Sheets) -->
+    <!--
+      장점 : 한페이지에서 쉽게 관리
+      단점 : 여러 페이지에 적용 불가
+    -->
+
+    <!-- 외부 스타일 시트 (External Style Sheets) -->
+    <!--
+      장점
+        여러 페이지에서 재사용
+        HTML과 CSS분리
+        유지보수 용이
+        브라우저 캐싱 가능
+
+    -->
+    <link rel="stylesheet" href="01.css" />
     <style>
+      div {
+        color: yellow;
+        font-size: 30px;
+      }
       .box {
         height: 100px;
       }
@@ -41,11 +61,36 @@
     </style>
   </head>
   <body>
-    <h1>무지개</h1>
+    <!-- CSS -->
+    <!-- Cascading Style Sheets-->
+    <!-- HTML 요소의 스타일을 정의하는 언어입니다. -->
+    <!-- HTML    CSS 
+         구조    디자인
+         내용    스타일
+         뼈대    외관
+    -->
+
+    <!-- 인라인 스타일 (Inline Style) -->
+    <p style="color: blue; font-size: 20px">파란색 20px 텍스트</p>
+    <!-- 단점 -->
+    <!-- 
+    재사용이 불가
+    유지보수 어려움
+    HTML과 CSS 혼재
+    권장하지 않음
+    -->
+
+    <!-- 내부 스타일 시트 (Internal Style Sheets) -->
+    <div>노란색 30px 텍스트</div>
+
+    <h1>네이비 32px 텍스트</h1>
+    <!-- <h1>무지개</h1> -->
     <div class="box red">red</div>
     <div class="box orange">orange</div>
     <div class="box yellow">yellow</div>
     <div class="box green">green</div>
     <div class="box blue">blue</div>
+    <div class="highlight box">강조된 텍스트</div>
+    <div id="header">헤더</div>
   </body>
 </html>
