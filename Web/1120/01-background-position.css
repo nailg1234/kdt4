@@ -1,0 +1,249 @@
+/* ========================================
+   1. 기본 스타일 초기화
+   ======================================== */
+/* 모든 요소에 적용되는 기본 스타일 리셋 */
+* {
+  /* 테두리와 패딩을 포함한 전체 크기 계산 */
+  box-sizing: border-box;
+  /* 브라우저 기본 마진 제거 */
+  margin: 0;
+  /* 브라우저 기본 패딩 제거 */
+  padding: 0;
+}
+
+/* body 요소의 기본 스타일 */
+body {
+  /* 폰트 우선순위: Arial -> Helvetica -> sans-serif */
+  font-family: Arial, Helvetica, sans-serif;
+  /* 밝은 회색 배경 */
+  background-color: #f5f5f5;
+  /* 페이지 전체에 40px 여백 추가 */
+  padding: 40px;
+}
+
+/* ========================================
+   2. 카드 컨테이너 스타일
+   ======================================== */
+.container {
+  /* 컨테이너 최대 너비 제한 */
+  max-width: 1000px;
+  /* 가운데 정렬: 상하(0) 좌우(auto) */
+  margin: 0 auto;
+}
+
+/* ========================================
+   3. 카드 스타일 및 그림자 효과
+   ======================================== */
+.card {
+  /* 흰색 배경 */
+  background-color: white;
+  /* 얇은 회색 테두리 */
+  border: 1px solid #ddd;
+  /* 모서리를 8px 둥글게 */
+  border-radius: 8px;
+  /* 카드 내부 여백 */
+  padding: 20px;
+  /* 카드 간 간격 */
+  margin-bottom: 20px;
+  /* 그림자 효과: 아래로 2px, 흐림 4px, 불투명한 검정 */
+  box-shadow: 0 2px 4px rgb(0, 0, 0, 1);
+}
+
+/* 그림자 효과 (box-shadow) 문법 설명
+   box-shadow: x-offset y-offset blur spread color
+
+   x-offset : 가로 방향 이동 (양수: 오른쪽, 음수: 왼쪽)
+   y-offset : 세로 방향 이동 (양수: 아래, 음수: 위)
+   blur     : 흐림 정도 (값이 클수록 더 흐림)
+   spread   : 그림자 확산 크기 (선택사항)
+   color    : 그림자 색상
+*/
+
+/* 카드 내부 제목 스타일 */
+.card h3 {
+  /* 진한 청회색 텍스트 */
+  color: #2c3e50;
+  /* 제목 아래 여백 */
+  margin-bottom: 10px;
+  /* 제목 내부 아래 여백 */
+  padding-bottom: 10px;
+  /* 제목 아래 파란색 밑줄 */
+  border-bottom: 2px solid #3499db;
+}
+
+/* ========================================
+   4. 실습 과제 카드 스타일 (호버 효과 포함)
+   ======================================== */
+.hover-card {
+  /* 가운데 정렬 */
+  margin: 0 auto;
+
+  /* 카드 크기 설정 */
+  width: 300px;
+  height: 400px;
+
+  /* 모서리를 10px 둥글게 */
+  border-radius: 10px;
+
+  /* 카드 내부 여백 */
+  padding: 20px;
+
+  /* 얇은 회색 테두리 */
+  border: 1px solid #ddd;
+
+  /* 부드러운 그림자 효과 (15% 투명도) */
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
+}
+
+/* 마우스 호버 시 효과 */
+.hover-card:hover {
+  /* Y축으로 -5px 이동 (위로 올라감) */
+  transform: translateY(-5px);
+  /* 동일한 그림자 유지 */
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
+}
+
+/* ========================================
+   5. 배경 (Background) 속성
+   ======================================== */
+.background-demo {
+  /* --- 배경색 설정 방법 (주석 처리된 예제들) --- */
+  /* background-color: lightblue; */           /* 색상 이름 */
+  /* background-color: #ddd; */                /* HEX 색상 코드 */
+  /* background-color: rgb(0, 0, 255); */      /* RGB 값 */
+  /* background-color: rgba(0, 0, 255, 0.4); *//* RGBA 값 (투명도 포함) */
+
+  /* --- 배경 이미지 설정 --- */
+  background-image: url("https://www.adobe.com/kr/products/firefly/features/media_156f60527ad304e5d5cc92b1c934b381d6ff0625c.jpg?width=750&format=jpg&optimize=medium");
+
+  /* 박스 크기 */
+  width: 300px;
+  height: 400px;
+
+  /* --- background-repeat: 배경 이미지 반복 설정 --- */
+  /* background-repeat: repeat; */    /* 기본값: 가로/세로 모두 반복 */
+  /* background-repeat: repeat-x; */  /* 가로만 반복 */
+  /* background-repeat: repeat-y; */  /* 세로만 반복 */
+  background-repeat: no-repeat;      /* 반복 없음 */
+
+  /* --- background-size: 배경 이미지 크기 설정 --- */
+  /* background-size: auto; */           /* 원본 크기 유지 */
+  background-size: cover;               /* 요소를 꽉 채움 (비율 유지, 잘릴 수 있음) */
+  /* background-size: contain; */        /* 요소 안에 전체가 보이도록 (비율 유지, 여백 생길 수 있음) */
+  /* background-size: 300px 400px; */    /* 고정 픽셀 크기 */
+  /* background-size: 100% 100%; */      /* 백분율 크기 (비율 무시하고 늘어남) */
+
+  /* --- background-position: 배경 이미지 위치 설정 --- */
+  background-position: center;          /* 가운데 정렬 */
+  /* background-position: top right; */  /* 오른쪽 위 */
+  /* background-position: 40% 0%; */     /* 백분율로 위치 지정 */
+  /* background-position: -100px -200px; */ /* 픽셀로 위치 지정 (음수 가능) */
+
+  /* --- 그라데이션 배경 예제 (주석 처리) --- */
+  /* 선형 그라데이션 (linear-gradient) */
+  /* background: linear-gradient(to right, rgb(223, 8, 8), rgb(255, 240, 154)); */  /* 왼쪽에서 오른쪽으로 */
+  /* background: linear-gradient(to bottom, rgb(223, 8, 8), rgb(255, 240, 154)); */ /* 위에서 아래로 */
+  /* background: linear-gradient(315deg, rgb(223, 8, 8), rgb(255, 240, 154)); */    /* 각도로 방향 지정 */
+
+  /* 방사형 그라데이션 (radial-gradient) */
+  /* background: radial-gradient(circle, rgb(0, 0, 0), blue); */ /* 중심에서 바깥으로 원형 */
+}
+
+/* ========================================
+   6. Position 속성 (위치 지정)
+   ======================================== */
+/*
+   Position 속성은 요소의 위치를 지정하는 방법을 결정합니다.
+   static, relative, absolute, fixed, sticky 값이 있습니다.
+*/
+
+.fixed-box {
+  width: 100px;
+  height: 100px;
+
+  /* --- 1) static (기본값) --- */
+  /* position: static; */
+  /* 기본 위치, top/bottom/left/right 속성이 적용되지 않음 */
+  /* 문서의 정상적인 흐름에 따라 배치됨 */
+
+  /* --- 2) relative (상대 위치) --- */
+  /* position: relative; */
+  /* 원래 위치를 기준으로 이동 */
+  /* 원래 자리는 그대로 차지하면서 시각적으로만 이동 */
+  /* top: 20px; */  /* 원래 위치에서 아래로 20px 이동 */
+  /* left: 30px; */ /* 원래 위치에서 오른쪽으로 30px 이동 */
+
+  /* --- 3) absolute (절대 위치) --- */
+  /* position: absolute; */
+  /* 부모 요소(position이 relative, absolute, fixed인)를 기준으로 배치 */
+  /* 부모에 position이 없으면 body를 기준으로 함 */
+  /* 문서의 흐름에서 제거되어 다른 요소에 영향을 주지 않음 */
+  /* top: 20px; */   /* 부모의 위쪽에서 20px */
+  /* right: 30px; */ /* 부모의 오른쪽에서 30px */
+
+  /* --- 4) fixed (고정 위치) --- */
+  /* 뷰포트(브라우저 화면)를 기준으로 고정 */
+  /* 스크롤해도 항상 같은 위치에 고정됨 */
+  position: fixed;
+  bottom: 0;  /* 화면 하단에 고정 */
+  right: 0;   /* 화면 오른쪽에 고정 */
+
+  background-color: rgb(19, 18, 18);
+}
+
+/* absolute의 기준이 되는 부모 요소 */
+.position-parent {
+  /* position: relative; */ /* 이 주석을 해제하면 .fixed-box의 기준점이 됨 */
+  width: 400px;
+  height: 400px;
+
+  background-color: #2c3e50;
+}
+
+/* ========================================
+   7. Sticky Position (스크롤 고정)
+   ======================================== */
+/*
+   sticky: 스크롤에 따라 relative와 fixed를 전환합니다.
+   - 스크롤 전: relative처럼 작동
+   - 지정한 위치 도달 후: fixed처럼 고정
+   - 예: position: sticky; top: 0; → 스크롤 시 상단에 고정
+*/
+
+/* ========================================
+   8. z-index (레이어 순서/쌓임 순서)
+   ======================================== */
+/*
+   z-index는 요소의 쌓임 순서를 제어합니다.
+   - 값이 클수록 위에 표시됨
+   - position이 static이 아닌 요소에만 적용됨
+   - 같은 z-index면 HTML에서 나중에 나온 요소가 위에 표시됨
+*/
+
+.z-box-red {
+  position: relative;
+  width: 100px;
+  height: 100px;
+  background-color: red;
+  z-index: 1;  /* 레이어 순서: 1 */
+}
+
+.z-box-gray {
+  position: relative;
+  top: -20px;   /* 위로 20px 이동 (빨간 박스와 겹침) */
+  left: 20px;   /* 오른쪽으로 20px 이동 */
+  width: 100px;
+  height: 100px;
+  background-color: gray;
+  z-index: 2;  /* 레이어 순서: 2 (가장 위에 표시) */
+}
+
+.z-box-blue {
+  position: relative;
+  top: -40px;   /* 위로 40px 이동 (빨간, 회색 박스와 겹침) */
+  left: 40px;   /* 오른쪽으로 40px 이동 */
+  width: 100px;
+  height: 100px;
+  background-color: blue;
+  z-index: 1;  /* 레이어 순서: 1 (빨간 박스와 같지만 나중에 나와서 빨간 박스 위에 표시) */
+}

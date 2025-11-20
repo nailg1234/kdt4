@@ -1,0 +1,163 @@
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  font-family: Arial, Helvetica, sans-serif;
+  background-color: #f5f5f5;
+  padding: 40px;
+}
+
+.container {
+  max-width: 1000px;
+  margin: 0 auto;
+}
+
+.card {
+  background-color: white;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  padding: 20px;
+  margin-bottom: 20px;
+  box-shadow: 0 2px 4px rgb(0, 0, 0, 1);
+}
+/* 그림자 효과 (box-shadow) */
+/*
+    box-shadow : x offset, y offset, blur, spread, color
+    x offset : 가로 이동
+    y offset : 세로 이동
+    blur : 흐림 정도
+    spread : 확산 크기
+    color : 그림자 색상
+*/
+.card h3 {
+  color: #2c3e50;
+  margin-bottom: 10px;
+  padding-bottom: 10px;
+  border-bottom: 2px solid #3499db;
+}
+
+.container1 {
+  margin: 0 auto;
+}
+
+.card1 {
+  margin: 0 auto;
+  width: 300px;
+  height: 400px;
+  border-radius: 10px;
+  padding: 20px;
+  border: 1px solid #ddd;
+
+  box-shadow: 0 2px 4px rgb(0, 0, 0, 1);
+}
+
+.card1:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
+}
+
+.box {
+  /* background-color: lightblue; */
+  /* background-color: #ddd; # dd dd dd */
+  /* background-color: rgb(255, 0, 0); */
+  /* background-color: rgba(0, 0, 255, 0.4); */
+  background-image: url(https://www.fitpetmall.com/wp-content/uploads/2023/10/GettyImages-492548888-1.png);
+  width: 700px;
+  height: 400px;
+
+  /* 기본값 : 가로 세로 반복*/
+  background-repeat: repeat;
+  /* 가로만 반복 */
+  background-repeat: repeat-x;
+  /* 세로만 반복*/
+  background-repeat: repeat-y;
+  /* 반복 없음 */
+  background-repeat: no-repeat;
+
+  /* 원본 크기 */
+  /* background-size: auto; */
+
+  /* 요소를 꽉 채움 (비율 유지) */
+  /* background-size: cover; */
+
+  /*요소 안에 전체가 보이도록 (비율 유지)*/
+  /* background-size: contain; */
+
+  /*고정 크기*/
+  /* background-size: 300px 400px; */
+
+  /* 백분율 */
+  /* background-size: 100% 100%; */
+
+  /* 가운데*/
+  /* background-position: center; */
+
+  /* 오른쪽 위 */
+  /* background-position: top right; */
+
+  /* 백분율 */
+  /* background-position: 40% 0%; */
+
+  /* 픽셀 */
+  /* background-position: -100px -200px; */
+
+  /* 그라데이션 배경 */
+
+  /* 선형 그라데이션 */
+  /* 오른쪽 */
+  background: linear-gradient(to right, rgb(233, 8, 8), rgb(255, 240, 154));
+
+  /* 아래로 */
+  background: linear-gradient(to bottom, rgb(233, 8, 8), rgb(255, 240, 154));
+
+  /* 각도 */
+  background: linear-gradient(45deg, rgb(233, 8, 8), rgb(255, 240, 154));
+
+  /* 원형 */
+  background: radial-gradient(circle, rgb(234, 233, 21), rgb(23, 45, 78));
+}
+
+/* position 속성 */
+
+/**/
+
+.pos {
+  width: 100px;
+  height: 100px;
+  /* 기본값 */
+  /* 기본 위치, top/left, 등 적용안됨 */
+  /* position: static; */
+
+  /* 상대위치 */
+  /* 원래 위치를 기준으로 이동 */
+  position: relative;
+  /* 원래 위치에서 아래로 20px */
+  top: 20px;
+  /* 원래 위치에서 오른쪽으로 30px */
+  left: 30px;
+
+  /*절대위치*/
+  /*부모 요소를 기준으로 배치 (부모가 relative fixed일때*/
+  position: absolute;
+  top: 20px;
+  right: 30px;
+
+  /*fixed (고정 위치)*/
+  /*뷰포트(화면)를 기준으로 고정*/
+  position: fixed;
+  top: 0;
+  left: 0;
+
+  background-color: rgb(19, 18, 18);
+}
+
+.parent {
+  position: sticky;
+  top: 0;
+  width: 400px;
+  height: 400px;
+  background-color: #2c3e50;
+}

@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="ko">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>CSS Background & Position 학습</title>
+    <link rel="stylesheet" href="01-background-position.css" />
+  </head>
+  <body>
+    <!-- ========================================
+         1. 카드 컴포넌트 예제 (주석 처리)
+         ======================================== -->
+    <!--
+    <div class="container">
+      <div class="card">
+        <h3>HTML</h3>
+        <p>웹의 구조를 만드는 언어</p>
+      </div>
+      <div class="card">
+        <h3>CSS</h3>
+        <p>웹의 스타일을 정의하는 언어</p>
+      </div>
+      <div class="card">
+        <h3>JavaScript</h3>
+        <p>웹에 동작을 추가하는 언어</p>
+      </div>
+    </div>
+    -->
+
+    <!-- ========================================
+         2. 배경(Background) 속성 테스트
+         ======================================== -->
+    <!-- background-image, background-size, background-position 등을 테스트하는 박스 -->
+    <div class="background-demo"></div>
+
+    <!-- ========================================
+         3. Position 속성 테스트
+         ======================================== -->
+    <!-- position-parent: absolute의 기준이 되는 부모 요소 -->
+    <!-- fixed-box: position 속성(fixed)을 테스트하는 자식 요소 (화면 오른쪽 하단에 고정) -->
+    <div class="position-parent">
+      <div class="fixed-box"></div>
+    </div>
+
+    <br />
+    <br />
+    <br />
+
+    <!-- ========================================
+         4. 실습 과제 카드 (호버 효과)
+         ======================================== -->
+    <!-- 마우스를 올리면 위로 올라가는 효과가 있는 카드 -->
+    <div class="hover-card">
+      <h3>실습 과제</h3>
+      <p>프로필 카드 만들기</p>
+    </div>
+
+    <br />
+    <br />
+    <br />
+
+    <!-- ========================================
+         5. z-index (레이어 순서) 테스트
+         ======================================== -->
+    <!-- 세 개의 박스가 겹치면서 z-index에 따라 쌓이는 순서를 확인 -->
+    <!-- 회색(z-index:2)가 가장 위, 파란색(z-index:1)가 중간, 빨간색(z-index:1)이 가장 아래 -->
+    <div class="z-box-red"></div>
+    <div class="z-box-gray"></div>
+    <div class="z-box-blue"></div>
+
+    <!-- 스크롤 테스트를 위한 여백 -->
+    <br />
+    <br />
+    <br />
+    <br />
+    <br />
+    <br />
+    <br />
+    <br />
+    <br />
+    <br />
+  </body>
+</html>

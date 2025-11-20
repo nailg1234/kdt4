@@ -18,18 +18,18 @@
    ======================================== */
 .box {
   background-color: #b3a9a9;
-  
+
   /* 절대 단위 - 고정 크기 */
-  width: 200px;   /* 픽셀(pixel): 화면의 점 하나 */
+  width: 200px; /* 픽셀(pixel): 화면의 점 하나 */
   height: 200px;
-  
+
   /* 상대 단위 - 부모 요소 기준 */
-  width: 50%;     /* 부모 요소 너비의 50% */
-  width: 25%;     /* 부모 요소 너비의 25% */
-  
+  width: 50%; /* 부모 요소 너비의 50% */
+  width: 25%; /* 부모 요소 너비의 25% */
+
   /* 뷰포트 단위 - 브라우저 창 크기 기준 */
-  width: 50vw;    /* 뷰포트 너비(Viewport Width)의 50% */
-  height: 50vh;   /* 뷰포트 높이(Viewport Height)의 50% */
+  width: 50vw; /* 뷰포트 너비(Viewport Width)의 50% */
+  height: 50vh; /* 뷰포트 높이(Viewport Height)의 50% */
 }
 
 /* ========================================
@@ -41,13 +41,13 @@
   padding-right: 30px;
   padding-bottom: 40px;
   padding-left: 10px;
-  
+
   /* 방법 2: 단축 속성 (Shorthand) */
-  padding: 30px;              /* 1개 값: 상하좌우 모두 동일 */
-  padding: 15px 25px;         /* 2개 값: (상하) (좌우) */
-  padding: 11px 22px 33px;    /* 3개 값: (상) (좌우) (하) */
-  padding: 1px 2px 3px 4px;   /* 4개 값: (상) (우) (하) (좌) - 시계방향 */
-  
+  padding: 30px; /* 1개 값: 상하좌우 모두 동일 */
+  padding: 15px 25px; /* 2개 값: (상하) (좌우) */
+  padding: 11px 22px 33px; /* 3개 값: (상) (좌우) (하) */
+  padding: 1px 2px 3px 4px; /* 4개 값: (상) (우) (하) (좌) - 시계방향 */
+
   /* 실무 팁: padding은 클릭 영역을 넓혀 사용성을 향상시킵니다 */
 }
 
@@ -60,15 +60,15 @@
   margin-right: 10px;
   margin-bottom: 10px;
   margin-left: 10px;
-  
+
   /* 방법 2: 단축 속성 */
-  margin: 20px;               /* 1개 값: 상하좌우 모두 동일 */
-  margin: 15px 25px;          /* 2개 값: (상하) (좌우) */
-  margin: 11px 22px 33px;     /* 3개 값: (상) (좌우) (하) */
-  margin: 1px 2px 3px 4px;    /* 4개 값: (상) (우) (하) (좌) */
-  
+  margin: 20px; /* 1개 값: 상하좌우 모두 동일 */
+  margin: 15px 25px; /* 2개 값: (상하) (좌우) */
+  margin: 11px 22px 33px; /* 3개 값: (상) (좌우) (하) */
+  margin: 1px 2px 3px 4px; /* 4개 값: (상) (우) (하) (좌) */
+
   /* 중앙 정렬 팁 */
-  margin: 0 auto;  /* 상하 0, 좌우 자동 -> 블록 요소 수평 중앙 정렬 */
+  margin: 0 auto; /* 상하 0, 좌우 자동 -> 블록 요소 수평 중앙 정렬 */
 }
 
 /* ========================================
@@ -76,15 +76,15 @@
    ======================================== */
 .box {
   /* 방법 1: 개별 속성 지정 */
-  border-width: 4px;      /* 두께 */
-  border-style: dotted;   /* 스타일: solid(실선), dashed(점선), dotted(점) */
-  border-color: red;      /* 색상 */
-  
+  border-width: 4px; /* 두께 */
+  border-style: dotted; /* 스타일: solid(실선), dashed(점선), dotted(점) */
+  border-color: red; /* 색상 */
+
   /* 방법 2: 단축 속성 (권장) */
-  border: 1px solid black;  /* 두께 스타일 색상 순서 */
-  
+  border: 1px solid black; /* 두께 스타일 색상 순서 */
+
   /* border-radius: 모서리 둥글게 */
-  border-radius: 10px;    /* 모든 모서리 동일 */
+  border-radius: 10px; /* 모든 모서리 동일 */
 }
 
 /* ========================================
@@ -93,10 +93,10 @@
 
 /* 원 만들기 */
 .circle {
-  border-radius: 50%;     /* 50%로 설정하면 정사각형이 원이 됨 */
+  border-radius: 50%; /* 50%로 설정하면 정사각형이 원이 됨 */
   background-color: #eee;
   width: 100px;
-  height: 100px;          /* width와 height가 같아야 정원 */
+  height: 100px; /* width와 height가 같아야 정원 */
 }
 
 /* 각 모서리 개별 지정 */
@@ -125,12 +125,12 @@
   width: 100px;
   height: 100px;
   background-color: brown;
-  margin-bottom: 50px;  /* 아래 마진 50px */
+  margin-bottom: 50px; /* 아래 마진 50px */
 }
 
 .box2 {
   background-color: beige;
-  margin-top: 20px;     /* 위 마진 20px */
+  margin-top: 20px; /* 위 마진 20px */
   width: 100px;
   height: 100px;
   /* 실제 box1과 box2 사이 간격 = 50px (큰 값만 적용) */
@@ -142,4 +142,77 @@
   2. border 사용
   3. display: inline-block 사용
   4. overflow: hidden 사용 (부모에 적용)
+*/
+
+/* box-sizing 속성 */
+/* content-box(기본값) */
+/* width / height가 content 영역만 포함 */
+
+.box1 {
+  box-sizing: content-box;
+  width: 150px;
+  height: 150px;
+
+  padding: 20px;
+  margin: 30px;
+
+  border: 5px solid black;
+}
+/* 실제 너비  150  + 20 * 2 + 30 * 2 */
+
+/* border-box */
+/* width / height가 padding 과 border 포함 */
+/* 권장 합니다... */
+.box1 {
+  box-sizing: border-box;
+  width: 150px;
+  height: 150px;
+
+  padding: 20px;
+  margin: 30px;
+
+  border: 5px solid black;
+}
+
+/* 블록 vs 인라인 요소 */
+/* 블록 요소 */
+div,
+p,
+h1,
+ul,
+li,
+section {
+  display: block;
+}
+/*
+  한줄 전체 차지
+  width, height 적용 가능
+  margin, padding 모두 적용
+*/
+
+/* 인라인 요소 */
+
+span,
+a,
+strong,
+em {
+  display: inline;
+  width: 200px;
+}
+/* 
+  내용만큼만 차지
+  width, height 적용 불가능
+  상하 margin 적용 안됨
+*/
+
+/* 인라인 블록 (inline-block) */
+span {
+  display: inline-block;
+  width: 100px;
+  height: 200px;
+}
+
+/*
+ 인라인처럼 나란히 배치 
+  width, height, margin, padding 모두 적용  
 */

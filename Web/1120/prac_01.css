@@ -1,0 +1,15 @@
+.card {
+  margin: 0 auto;
+  width: 300px;
+  height: 400px;
+  text-align: center;
+  border-radius: 10px;
+  padding: 20px;
+  border: 5px solid #ddd;
+  box-shadow: 0 2px 4px rgb(0, 0, 0, 1);
+}
+
+.card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
+}
