@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>돔 제목</title>
+    <style>
+      #title {
+        color: red;
+      }
+
+      .sub {
+        color: aqua;
+      }
+
+      ul > li:last-child {
+        color: red;
+      }
+    </style>
+  </head>
+  <body>
+    <!-- DOM 이란 -->
+    <!-- DOM(Document Object Model)은 HTML 문서를
+     JavaScript로 조작할 수 있게 해주는 인터페이스 입니다. -->
+
+    <!-- DOM 트리 구조 -->
+    <!-- HTML 문서는 트리 구조로 표현 됩니다. -->
+    <h1 id="title">안녕하세요</h1>
+    <p class="sub">DOM 배우기</p>
+    <div class="sub">DOM 배우기2</div>
+    <ul>
+      <li>1</li>
+      <li>2</li>
+      <li>3</li>
+      <li>4</li>
+    </ul>
+    <script>
+      console.log("script 입니다.");
+      console.log("안녕하세요");
+      console.log(document);
+      console.log(document.title);
+      console.log(document.body);
+      console.log(document.URL);
+
+      // 127.0.0.1:5500 현재 내 컴퓨터
+      // localhost:5500
+      // :5500 port (포트)
+
+      // 요소 선택 메서드
+      // CSS
+      // id, class
+
+      // 선택 기준 id
+      // 가지고 오는 개수는 1개
+      let title = document.getElementById("title");
+      console.log(title);
+
+      // 없는 ID
+      let notExist = document.getElementById("wrong");
+      console.log("notExist", notExist);
+
+      // 선택 기준 class
+      // 가지고 오는 개수는 여러 개
+      let sub = document.getElementsByClassName("sub");
+      console.log(sub);
+
+      // 선택 기준 css
+      let title1 = document.querySelector("#title");
+      console.log(title1);
+
+      let sub1 = document.querySelector(".sub");
+      console.log(sub1);
+
+      let sub_all = document.querySelectorAll(".sub");
+      console.log(sub_all);
+
+      let p = document.querySelector("p");
+      console.log(p);
+
+      let last_li = document.querySelector("ul > li:last-child");
+      console.log(last_li);
+
+      let li_all = document.querySelectorAll("ul li");
+      console.log(li_all);
+
+      li_all.forEach((el, index) => {
+        console.log(el.textContent);
+      });
+    </script>
+  </body>
+</html>

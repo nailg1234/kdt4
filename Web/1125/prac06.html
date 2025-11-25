@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <div class="container">
+      <ul>
+        <li>항목 1</li>
+        <li>항목 2</li>
+        <li>항목 3</li>
+      </ul>
+    </div>
+    <script>
+      // 1. container 안의 모든 <li> 선택
+      console.log(document.querySelectorAll(".container li"));
+      // 2. 두 번째 <li> 선택
+      console.log(document.querySelector("li:nth-child(2)"));
+      // 3. 마지막 <li> 선택
+      console.log(document.querySelector("li:last-child"));
+
+      // 리더님 풀이
+      console.log(document.querySelectorAll(".container li"));
+      console.log(document.querySelector(".container li:nth-child(2)"));
+      console.log(document.querySelector(".container li:nth-child(3)"));
+      console.log(document.querySelector(".container li:last-child"));
+    </script>
+  </body>
+</html>

@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <h1 id="main-title">환영합니다!</h1>
+    <p class="intro">첫 번째 문단</p>
+    <p class="intro">두 번째 문단</p>
+    <p class="intro">세 번째 문단</p>
+    <div class="intro">네 번째 문단</div>
+    <p class="intro">다섯 번째 문단</p>
+
+    <script>
+      // title 의 내용을 반가워요!
+      // .intro가 몇개가 있는지
+
+      // HTMLCollection vs NodeList
+      document.querySelector("#main-title").textContent = "반가워요!";
+      let intro_length = document.querySelectorAll(".intro").length;
+      console.log(intro_length);
+      // NodeList
+      // 정적 컬렉션
+      // - forEach 가능
+      // - for...of 가능
+
+      const intros_collection = document.getElementsByClassName("intro");
+      console.log(intros_collection);
+      // HTMLCollection
+      // 살아있는 컬렉션 (DOM 변경 시 자동 업데이트)
+      // - forEach 없음
+      // - 인덱스 접근만 가능
+    </script>
+  </body>
+</html>

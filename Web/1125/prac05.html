@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <p class="highlight">첫 번째</p>
+    <p>두 번째</p>
+    <p class="highlight">세 번째</p>
+    <script>
+      // 1. 모든 <p> 태그 개수
+      console.log(document.querySelectorAll("p").length);
+      // 2. highlight 클래스를 가진 요소 개수
+      console.log(document.querySelectorAll(".highlight").length);
+      // 3. 첫번째 <p> 의 텍스트
+      console.log(document.querySelector("p").textContent);
+
+      // 리더님 풀이
+      console.log(document.querySelectorAll("p").length);
+      console.log(document.querySelectorAll(".highlight").length);
+      console.log(document.querySelector("p").textContent);
+    </script>
+  </body>
+</html>
