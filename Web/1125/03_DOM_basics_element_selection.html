@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>DOM 제목</title>
+
+    <style>
+      /* ID 선택자 스타일 */
+      #title {
+        color: red;
+      }
+
+      /* 클래스 선택자 스타일 */
+      .sub {
+        background-color: aqua;
+      }
+
+      /* CSS 선택자: 마지막 li 요소 */
+      ul > li:last-child {
+        color: red;
+      }
+    </style>
+  </head>
+  <body>
+    <!-- ====================================== -->
+    <!-- 1. DOM(Document Object Model)이란? -->
+    <!-- ====================================== -->
+    <!-- DOM은 HTML 문서를 JavaScript로 조작할 수 있게 해주는 인터페이스입니다. -->
+    <!-- 웹 페이지의 모든 요소를 객체로 표현하여 프로그래밍적으로 접근하고 수정할 수 있습니다. -->
+
+    <!-- ====================================== -->
+    <!-- 2. DOM 트리 구조 -->
+    <!-- ====================================== -->
+    <!-- HTML 문서는 트리 구조로 표현됩니다. -->
+    <!-- 각 HTML 요소는 노드(Node)가 되며, 부모-자식 관계를 가집니다. -->
+    <!-- ====================================== -->
+    <!-- 3. HTML 요소 예제 -->
+    <!-- ====================================== -->
+    <!-- 다양한 선택자(id, class, tag)를 사용한 요소들 -->
+    <h1 id="title">안녕하세요</h1>
+    <p class="sub">DOM 배우기</p>
+    <div class="sub">DOM 배우기2</div>
+
+    <ul>
+      <li>1</li>
+      <li>2</li>
+      <li>3</li>
+      <li>4</li>
+    </ul>
+
+    <script>
+      // ====================================
+      // 4. JavaScript 기본 출력
+      // ====================================
+      console.log("script 입니다.");
+      console.log("안녕하세요");
+
+      // ====================================
+      // 5. Document 객체의 주요 속성
+      // ====================================
+      // document 객체는 웹 페이지 전체를 나타내는 최상위 객체입니다.
+      console.log(document); // 전체 HTML 문서 객체
+      console.log(document.title); // 페이지 제목 (title 태그의 내용)
+      console.log(document.body); // body 요소 전체
+      console.log(document.URL); // 현재 페이지의 URL
+
+      // URL 구성 요소 설명
+      // 127.0.0.1:5500 - 현재 내 컴퓨터 (localhost와 동일)
+      // localhost:5500 - 로컬 서버 주소
+      // :5500 - 포트(port) 번호, 서버가 사용하는 통신 채널
+
+      // ====================================
+      // 6. 요소 선택 메서드
+      // ====================================
+      // HTML 요소를 JavaScript로 선택하는 다양한 방법들을 학습합니다.
+
+      // ====================================
+      // 6-1. getElementById() - ID로 요소 선택
+      // ====================================
+      // 특징: ID는 문서 내에서 유일하므로 항상 1개의 요소만 반환
+      // 반환값: 해당 요소 또는 null (요소가 없을 경우)
+      const titleElementById = document.getElementById("title");
+      console.log(titleElementById); // <h1 id="title">안녕하세요</h1>
+
+      // 존재하지 않는 ID를 검색한 경우
+      const nonExistentElement = document.getElementById("wrong");
+      console.log("nonExistentElement", nonExistentElement); // null
+
+      // ====================================
+      // 6-2. getElementsByClassName() - 클래스로 요소 선택
+      // ====================================
+      // 특징: 같은 클래스를 가진 여러 요소를 모두 선택
+      // 반환값: HTMLCollection (배열 유사 객체, 실시간 업데이트됨)
+      const subElementsByClass = document.getElementsByClassName("sub");
+      console.log(subElementsByClass); // HTMLCollection(2) [p.sub, div.sub]
+
+      // ====================================
+      // 6-3. querySelector() - CSS 선택자로 요소 선택 (단일)
+      // ====================================
+      // 특징: CSS 선택자 문법을 사용하여 요소 선택
+      // 반환값: 첫 번째로 매칭되는 요소 1개 또는 null
+
+      // ID 선택자 사용 (#)
+      const titleElementByQuery = document.querySelector("#title");
+      console.log(titleElementByQuery); // <h1 id="title">안녕하세요</h1>
+
+      // 클래스 선택자 사용 (.) - 여러 개 있어도 첫 번째만 반환
+      const firstSubElement = document.querySelector(".sub");
+      console.log(firstSubElement); // <p class="sub">DOM 배우기</p>
+
+      // 태그 선택자 사용
+      const firstParagraph = document.querySelector("p");
+      console.log(firstParagraph); // 첫 번째 p 태그
+
+      // CSS 고급 선택자 사용 - 마지막 자식 요소
+      const lastListItem = document.querySelector("ul > li:last-child");
+      console.log(lastListItem); // <li>4</li>
+
+      // ====================================
+      // 6-4. querySelectorAll() - CSS 선택자로 요소 선택 (다중)
+      // ====================================
+      // 특징: 매칭되는 모든 요소를 선택
+      // 반환값: NodeList (배열 유사 객체, 정적 스냅샷)
+
+      // 클래스 선택자로 모든 요소 선택
+      const allSubElements = document.querySelectorAll(".sub");
+      console.log(allSubElements); // NodeList(2) [p.sub, div.sub]
+
+      // 자손 선택자로 모든 li 선택
+      const allListItems = document.querySelectorAll("ul li");
+      console.log(allListItems); // NodeList(4) [li, li, li, li]
+
+      // ====================================
+      // 7. NodeList 순회하기
+      // ====================================
+      // NodeList는 forEach 메서드를 지원합니다.
+      allListItems.forEach((listItem, index) => {
+        console.log(listItem.textContent); // 1, 2, 3, 4 순서대로 출력
+      });
+
+      // ====================================
+      // 학습 요약
+      // ====================================
+      // 1. getElementById: ID로 단일 요소 선택 (빠름)
+      // 2. getElementsByClassName: 클래스로 다중 요소 선택 (HTMLCollection)
+      // 3. querySelector: CSS 선택자로 단일 요소 선택 (유연함)
+      // 4. querySelectorAll: CSS 선택자로 다중 요소 선택 (NodeList)
+      //
+      // 권장사항: querySelector/querySelectorAll이 가장 유연하고 현대적인 방법입니다.
+    </script>
+  </body>
+</html>
