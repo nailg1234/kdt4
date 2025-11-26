@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>이벤트 처리 실습</title>
+    <style>
+      #count {
+        font-size: 36px;
+        font-weight: bold;
+        color: #3498db;
+      }
+
+      button {
+        padding: 15px 30px;
+        font-size: 18px;
+        cursor: pointer;
+      }
+    </style>
+  </head>
+  <body>
+    <!-- 클릭 카운터 -->
+    <h1>클릭 카운터</h1>
+    <div id="count">0</div>
+    <button id="clickBtn">클릭</button>
+
+    <!-- 키보드 이벤트 -->
+    <h1>키보드 이벤트</h1>
+    <input type="text" id="input" placeholder="키를 입력하세요" />
+    <div id="output">
+      <p>키 이름 : <span id="keyName">-</span></p>
+      <p>키 코드 : <span id="keyCode">-</span></p>
+    </div>
+    <script>
+      let input = document.querySelector("#input");
+      let keyName = document.querySelector("#keyName");
+      let keyCode = document.querySelector("#keyCode");
+
+      input.addEventListener("keydown", (e) => {
+        keyName.textContent = e.key;
+        keyCode.textContent = e.code;
+      });
+
+      let count = 0;
+      let display = document.querySelector("#count");
+      let btn = document.querySelector("#clickBtn");
+      btn.addEventListener("click", () => {
+        count++;
+        display.textContent = count;
+      });
+    </script>
+  </body>
+</html>

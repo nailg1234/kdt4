@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <h1>할 일 목록</h1>
+    <input id="todoInput" type="text" placeholder="할 일을 입력하세요." />
+    <ul id="todoList"></ul>
+    <button onclick="addTodo()">추가</button>
+    <script>
+      let input = document.querySelector("#todoInput");
+      let list = document.querySelector("#todoList");
+
+      function addTodo() {
+        let text = input.value;
+        if (text === "") {
+          alert("할 일을 입력하세요.");
+          return;
+        }
+
+        // li 생성
+        let li = document.createElement("li");
+        li.textContent = text;
+
+        // 리스트에 추가
+        list.append(li);
+
+        // 입력 필드 초기화
+        input.value = "";
+
+        // Enter 키로 추가
+      }
+
+      input.addEventListener("keydown", (e) => {
+        if (e.key === "Enter") {
+          addTodo();
+        }
+      });
+    </script>
+  </body>
+</html>

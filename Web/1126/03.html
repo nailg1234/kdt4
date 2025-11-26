@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <!-- 이벤트 버블링 -->
+    <div id="parent">
+      <button id="child">클릭</button>
+    </div>
+    <!-- 이벤트가 발생하면 자식 -> 부모 -> 조상 순으로 전파 됩니다. -->
+
+    <ul id="list">
+      <li>클릭1</li>
+      <li>클릭2</li>
+      <li>클릭3</li>
+    </ul>
+    <script>
+      document.querySelector("#parent").addEventListener("click", () => {
+        console.log("부모 클릭");
+      });
+      document.querySelector("#child").addEventListener("click", (e) => {
+        e.stopPropagation(); // 부모로 전파 막기
+        console.log("자식 클릭");
+      });
+
+      // 결과 :
+      // 자식 클릭 -> 부모 클릭 (버블링!!)
+
+      let list = document.querySelector("#list");
+
+      //비효율적 : 각 항목마다 이벤트 등록
+      document.querySelectorAll("li").forEach((li) => {
+        li.addEventListener("click", () => {
+          console.log("click", li.textContent);
+        });
+      });
+
+      // 효율적 : 부모에 한번만 등록
+      list.addEventListener("click", (e) => {
+        console.log(e.target.textContent);
+      });
+    </script>
+  </body>
+</html>
