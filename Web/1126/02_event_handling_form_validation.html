@@ -1,0 +1,492 @@
+<!DOCTYPE html>
+<!--
+  ================================================================
+  이벤트 처리와 폼 유효성 검사 학습 자료
+  ================================================================
+
+  이 파일은 JavaScript에서 이벤트를 처리하고 폼 유효성 검사를
+  구현하는 방법을 학습하기 위한 실습 자료입니다.
+
+  학습 내용:
+  1. 이벤트 등록 방식 3가지 비교
+  2. addEventListener 사용법
+  3. 이벤트 버블링과 전파 제어
+  4. 이벤트 위임 패턴
+  5. 폼 유효성 검사 (이메일, 비밀번호)
+  6. 정규표현식을 활용한 입력값 검증
+
+  사용 방법:
+  - 브라우저에서 파일을 열고 개발자 도구(F12)의 Console 탭에서
+    각 섹션의 코드를 확인하며 학습하세요.
+  - 주석을 해제하여 각 섹션을 실습할 수 있습니다.
+  ================================================================
+-->
+<html lang="ko">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>이벤트 처리와 폼 유효성 검사</title>
+    <style>
+      /* 폼 스타일 */
+      body {
+        font-family: Arial, sans-serif;
+        max-width: 500px;
+        margin: 50px auto;
+        padding: 20px;
+      }
+
+      form div {
+        margin-bottom: 15px;
+      }
+
+      label {
+        display: block;
+        margin-bottom: 5px;
+        font-weight: bold;
+      }
+
+      input {
+        width: 100%;
+        padding: 8px;
+        border: 1px solid #ddd;
+        border-radius: 4px;
+        box-sizing: border-box;
+      }
+
+      button {
+        width: 100%;
+        padding: 10px;
+        background-color: #007bff;
+        color: white;
+        border: none;
+        border-radius: 4px;
+        cursor: pointer;
+        font-size: 16px;
+      }
+
+      button:hover {
+        background-color: #0056b3;
+      }
+
+      .error-message {
+        margin-top: 5px;
+        font-size: 14px;
+        min-height: 20px;
+      }
+
+      .success-message {
+        color: green;
+        font-weight: bold;
+      }
+    </style>
+  </head>
+  <body>
+    <!-- ============================================ -->
+    <!-- 섹션 1: HTML 속성 방식 (비권장) -->
+    <!-- ============================================ -->
+    <!--
+      HTML과 JavaScript 코드가 섞여서 유지보수가 어려움
+      onclick 속성에 직접 함수 호출 코드 작성
+    -->
+    <!-- <button onclick="handleClick()">클릭</button> -->
+
+    <!-- ============================================ -->
+    <!-- 섹션 2: DOM 속성 방식 (제한적) -->
+    <!-- ============================================ -->
+    <!--
+      element.onclick = function() {...} 형태
+      단점: 하나의 이벤트 핸들러만 등록 가능 (덮어씀)
+    -->
+    <!-- <button id="dom-button">클릭</button> -->
+
+    <!-- ============================================ -->
+    <!-- 섹션 3: 이벤트 버블링 실습 -->
+    <!-- ============================================ -->
+    <!--
+      이벤트가 자식 요소에서 부모 요소로 전파되는 현상
+      자식 클릭 → 부모 클릭 → 조상 클릭 순서로 이벤트 발생
+    -->
+    <!-- <div id="parent" style="padding: 30px; background: lightblue;">
+      부모 요소
+      <button id="child" style="padding: 10px;">자식 버튼</button>
+    </div> -->
+
+    <!-- ============================================ -->
+    <!-- 섹션 4: 이벤트 위임 실습 -->
+    <!-- ============================================ -->
+    <!--
+      많은 자식 요소에 개별적으로 이벤트를 등록하는 대신
+      부모 요소 하나에만 이벤트를 등록하여 효율성 향상
+    -->
+    <!-- <ul id="list">
+      <li>항목 1</li>
+      <li>항목 2</li>
+      <li>항목 3</li>
+    </ul> -->
+
+    <!-- ============================================ -->
+    <!-- 섹션 5: 폼 유효성 검사 (실습 중) -->
+    <!-- ============================================ -->
+    <div>
+      <h2>회원가입 폼</h2>
+      <form id="signupForm">
+        <div>
+          <label for="email">이메일</label>
+          <input type="text" id="email" placeholder="example@email.com" />
+          <div id="emailError" class="error-message"></div>
+        </div>
+        <div>
+          <label for="password">비밀번호 (8자 이상)</label>
+          <input type="password" id="password" placeholder="비밀번호 입력" />
+          <div id="passwordError" class="error-message"></div>
+        </div>
+        <div>
+          <label for="passwordConfirm">비밀번호 확인</label>
+          <input
+            type="password"
+            id="passwordConfirm"
+            placeholder="비밀번호 다시 입력"
+          />
+          <div id="passwordConfirmError" class="error-message"></div>
+        </div>
+        <button type="submit">가입하기</button>
+      </form>
+      <div id="submitMessage" class="error-message"></div>
+    </div>
+
+    <!-- ============================================ -->
+    <!-- 섹션 1, 2: 이벤트 등록 방식 비교 (주석 처리됨) -->
+    <!-- ============================================ -->
+    <!-- <script>
+      // ============================================
+      // 이벤트(Event)란?
+      // ============================================
+      // 웹 페이지에서 발생하는 사용자의 행동이나 브라우저의 동작
+      //
+      // 주요 이벤트 종류:
+      //   마우스: click, dblclick, mouseover, mouseout, mousemove
+      //   키보드: keydown, keyup, keypress
+      //   폼: submit, change, focus, blur, input
+      //   문서: load, DOMContentLoaded, resize, scroll
+
+      // ============================================
+      // 방법 1: HTML 속성 (비권장)
+      // ============================================
+      // 장점: 간단하고 직관적
+      // 단점:
+      //   - HTML과 JavaScript가 섞여서 관심사 분리 위반
+      //   - 유지보수 어려움
+      //   - 전역 함수만 사용 가능
+      function handleClick() {
+        alert("클릭됨!");
+      }
+
+      // ============================================
+      // 방법 2: DOM 속성 (제한적)
+      // ============================================
+      // 장점: HTML과 JavaScript 분리
+      // 단점: 하나의 핸들러만 등록 가능 (나중에 등록한 것이 이전 것을 덮어씀)
+      const domButton = document.querySelector("#dom-button");
+
+      // 첫 번째 핸들러
+      domButton.onclick = function () {
+        alert("첫 번째 핸들러");
+      };
+
+      // 두 번째 핸들러 - 첫 번째를 덮어씀!
+      domButton.onclick = function () {
+        alert("두 번째 핸들러만 실행됨");
+      };
+
+      // ============================================
+      // 방법 3: addEventListener (권장) ✅
+      // ============================================
+      // 장점:
+      //   - 여러 개의 핸들러 등록 가능
+      //   - 이벤트 전파 제어 가능
+      //   - removeEventListener로 제거 가능
+      //   - 이벤트 객체 자동 전달
+      //
+      // 구문: element.addEventListener(이벤트타입, 핸들러함수)
+
+      const button = document.querySelector("button");
+
+      // 여러 개의 핸들러를 등록할 수 있음 - 모두 실행됨!
+      button.addEventListener("click", () => {
+        console.log("첫 번째 핸들러 실행");
+      });
+
+      button.addEventListener("click", () => {
+        console.log("두 번째 핸들러 실행");
+      });
+
+      button.addEventListener("click", () => {
+        alert("클릭됨!");
+      });
+    </script> -->
+
+    <!-- ============================================ -->
+    <!-- 섹션 3: 이벤트 버블링 (주석 처리됨) -->
+    <!-- ============================================ -->
+    <!-- <script>
+      // ============================================
+      // 이벤트 버블링(Event Bubbling)
+      // ============================================
+      // 이벤트가 발생한 요소에서 시작하여 부모 요소로 전파되는 현상
+      // 실행 순서: 자식 → 부모 → 조상 → ... → document → window
+      //
+      // 이벤트 객체(e)의 주요 속성:
+      //   - e.target: 이벤트가 실제로 발생한 요소
+      //   - e.currentTarget: 이벤트 핸들러가 등록된 요소
+      //   - e.stopPropagation(): 이벤트 전파 중단
+
+      const parentElement = document.querySelector("#parent");
+      const childButton = document.querySelector("#child");
+
+      // 부모 요소에 이벤트 등록
+      parentElement.addEventListener("click", (event) => {
+        console.log("부모 요소 클릭됨");
+        console.log("이벤트 대상(target):", event.target); // 실제 클릭된 요소
+        console.log("현재 요소(currentTarget):", event.currentTarget); // parent
+      });
+
+      // 자식 요소에 이벤트 등록
+      childButton.addEventListener("click", (event) => {
+        // stopPropagation() - 부모로의 이벤트 전파를 막음
+        event.stopPropagation();
+
+        console.log("자식 버튼 클릭됨");
+        console.log("이벤트 대상(target):", event.target); // child
+      });
+
+      // stopPropagation() 주석 처리 시 결과:
+      // "자식 버튼 클릭됨" → "부모 요소 클릭됨" (버블링!)
+      //
+      // stopPropagation() 사용 시 결과:
+      // "자식 버튼 클릭됨" (부모로 전파 안됨)
+    </script> -->
+
+    <!-- ============================================ -->
+    <!-- 섹션 4: 이벤트 위임 (주석 처리됨) -->
+    <!-- ============================================ -->
+    <!-- <script>
+      // ============================================
+      // 이벤트 위임(Event Delegation)
+      // ============================================
+      // 여러 자식 요소에 이벤트를 등록하는 대신
+      // 부모 요소 하나에만 이벤트를 등록하여 처리
+      //
+      // 장점:
+      //   - 메모리 효율적 (이벤트 핸들러 수 감소)
+      //   - 동적으로 추가된 요소에도 자동 적용
+      //   - 코드가 간결해짐
+      //
+      // 원리: 이벤트 버블링을 활용
+
+      const listElement = document.querySelector("#list");
+
+      // ❌ 비효율적인 방법: 각 항목마다 이벤트 등록
+      // 항목이 1000개라면 1000개의 이벤트 핸들러가 등록됨
+      // listElement.querySelectorAll("li").forEach((li) => {
+      //   li.addEventListener("click", () => {
+      //     console.log("클릭:", li.textContent);
+      //   });
+      // });
+
+      // ✅ 효율적인 방법: 부모에 한 번만 등록 (이벤트 위임)
+      // 이벤트 버블링으로 li 클릭이 ul로 전파됨
+      listElement.addEventListener("click", (event) => {
+        // event.target: 실제로 클릭된 요소
+        // li를 클릭했는지 확인
+        if (event.target.tagName === "LI") {
+          console.log("클릭된 항목:", event.target.textContent);
+        }
+      });
+
+      // 동적으로 항목 추가해도 자동으로 이벤트가 적용됨
+      const newItem = document.createElement("li");
+      newItem.textContent = "항목 4 (동적 추가)";
+      listElement.appendChild(newItem);
+      // → 추가된 항목도 클릭 시 이벤트가 동작함!
+    </script> -->
+
+    <!-- ============================================ -->
+    <!-- 섹션 5: 폼 유효성 검사 -->
+    <!-- ============================================ -->
+    <script>
+      // ============================================
+      // 폼 유효성 검사 (Form Validation)
+      // ============================================
+      // 사용자가 입력한 데이터를 서버로 전송하기 전에
+      // 클라이언트에서 먼저 검증하는 과정
+      //
+      // 주요 검사 항목:
+      //   - 필수 입력 확인 (빈 값 체크)
+      //   - 형식 검증 (이메일, 전화번호 등)
+      //   - 길이 제한 (최소/최대 글자 수)
+      //   - 값 일치 확인 (비밀번호 확인)
+
+      const signupForm = document.querySelector("#signupForm");
+
+      // submit 이벤트: 폼이 제출될 때 발생
+      signupForm.addEventListener("submit", (event) => {
+        // ============================================
+        // preventDefault() - 기본 동작 막기
+        // ============================================
+        // 폼의 기본 동작(페이지 새로고침)을 막음
+        // 이렇게 해야 JavaScript로 유효성 검사 후 처리 가능
+        event.preventDefault();
+
+        // 입력값 가져오기
+        const emailInput = document.querySelector("#email");
+        const passwordInput = document.querySelector("#password");
+        const passwordConfirmInput = document.querySelector("#passwordConfirm");
+
+        const email = emailInput.value.trim(); // trim(): 앞뒤 공백 제거
+        const password = passwordInput.value;
+        const passwordConfirm = passwordConfirmInput.value;
+
+        // 에러 메시지 요소들
+        const emailError = document.querySelector("#emailError");
+        const passwordError = document.querySelector("#passwordError");
+        const passwordConfirmError = document.querySelector("#passwordConfirmError");
+        const submitMessage = document.querySelector("#submitMessage");
+
+        // 에러 메시지 초기화
+        emailError.textContent = "";
+        passwordError.textContent = "";
+        passwordConfirmError.textContent = "";
+        submitMessage.textContent = "";
+
+        let isValid = true; // 유효성 검사 통과 여부
+
+        // ============================================
+        // 1. 이메일 검사
+        // ============================================
+
+        // 빈 값 체크
+        if (email === "") {
+          emailError.textContent = "이메일을 입력하세요.";
+          emailError.style.color = "red";
+          emailInput.focus(); // 해당 입력 필드에 포커스
+          isValid = false;
+        } else {
+          // ============================================
+          // 정규표현식(Regular Expression)으로 형식 검사
+          // ============================================
+          // 정규표현식: 문자열 패턴을 표현하는 방법
+          //
+          // 이메일 패턴 설명:
+          //   ^        : 문자열 시작
+          //   [^\s@]+  : 공백과 @가 아닌 문자 1개 이상
+          //   @        : @ 문자
+          //   [^\s@]+  : 공백과 @가 아닌 문자 1개 이상
+          //   \.       : . 문자 (이스케이프 필요)
+          //   [^\s@]+  : 공백과 @가 아닌 문자 1개 이상
+          //   $        : 문자열 끝
+          //
+          // 예시: "user@example.com" → 통과
+          //       "user@example" → 실패 (도메인에 . 없음)
+          //       "@example.com" → 실패 (@ 앞에 문자 없음)
+          const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
+          // test() 메서드: 패턴과 일치하면 true, 아니면 false
+          if (!emailPattern.test(email)) {
+            emailError.textContent = "올바른 이메일 형식이 아닙니다.";
+            emailError.style.color = "red";
+            emailInput.focus();
+            isValid = false;
+          } else {
+            emailError.textContent = "✓ 사용 가능한 이메일입니다.";
+            emailError.style.color = "green";
+          }
+        }
+
+        // ============================================
+        // 2. 비밀번호 길이 검사
+        // ============================================
+        if (password === "") {
+          passwordError.textContent = "비밀번호를 입력하세요.";
+          passwordError.style.color = "red";
+          if (isValid) passwordInput.focus();
+          isValid = false;
+        } else if (password.length < 8) {
+          // ⚠️ 중요: password.length로 길이 확인
+          // (원본 코드의 password < 8은 잘못된 비교)
+          passwordError.textContent = "비밀번호는 8자 이상이어야 합니다.";
+          passwordError.style.color = "red";
+          if (isValid) passwordInput.focus();
+          isValid = false;
+        } else {
+          passwordError.textContent = "✓ 사용 가능한 비밀번호입니다.";
+          passwordError.style.color = "green";
+        }
+
+        // ============================================
+        // 3. 비밀번호 확인 검사 (추가 기능)
+        // ============================================
+        if (passwordConfirm === "") {
+          passwordConfirmError.textContent = "비밀번호 확인을 입력하세요.";
+          passwordConfirmError.style.color = "red";
+          if (isValid) passwordConfirmInput.focus();
+          isValid = false;
+        } else if (password !== passwordConfirm) {
+          passwordConfirmError.textContent = "비밀번호가 일치하지 않습니다.";
+          passwordConfirmError.style.color = "red";
+          if (isValid) passwordConfirmInput.focus();
+          isValid = false;
+        } else {
+          passwordConfirmError.textContent = "✓ 비밀번호가 일치합니다.";
+          passwordConfirmError.style.color = "green";
+        }
+
+        // ============================================
+        // 최종 제출 처리
+        // ============================================
+        if (isValid) {
+          // 모든 검사를 통과한 경우
+          submitMessage.textContent = "✓ 회원가입이 완료되었습니다!";
+          submitMessage.className = "error-message success-message";
+
+          console.log("제출된 데이터:");
+          console.log("이메일:", email);
+          console.log("비밀번호:", password);
+
+          // 실제 서버 전송은 여기서 처리
+          // 예: fetch() 또는 XMLHttpRequest 사용
+
+          // 폼 초기화 (선택사항)
+          // signupForm.reset();
+        } else {
+          // 검사 실패
+          submitMessage.textContent = "입력 정보를 확인해주세요.";
+          submitMessage.style.color = "red";
+        }
+      });
+
+      // ============================================
+      // 실시간 입력 검증 (추가 개선)
+      // ============================================
+      // input 이벤트: 사용자가 입력할 때마다 발생
+      // 사용자가 타이핑하는 동안 실시간으로 피드백 제공
+
+      const emailInput = document.querySelector("#email");
+      const emailError = document.querySelector("#emailError");
+
+      emailInput.addEventListener("input", (event) => {
+        const email = event.target.value.trim();
+        const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
+        if (email === "") {
+          emailError.textContent = "";
+        } else if (emailPattern.test(email)) {
+          emailError.textContent = "✓ 올바른 이메일 형식입니다.";
+          emailError.style.color = "green";
+        } else {
+          emailError.textContent = "이메일 형식을 확인하세요.";
+          emailError.style.color = "orange";
+        }
+      });
+    </script>
+  </body>
+</html>
