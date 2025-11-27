@@ -92,9 +92,19 @@
                 e.parentElement.style.display = "none";
               });
           } else {
-            document.querySelectorAll("#list li").forEach((e) => {
-              e.style.display = "none";
-            });
+            document
+              .querySelectorAll('#list input[type="checkbox"]:not(:checked)')
+              .forEach((e) => {
+                console.log(e);
+                e.parentElement.style.display = "none";
+              });
+
+            document
+              .querySelectorAll('#list input[type="checkbox"]:checked')
+              .forEach((e) => {
+                console.log("aaa", e);
+                e.parentElement.style.display = "list-item";
+              });
           }
         }
       });
