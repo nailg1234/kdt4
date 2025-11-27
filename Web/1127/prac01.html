@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <style>
+      .container1,
+      .container2 {
+        display: flex;
+      }
+
+      .container1 {
+        width: 500px;
+        justify-content: space-between;
+      }
+
+      .container2 {
+        gap: 20px;
+      }
+
+      .container2 div {
+        background-color: gray;
+        color: white;
+        padding: 10px;
+        border-radius: 10px;
+      }
+
+      .container2 .filter {
+        background-color: black;
+      }
+    </style>
+  </head>
+  <body>
+    <!-- Todo List -->
+
+    <!-- 기능 목록 -->
+    <input id="text1" type="text" placeholder="할 일을 입력해주세요." />
+    <input id="button1" type="button" value="추가" />
+    <h1>기능 목록</h1>
+    <div class="container1">
+      <div><span id="cnt">0</span>개 남음</div>
+      <div class="container2">
+        <div class="filter">전체</div>
+        <div>미완료</div>
+        <div>완료</div>
+      </div>
+    </div>
+    <ul id="list"></ul>
+    <button id="button2">완료 항목 삭제</button>
+    <!-- 할 일 추가 - addTodo() -->
+    <!-- 할 일 완료/미완료 토글 - toggleTodo(id) -->
+    <!-- 할 일 삭제 deleteTodo(id) -->
+    <!-- 전체/완료/미완료 필터링 filterTodos(filter) -->
+    <!-- 남은 할 일 개수 표시 -->
+    <!-- 완료된 항목 모두 삭제 -->
+    <script>
+      let button1 = document.querySelector("#button1");
+      let button2 = document.querySelector("#button2");
+      let cnt = document.querySelector("#cnt");
+      let list = document.querySelector("#list");
+      let container2 = document.querySelector(".container2");
+
+      container2.addEventListener("click", (e) => {
+        if (
+          e.target.textContent === "전체" ||
+          e.target.textContent === "미완료" ||
+          e.target.textContent === "완료"
+        ) {
+          let filtered = document.querySelector(
+            ".container2 div[class='filter']"
+          );
+          filtered.classList.remove("filter");
+          e.target.classList.add("filter");
+
+          if (e.target.textContent === "전체") {
+            document.querySelectorAll("#list li").forEach((e) => {
+              e.style.display = "list-item";
+            });
+          } else if (e.target.textContent === "미완료") {
+            document
+              .querySelectorAll('#list input[type="checkbox"]:not(:checked)')
+              .forEach((e) => {
+                console.log(e);
+                e.parentElement.style.display = "list-item";
+              });
+
+            document
+              .querySelectorAll('#list input[type="checkbox"]:checked')
+              .forEach((e) => {
+                console.log("aaa", e);
+                e.parentElement.style.display = "none";
+              });
+          } else {
+            document.querySelectorAll("#list li").forEach((e) => {
+              e.style.display = "none";
+            });
+          }
+        }
+      });
+
+      button1.addEventListener("click", () => {
+        addTodo();
+      });
+
+      button2.addEventListener("click", () => {
+        let checkedboxs = document.querySelectorAll(
+          '#list input[type="checkbox"]:checked'
+        );
+        checkedboxs.forEach((e) => {
+          e.parentElement.remove();
+        });
+      });
+
+      list.addEventListener("click", (e) => {
+        if (e.target.value === "삭제") {
+          e.target.parentElement.remove();
+        }
+        updateCheckedCnt();
+      });
+
+      function addTodo() {
+        let text1 = document.querySelector("#text1");
+        if (text1.value === "") return;
+        let li = document.createElement("li");
+        let checkbox1 = document.createElement("input");
+        checkbox1.setAttribute("type", "checkbox");
+        let span = document.createElement("span");
+        span.textContent = text1.value;
+        let deleteButton = document.createElement("input");
+        deleteButton.setAttribute("type", "button");
+        deleteButton.setAttribute("value", "삭제");
+        deleteButton.setAttribute("style", "margin-left:10px;");
+        li.appendChild(checkbox1);
+        li.appendChild(span);
+        li.appendChild(deleteButton);
+
+        list.appendChild(li);
+        text1.value = "";
+        updateCheckedCnt();
+      }
+
+      function updateCheckedCnt() {
+        let checkboxs = document.querySelectorAll(
+          '#list input[type="checkbox"]:not(:checked)'
+        );
+
+        cnt.textContent = checkboxs.length;
+      }
+    </script>
+  </body>
+</html>
