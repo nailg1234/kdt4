@@ -1,0 +1,359 @@
+<!DOCTYPE html>
+<html lang="ko">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Todo List - 할 일 관리</title>
+  </head>
+  <body>
+    <!--
+      ========================================
+      Todo List Application
+      ========================================
+      기능 목록:
+      1. 할 일 추가 (텍스트 입력 후 Enter 또는 추가 버튼 클릭)
+      2. 할 일 완료/미완료 토글 (체크박스 클릭)
+      3. 할 일 삭제 (개별 삭제 버튼)
+      4. 완료된 항목 일괄 삭제
+      5. 남은 할 일 개수 표시
+      6. 필터링 (전체/완료/미완료)
+    -->
+    <div class="app-container">
+      <!-- 헤더: 애플리케이션 제목 및 설명 -->
+      <header class="app-header">
+        <h1>Todo List</h1>
+        <p>할 일을 추가하고 관리하세요.</p>
+      </header>
+
+      <!-- 입력 섹션: 새로운 할 일 추가 -->
+      <section class="input-section">
+        <input type="text" id="todoInput" placeholder="할 일을 입력하세요." />
+        <button id="addBtn">추가</button>
+      </section>
+
+      <!-- 필터 섹션: 할 일 목록 필터링 -->
+      <section class="filter-section">
+        <button class="filter-btn active" data-filter="all">전체</button>
+        <button class="filter-btn" data-filter="active">미완료</button>
+        <button class="filter-btn" data-filter="completed">완료</button>
+      </section>
+
+      <!-- 할 일 목록: 동적으로 생성되는 할 일 항목들 -->
+      <ul id="todoList"></ul>
+
+      <!-- 푸터: 통계 및 일괄 삭제 기능 -->
+      <footer class="app-footer">
+        <span id="counter">0개 남음</span>
+        <button id="clearCompleted">완료된 항목 삭제</button>
+      </footer>
+    </div>
+
+    <script>
+      // ========================================
+      // 1. 전역 변수 및 상태 관리
+      // ========================================
+
+      // 모든 할 일 항목을 저장하는 배열
+      // 각 todo 객체는 { id, text, completed } 구조를 가짐
+      let todos = [];
+
+      // 현재 선택된 필터 ('all', 'active', 'completed')
+      // 기본값은 'all'로 모든 할 일을 표시
+      let currentFilter = "all";
+
+      // ========================================
+      // 2. DOM 요소 선택
+      // ========================================
+
+      // 사용자 입력을 받는 텍스트 필드
+      const todoInput = document.querySelector("#todoInput");
+
+      // 할 일 추가 버튼
+      const addBtn = document.querySelector("#addBtn");
+
+      // 할 일 목록을 표시하는 ul 요소
+      const todoList = document.querySelector("#todoList");
+
+      // 남은 할 일 개수를 표시하는 span 요소
+      const counter = document.querySelector("#counter");
+
+      // 완료된 항목을 일괄 삭제하는 버튼
+      const clearCompleted = document.querySelector("#clearCompleted");
+
+      // 필터 버튼들 (전체, 미완료, 완료)
+      const filterBtns = document.querySelectorAll(".filter-btn");
+
+      // ========================================
+      // 3. 할 일 추가 기능
+      // ========================================
+
+      /**
+       * 새로운 할 일을 추가하는 함수
+       * - 입력값 검증 (빈 문자열 체크)
+       * - 고유 ID 생성 (Date.now() 사용)
+       * - todos 배열에 새 항목 추가
+       * - 화면 업데이트 및 입력 필드 초기화
+       */
+      const addTodo = () => {
+        // 입력값에서 앞뒤 공백 제거
+        const text = todoInput.value.trim();
+
+        // 빈 문자열인 경우 추가하지 않고 포커스만 설정
+        if (text === "") {
+          todoInput.focus();
+          return;
+        }
+
+        // 새로운 todo 객체 생성
+        const newTodo = {
+          id: Date.now(), // 현재 타임스탬프를 고유 ID로 사용
+          text: text, // 할 일 내용
+          completed: false, // 초기 상태는 미완료
+        };
+
+        // todos 배열에 새 항목 추가
+        todos.push(newTodo);
+
+        // 남은 할 일 개수 업데이트
+        updateCounter();
+
+        // 화면에 할 일 목록 다시 렌더링
+        renderTodos();
+
+        // 입력 필드 초기화 및 포커스 설정
+        todoInput.value = "";
+        todoInput.focus();
+
+        console.log("현재 todos:", todos);
+      };
+
+      // ========================================
+      // 4. 이벤트 리스너 등록 - 할 일 추가
+      // ========================================
+
+      // 추가 버튼 클릭 시 할 일 추가
+      addBtn.addEventListener("click", addTodo);
+
+      // 입력 필드에서 Enter 키 입력 시 할 일 추가
+      todoInput.addEventListener("keydown", (e) => {
+        if (e.key === "Enter") {
+          addTodo();
+        }
+      });
+
+      // ========================================
+      // 5. 할 일 완료/미완료 토글 기능
+      // ========================================
+
+      /**
+       * 특정 할 일의 완료 상태를 토글하는 함수
+       * @param {number} id - 토글할 할 일의 고유 ID
+       */
+      const toggleTodo = (id) => {
+        // ID에 해당하는 todo 항목 찾기
+        let todo = todos.find((todo) => todo.id === id);
+
+        // 항목이 존재하면 완료 상태 반전
+        if (todo) {
+          todo.completed = !todo.completed;
+          renderTodos(); // 화면 업데이트
+          updateCounter(); // 카운터 업데이트
+        }
+      };
+
+      // ========================================
+      // 6. 이벤트 리스너 등록 - 할 일 목록 클릭
+      // ========================================
+
+      /**
+       * 할 일 목록에서 발생하는 클릭 이벤트 처리
+       * - 체크박스 클릭: 완료 상태 토글
+       * - 삭제 버튼 클릭: 해당 항목 삭제
+       * 이벤트 위임(Event Delegation) 패턴 사용
+       */
+      todoList.addEventListener("click", (e) => {
+        // 클릭된 요소의 data-id 속성에서 ID 가져오기
+        let id = parseInt(e.target.dataset.id);
+
+        // 체크박스 클릭 시 토글 처리
+        if (e.target.type === "checkbox") {
+          toggleTodo(id);
+        }
+
+        // 삭제 버튼 클릭 시 삭제 처리
+        if (e.target.className === "delete") {
+          deleteTodo(id);
+        }
+      });
+
+      // ========================================
+      // 7. 할 일 삭제 기능
+      // ========================================
+
+      /**
+       * 특정 할 일을 삭제하는 함수
+       * @param {number} id - 삭제할 할 일의 고유 ID
+       */
+      const deleteTodo = (id) => {
+        // filter를 사용하여 해당 ID를 제외한 새 배열 생성
+        todos = todos.filter((todo) => todo.id !== id);
+
+        // 화면 업데이트
+        updateCounter();
+        renderTodos();
+      };
+
+      // ========================================
+      // 8. 완료된 항목 일괄 삭제 기능
+      // ========================================
+
+      /**
+       * 완료된 모든 할 일을 일괄 삭제하는 함수
+       * completed가 false인 항목들만 남김
+       */
+      const clearCompletedTodos = () => {
+        // 미완료 항목만 필터링
+        todos = todos.filter((todo) => !todo.completed);
+
+        // 화면 업데이트
+        updateCounter();
+        renderTodos();
+      };
+
+      // 완료된 항목 삭제 버튼 클릭 이벤트 리스너
+      clearCompleted.addEventListener("click", clearCompletedTodos);
+
+      // ========================================
+      // 9. 필터링 기능
+      // ========================================
+
+      /**
+       * 필터를 변경하고 화면을 업데이트하는 함수
+       * @param {string} filter - 설정할 필터 ('all', 'active', 'completed')
+       */
+      const setFilter = (filter) => {
+        // 현재 필터 상태 업데이트
+        currentFilter = filter;
+
+        // 모든 필터 버튼에서 active 클래스 제거
+        filterBtns.forEach((btn) => {
+          btn.classList.remove("active");
+        });
+
+        // 클릭된 필터 버튼에 active 클래스 추가
+        const activeBtn = document.querySelector(`[data-filter="${filter}"]`);
+        if (activeBtn) {
+          activeBtn.classList.add("active");
+        }
+
+        // 필터가 적용된 화면 다시 렌더링
+        renderTodos();
+      };
+
+      // 각 필터 버튼에 클릭 이벤트 리스너 등록
+      filterBtns.forEach((btn) => {
+        btn.addEventListener("click", (e) => {
+          // 클릭된 버튼의 data-filter 속성값 가져오기
+          const filter = e.target.dataset.filter;
+          setFilter(filter);
+        });
+      });
+
+      // ========================================
+      // 10. 남은 할 일 개수 업데이트
+      // ========================================
+
+      /**
+       * 미완료 상태의 할 일 개수를 계산하여 화면에 표시
+       * completed가 false인 항목만 카운트
+       */
+      const updateCounter = () => {
+        // 미완료 항목의 개수 계산
+        let activeCount = todos.filter((todo) => !todo.completed).length;
+
+        // 카운터 텍스트 업데이트
+        counter.textContent = `${activeCount}개 남았습니다.`;
+      };
+
+      // ========================================
+      // 11. 화면 렌더링 함수
+      // ========================================
+
+      /**
+       * todos 배열의 항목을 현재 필터에 따라 화면에 렌더링하는 함수
+       * DOM 조작을 통해 각 할 일 항목을 동적으로 생성
+       *
+       * 필터 종류:
+       * - 'all': 모든 할 일 표시
+       * - 'active': 미완료 할 일만 표시
+       * - 'completed': 완료된 할 일만 표시
+       *
+       * 각 항목의 구조:
+       * <li>
+       *   <input type="checkbox" /> - 완료 상태 토글
+       *   할 일 텍스트
+       *   <button class="delete">삭제</button> - 개별 삭제
+       * </li>
+       */
+      const renderTodos = () => {
+        // 기존 목록 초기화
+        todoList.innerHTML = "";
+
+        // 현재 필터에 따라 표시할 항목 필터링
+        let filteredTodos = todos;
+
+        if (currentFilter === "active") {
+          // 미완료 항목만 필터링
+          filteredTodos = todos.filter((todo) => !todo.completed);
+        } else if (currentFilter === "completed") {
+          // 완료된 항목만 필터링
+          filteredTodos = todos.filter((todo) => todo.completed);
+        }
+        // currentFilter === 'all'인 경우 모든 항목 표시 (필터링 없음)
+
+        // 필터링된 각 todo 항목을 순회하며 DOM 요소 생성
+        filteredTodos.forEach((todo) => {
+          // 체크박스 생성
+          const checkBox = document.createElement("input");
+          checkBox.type = "checkbox";
+          checkBox.checked = todo.completed; // 완료 상태 반영
+          checkBox.dataset.id = todo.id; // 이벤트 처리를 위한 ID 저장
+
+          // 삭제 버튼 생성
+          const deleteBtn = document.createElement("button");
+          deleteBtn.textContent = "삭제";
+          deleteBtn.className = "delete";
+          deleteBtn.dataset.id = todo.id; // 이벤트 처리를 위한 ID 저장
+
+          // 리스트 아이템 생성
+          const li = document.createElement("li");
+          li.textContent = todo.text;
+
+          // 요소들을 li에 추가
+          li.prepend(checkBox); // 체크박스를 맨 앞에 추가
+          li.append(deleteBtn); // 삭제 버튼을 맨 뒤에 추가
+
+          // 완성된 li를 ul에 추가
+          todoList.append(li);
+        });
+      };
+
+      // ========================================
+      // 참고: innerHTML을 사용한 대체 렌더링 방법
+      // ========================================
+      // 보안 이슈(XSS 공격)와 이벤트 리스너 재등록 문제로 인해
+      // createElement 방식을 권장하지만, 참고용으로 남겨둠
+      /*
+      const renderTodos = () => {
+        todoList.innerHTML = todos.map(todo => `
+          <li>
+            <input type="checkbox" ${todo.completed ? 'checked' : ''} data-id="${todo.id}" />
+            <span>${todo.text}</span>
+            <button class="delete" data-id="${todo.id}">삭제</button>
+          </li>
+        `).join('');
+      };
+      */
+    </script>
+  </body>
+</html>
