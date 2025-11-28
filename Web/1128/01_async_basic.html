@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>비동기 프로그래밍 기초</title>
+  </head>
+  <body>
+    <!-- 비동기 프로그래밍 기초 -->
+    <!-- 동기 VS 비동기 -->
+
+    <h1>카운트다운 타이머</h1>
+    <div id="timer">60</div>
+    <button onclick="startTimer()">시작</button>
+    <button onclick="resetTimer()">초기화</button>
+
+    <script>
+      // ============================================
+      // 1. 동기(Synchronous) 프로그래밍
+      // ============================================
+      // 동기 방식: 코드가 작성된 순서대로 위에서 아래로 한 줄씩 실행됩니다.
+      // 이전 코드가 완료되어야 다음 코드가 실행됩니다.
+      console.log("첫 번째"); // 1번째 실행
+      console.log("두 번째"); // 2번째 실행 (첫 번째가 끝난 후)
+      console.log("세 번째"); // 3번째 실행 (두 번째가 끝난 후)
+      // 출력 순서: "첫 번째" -> "두 번째" -> "세 번째"
+
+      // ============================================
+      // 2. 비동기(Asynchronous) 프로그래밍
+      // ============================================
+      // 비동기 방식: 특정 코드의 실행이 완료될 때까지 기다리지 않고
+      // 다음 코드를 바로 실행합니다.
+      console.log("시작"); // 1번째 실행
+
+      // setTimeout: 비동기 함수 - 지정된 시간 후에 코드를 실행
+      // 2초를 기다리지 않고 바로 다음 줄로 넘어갑니다!
+      setTimeout(() => {
+        console.log("2초 후 실행"); // 3번째 실행 (2초 후)
+      }, 2000);
+
+      console.log("끝"); // 2번째 실행 (setTimeout을 기다리지 않음)
+      // 출력 순서: "시작" -> "끝" -> (2초 후) "2초 후 실행"
+
+      // ============================================
+      // 3. 왜 비동기를 사용할까?
+      // ============================================
+
+      // 📌 동기 방식의 문제점 - 블로킹(Blocking)
+      // 아래 코드의 주석을 풀어서 실행하면 브라우저가 몇 초간 멈춥니다!
+      // function getData() {
+      //   // 5초 정도 걸리는 무거운 작업 시뮬레이션
+      //   for (let i = 0; i < 5000000000; i++) {}
+      //   return "데이터";
+      // }
+      //
+      // const data = getData(); // 여기서 5초간 대기... (브라우저 멈춤!)
+      // console.log("완료"); // 5초 후에야 실행됨
+      // 문제: 이 5초 동안 사용자는 아무것도 할 수 없습니다! (클릭, 스크롤 등 불가)
+
+      // 📌 비동기 방식의 해결책 - 논블로킹(Non-blocking)
+      // 시간이 오래 걸리는 작업을 비동기로 처리하면 브라우저가 멈추지 않습니다!
+
+      // callback: 작업이 완료되면 호출될 함수
+      function getData1(callback) {
+        // setTimeout으로 비동기 처리 - 5초 걸리는 작업 시뮬레이션
+        setTimeout(() => {
+          callback("데이터"); // 5초 후 callback 함수 실행
+        }, 5000);
+      }
+
+      // getData1 함수를 호출하면서 콜백 함수를 전달
+      getData1((data) => {
+        console.log(data); // 5초 후 "데이터" 출력
+      });
+
+      console.log("완료"); // 즉시 실행됨! (기다리지 않음)
+      // 출력 순서: "완료" -> (5초 후) "데이터"
+      // 장점: 5초 동안 사용자는 다른 작업을 할 수 있습니다!
+
+      // ============================================
+      // 4. setTimeout() - 일정 시간 후 한 번 실행
+      // ============================================
+      // 문법: setTimeout(함수, 지연시간(밀리초));
+      // 1000ms = 1초
+
+      // 📌 기본 사용법
+      setTimeout(() => {
+        console.log("3초 지났습니다.");
+      }, 3000); // 3000ms = 3초 후 실행
+
+      // 📌 매개변수 전달 방법
+      // setTimeout의 3번째, 4번째 인자로 함수에 전달할 값을 넘길 수 있습니다
+      function greet(name, age) {
+        console.log(`${name}님, ${age}살이시군요`);
+      }
+
+      // greet 함수에 "홍길동", 25를 인자로 전달
+      setTimeout(greet, 5000, "홍길동", 25); // 5초 후 실행
+
+      // 📌 타이머 취소하기 - clearTimeout()
+      // setTimeout은 타이머 ID를 반환합니다
+      let timerId = setTimeout(() => {
+        console.log("timerId 실행"); // 이 코드는 실행되지 않습니다!
+      }, 3000);
+
+      // clearTimeout으로 타이머를 취소할 수 있습니다
+      clearTimeout(timerId); // 타이머가 실행되기 전에 취소됨
+      // 사용 예시: 사용자가 버튼을 다시 클릭했을 때 이전 타이머 취소
+
+      // ============================================
+      // 5. setInterval() - 일정 간격마다 반복 실행
+      // ============================================
+      // 문법: setInterval(함수, 간격(밀리초));
+      // setTimeout과 달리 지정된 간격마다 계속 반복 실행됩니다
+
+      let count = 5;
+
+      // 1초(1000ms)마다 반복 실행되는 타이머
+      let intervalId = setInterval(() => {
+        console.log("setInterval", count); // 5, 4, 3, 2, 1, 0 출력
+        count--;
+
+        // ⚠️ 중요: setInterval은 무한 반복되므로 반드시 중지 조건이 필요합니다!
+        if (count < 0) {
+          clearInterval(intervalId); // 타이머 중지
+          console.log("중지");
+        }
+      }, 1000); // 1초마다 실행
+
+      // 출력 결과:
+      // (1초 후) "setInterval 5"
+      // (2초 후) "setInterval 4"
+      // (3초 후) "setInterval 3"
+      // (4초 후) "setInterval 2"
+      // (5초 후) "setInterval 1"
+      // (6초 후) "setInterval 0"
+      // (6초 후) "중지"
+    </script>
+
+    <script>
+      // ============================================
+      // 6. 실전 예제: 카운트다운 타이머 구현
+      // ============================================
+
+      // 전역 변수 선언
+      let timeLeft = 60; // 남은 시간 (초)
+      let timerId1 = null; // setInterval의 ID를 저장할 변수
+
+      // 타이머 시작 함수
+      function startTimer() {
+        // 📌 중복 실행 방지
+        // 이미 타이머가 실행 중이면 함수 종료
+        if (timerId1) return;
+
+        // 1초마다 실행되는 타이머 시작
+        timerId1 = setInterval(() => {
+          timeLeft--; // 남은 시간 1초 감소
+
+          // 화면에 표시되는 숫자 업데이트
+          document.querySelector("#timer").textContent = timeLeft;
+
+          // 📌 타이머 종료 조건
+          if (timeLeft === 0) {
+            clearInterval(timerId1); // 타이머 중지
+            timerId1 = null; // ID 초기화 (다시 시작 가능하도록)
+            alert("시간 종료!"); // 사용자에게 알림
+          }
+        }, 1000); // 1000ms = 1초
+      }
+
+      // 타이머 초기화 함수
+      function resetTimer() {
+        // 📌 실행 중인 타이머가 있다면 중지
+        clearInterval(timerId1);
+
+        // 📌 모든 값을 초기 상태로 되돌리기
+        timerId1 = null; // 타이머 ID 초기화
+        timeLeft = 60; // 남은 시간을 60초로 리셋
+        document.querySelector("#timer").textContent = timeLeft; // 화면 업데이트
+      }
+
+      // 📝 학습 포인트:
+      // 1. timerId1을 null로 초기화하여 타이머 실행 여부를 체크
+      // 2. clearInterval로 타이머를 중지한 후 반드시 null로 초기화
+      // 3. setInterval은 매 초마다 DOM을 업데이트하여 실시간 변화 표현
+    </script>
+  </body>
+</html>

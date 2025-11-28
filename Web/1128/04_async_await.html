@@ -1,0 +1,299 @@
+<!DOCTYPE html>
+<html lang="ko">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>async/await</title>
+  </head>
+  <body>
+    <script>
+      // ============================================
+      // async/await
+      // ============================================
+      // ES8(ES2017)에서 도입된 비동기 처리 문법
+      // Promise를 더 쉽고 간결하게 사용할 수 있게 해줍니다
+      // 비동기 코드를 동기 코드처럼 작성할 수 있어 가독성이 높습니다
+
+      // ============================================
+      // 1. async 키워드
+      // ============================================
+      // async 키워드를 함수 앞에 붙이면 해당 함수는 항상 Promise를 반환합니다
+      // 일반 값을 반환해도 자동으로 Promise.resolve()로 감싸집니다
+
+      async function hello() {
+        return "안녕하세요";
+        // 자동으로 Promise.resolve("안녕하세요")로 변환됩니다
+      }
+
+      // 위 코드는 아래와 동일합니다
+      function hello2() {
+        return Promise.resolve("안녕하세요");
+      }
+
+      // 사용 방법 (Promise와 동일하게 .then() 사용 가능)
+      hello().then((msg) => console.log(msg)); // "안녕하세요"
+
+      // ============================================
+      // 2. async 함수 선언 방법
+      // ============================================
+
+      // 📌 함수 선언식
+      async function getName() {
+        return "홍길동";
+      }
+
+      // 📌 함수 표현식
+      const getAge = async function () {
+        return 25;
+      };
+
+      // 📌 화살표 함수
+      const getCity = async () => {
+        return "서울";
+      };
+
+      // 📌 객체 메서드
+      const user = {
+        async getInfo() {
+          return { name: "홍길동", age: 25 };
+        },
+      };
+
+      // ============================================
+      // 3. await 키워드
+      // ============================================
+      // await는 Promise가 완료될 때까지 기다립니다
+      // 중요: await는 반드시 async 함수 안에서만 사용 가능합니다!
+
+      // 기본 사용법
+      async function example1() {
+        // Promise가 완료될 때까지 대기 후 결과값을 반환
+        const result = await Promise.resolve("완료!");
+        console.log(result); // "완료!"
+      }
+
+      example1();
+
+      // 일반 값에도 await 사용 가능 (자동으로 Promise.resolve()로 감싸짐)
+      async function example2() {
+        const num = await 42; // Promise.resolve(42)와 동일
+        console.log(num); // 42
+      }
+
+      example2();
+
+      // ============================================
+      // 4. Promise vs async/await 비교
+      // ============================================
+
+      // 📌 Promise 방식 (체이닝)
+      function fetchUserWithPromise() {
+        return fetch("https://api.example.com/user")
+          .then((response) => response.json())
+          .then((user) => {
+            console.log(user);
+            return user;
+          })
+          .catch((error) => {
+            console.error("에러:", error);
+          });
+      }
+
+      // 📌 async/await 방식 (더 직관적!)
+      async function fetchUserWithAsync() {
+        try {
+          const response = await fetch("https://api.example.com/user");
+          const user = await response.json();
+          console.log(user);
+          return user;
+        } catch (error) {
+          console.error("에러:", error);
+        }
+      }
+
+      // ============================================
+      // 5. 에러 처리: try...catch
+      // ============================================
+      // Promise의 .catch() 대신 try...catch 사용
+
+      async function fetchData() {
+        try {
+          // 성공 시나리오
+          const data = await Promise.resolve("데이터 로드 성공");
+          console.log(data);
+        } catch (error) {
+          // 에러 발생 시 실행
+          console.error("에러 발생:", error);
+        } finally {
+          // 성공/실패 상관없이 무조건 실행
+          console.log("작업 완료");
+        }
+      }
+
+      fetchData();
+
+      // 에러가 발생하는 경우
+      async function fetchDataWithError() {
+        try {
+          const data = await Promise.reject(new Error("네트워크 에러"));
+          console.log(data); // 실행되지 않음
+        } catch (error) {
+          console.error("에러 캐치:", error.message); // "네트워크 에러"
+        }
+      }
+
+      fetchDataWithError();
+
+      // ============================================
+      // 6. 순차 실행 vs 병렬 실행
+      // ============================================
+
+      // 📌 순차 실행 (await를 순서대로 사용)
+      async function sequential() {
+        console.log("순차 실행 시작");
+        const start = Date.now();
+
+        const result1 = await new Promise((resolve) =>
+          setTimeout(() => resolve("작업1 완료"), 1000)
+        );
+        console.log(result1); // 1초 후
+
+        const result2 = await new Promise((resolve) =>
+          setTimeout(() => resolve("작업2 완료"), 1000)
+        );
+        console.log(result2); // 2초 후
+
+        const result3 = await new Promise((resolve) =>
+          setTimeout(() => resolve("작업3 완료"), 1000)
+        );
+        console.log(result3); // 3초 후
+
+        console.log(`총 소요 시간: ${Date.now() - start}ms`); // 약 3000ms
+      }
+
+      // sequential();
+
+      // 📌 병렬 실행 (Promise.all 사용)
+      async function parallel() {
+        console.log("병렬 실행 시작");
+        const start = Date.now();
+
+        // 모든 Promise를 동시에 시작
+        const [result1, result2, result3] = await Promise.all([
+          new Promise((resolve) =>
+            setTimeout(() => resolve("작업1 완료"), 1000)
+          ),
+          new Promise((resolve) =>
+            setTimeout(() => resolve("작업2 완료"), 1000)
+          ),
+          new Promise((resolve) =>
+            setTimeout(() => resolve("작업3 완료"), 1000)
+          ),
+        ]);
+
+        console.log(result1, result2, result3);
+        console.log(`총 소요 시간: ${Date.now() - start}ms`); // 약 1000ms
+      }
+
+      // parallel();
+
+      // ============================================
+      // 7. 실전 예제: 사용자 정보 가져오기
+      // ============================================
+
+      // 가짜 API 시뮬레이션
+      function fetchUserAPI(userId) {
+        return new Promise((resolve, reject) => {
+          setTimeout(() => {
+            if (userId > 0) {
+              resolve({
+                id: userId,
+                name: "홍길동",
+                email: "hong@example.com",
+              });
+            } else {
+              reject(new Error("유효하지 않은 사용자 ID"));
+            }
+          }, 1000);
+        });
+      }
+
+      function fetchPostsAPI(userId) {
+        return new Promise((resolve) => {
+          setTimeout(() => {
+            resolve([
+              { id: 1, title: "첫 번째 게시글" },
+              { id: 2, title: "두 번째 게시글" },
+            ]);
+          }, 1000);
+        });
+      }
+
+      // async/await로 순차적 데이터 가져오기
+      async function getUserData(userId) {
+        try {
+          console.log("사용자 정보 조회 시작...");
+
+          // 1단계: 사용자 정보 가져오기
+          const user = await fetchUserAPI(userId);
+          console.log("사용자:", user);
+
+          // 2단계: 사용자의 게시글 가져오기
+          const posts = await fetchPostsAPI(user.id);
+          console.log("게시글:", posts);
+
+          return { user, posts };
+        } catch (error) {
+          console.error("데이터 조회 실패:", error.message);
+        }
+      }
+
+      // getUserData(1);
+
+      // ============================================
+      // 8. async/await 주의사항
+      // ============================================
+
+      // ❌ 잘못된 예: await를 일반 함수에서 사용
+      // function normalFunction() {
+      //   const result = await Promise.resolve("값"); // SyntaxError!
+      // }
+
+      // ✅ 올바른 예: async 함수 안에서 사용
+      async function correctFunction() {
+        const result = await Promise.resolve("값");
+        return result;
+      }
+
+      // ❌ 잘못된 예: forEach에서 await 사용 (동작하지 않음)
+      // async function processArray() {
+      //   [1, 2, 3].forEach(async (num) => {
+      //     await new Promise(resolve => setTimeout(resolve, 1000));
+      //     console.log(num); // 순차적으로 실행되지 않음!
+      //   });
+      // }
+
+      // ✅ 올바른 예: for...of 사용
+      async function processArrayCorrect() {
+        for (const num of [1, 2, 3]) {
+          await new Promise((resolve) => setTimeout(resolve, 1000));
+          console.log(num); // 1초마다 순차적으로 출력
+        }
+      }
+
+      // processArrayCorrect();
+
+      // 💡 async/await의 장점:
+      // 1. 코드 가독성 향상 (동기 코드처럼 작성)
+      // 2. 에러 처리 간편 (try...catch 사용)
+      // 3. 디버깅이 쉬움
+      // 4. Promise 체이닝보다 직관적
+
+      // 💡 async/await 사용 시기:
+      // - Promise 체이닝이 복잡할 때
+      // - 순차적인 비동기 작업이 필요할 때
+      // - 에러 처리를 명확하게 하고 싶을 때
+      // - 코드 가독성을 높이고 싶을 때
+    </script>
+  </body>
+</html>
