@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <!-- async/await -->
+    <!-- async 키워드를 붙이면 함수는 항상 Promise를 반환 합니다. -->
+    <script>
+      async function hello() {
+        return "안녕하세요";
+      }
+
+      // 동일
+      function hello() {
+        return Promise.resolve("안녕하세요");
+      }
+
+      // 사용
+      hello().then((msg) => {
+        console.log(msg);
+      });
+
+      // 함수 선언
+      async function name(param) {}
+
+      // 함수 표현식
+      const name2 = async function (params) {};
+
+      // 화살표 함수
+      const name3 = async (param) => {};
+
+      // await 키워드
+      // Promise가 완료될 때까지 기다립니다.
+      // 중요 : await는 async 함수 안에서만 사용 가능!!
+
+      //   async function example() {
+      //     // Promise가 완료 될 때까지 대기
+      //     const result = await somePromise;
+      //     console.log(result);
+      //   }
+
+      async function example() {
+        // Promise가 완료 될 때까지 대기
+        const num = await 42; // Promise.resolve(42)와 동일
+        return num;
+      }
+
+      console.log(example());
+    </script>
+  </body>
+</html>

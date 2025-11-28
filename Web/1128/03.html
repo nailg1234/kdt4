@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <!-- 콜백 함수 -->
+    <!-- 다른 함수의 인자로 전달되는 함수 -->
+    <script>
+      function doSomething(callback) {
+        console.log("작업 시작");
+        setTimeout(() => {
+          console.log("작업 완료");
+          callback();
+        }, 2000);
+      }
+
+      doSomething(() => {
+        console.log("콜백 실행");
+      });
+
+      function fetchUser(userId, callback) {
+        // 1.
+        console.log("사용자 정보 요청 중...");
+
+        setTimeout(() => {
+          // 2.
+          const user = {
+            id: userId,
+            name: "홍길동",
+          };
+
+          // 3.
+          callback(user);
+        }, 1000);
+      }
+
+      fetchUser(123, (user) => {
+        // 4.
+        console.log("사용자 정보:", user);
+      });
+
+      // 콜백 지옥(callback)
+      fetchUser(userId, (user) => {
+        fetchPost(user.id, (post) => {
+          fetchPost(user.id, (post) => {
+            fetchPost(user.id, (post) => {
+              fetchPost(user.id, (post) => {
+                // 끝없는 중첩...
+              });
+            });
+          });
+        });
+      });
+
+      // 코드 가독성 저하: 읽기 어려움
+      // 에러 처리 어려움 - 어디서 에러가 났는지 파악 힘듦
+      // 유지보수 힘듬 - 수정하기 복잡함
+    </script>
+  </body>
+</html>
