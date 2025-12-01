@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <style>
+      body {
+        background-color: gray;
+        height: 1000px;
+      }
+
+      #container {
+        display: flex;
+        color: black;
+        overflow: auto;
+      }
+
+      .pop_movies {
+        padding: 20px;
+        background-color: black;
+        width: 200px;
+        flex: 0 0 auto;
+      }
+
+      .poster_path {
+        padding: 20px;
+        width: 200px;
+        height: 300px;
+      }
+
+      .title {
+        color: white;
+        padding-left: 10px;
+      }
+
+      .release_date {
+        color: white;
+        padding-left: 10px;
+      }
+    </style>
+  </head>
+  <body>
+    <div>
+      <h1>영화 검색</h1>
+
+      <div>
+        <input type="text" placeholder="영화 제목을 입력하세요." />
+        <button>검색</button>
+      </div>
+
+      <!-- 정보 -->
+      <div></div>
+
+      <!-- 인기 영화 목록 -->
+      <div>
+        <h2>인기 영화 목록</h2>
+        <div id="container">
+          <!-- <div class="pop_movies">
+            <img
+              class="poster_path"
+              src="https://image.tmdb.org/t/p/w500/ib6v6qUXzez1x2qIOLN7C0yJNPQ.jpg"
+            />
+            <p class="title">주토피아 2</p>
+            <p class="release_date">개봉일 : 2025-11-26</p>
+          </div>
+          <div class="pop_movies">영화2</div>
+          <div class="pop_movies">영화3</div>
+          <div class="pop_movies">영화4</div>
+          <div class="pop_movies">영화5</div>
+          <div class="pop_movies">영화6</div>
+          <div class="pop_movies">영화7</div>
+          <div class="pop_movies">영화8</div>
+          <div class="pop_movies">영화9</div>
+          <div class="pop_movies">영화10</div>
+          <div class="pop_movies">영화11</div>
+          <div class="pop_movies">영화12</div>
+          <div class="pop_movies">영화13</div>
+          <div class="pop_movies">영화14</div>
+          <div class="pop_movies">영화15</div>
+          <div class="pop_movies">영화16</div>
+          <div class="pop_movies">영화17</div>
+          <div class="pop_movies">영화18</div>
+          <div class="pop_movies">영화19</div>
+          <div class="pop_movies">영화20</div> -->
+        </div>
+      </div>
+    </div>
+    <!-- 인기 영화 목록 -->
+    <!-- 페이지 전환  -->
+
+    <!-- 영화 검색 -->
+
+    <!-- 영화 상세 정보 -->
+
+    <!-- <h2>포스터</h2>
+    <img
+      src="https://image.tmdb.org/t/p/w500/hBvaanw3RfMEs1m1blY7xwRXzul.jpg"
+      alt=""
+    />
+    <h2>배경</h2>
+    <img
+      src="https://image.tmdb.org/t/p/original/hBvaanw3RfMEs1m1blY7xwRXzul.jpg"
+      alt=""
+    /> -->
+
+    <script>
+      const BASE_URL = "https://api.themoviedb.org/3";
+      const API_KEY = "d40653d9f45c0c0a68900733a9c2b6e7";
+      const IMG_BASE = "https://image.tmdb.org/t/p";
+      const container = document.querySelector("#container");
+      const button = document.querySelector("button");
+      const input = document.querySelector("input");
+      //https://developer.themoviedb.org/reference/tv-series-details
+      //https://www.themoviedb.org/search?query=%ED%8C%90%ED%83%80%EC%8A%A4%ED%8B%B1
+      button.addEventListener("click", () => {
+        console.log(input.value);
+      });
+      async function getMoive() {
+        const response = await fetch(
+          `${BASE_URL}/movie/popular?api_key=${API_KEY}&language=ko-Kr&page=1`
+        );
+        const movies = await response.json();
+        console.log("영화:", movies);
+
+        movies["results"].forEach((arr) => {
+          let div = document.createElement("div");
+          let img = document.createElement("img");
+          img.classList.add("poster_path");
+          img.src = `https://image.tmdb.org/t/p/w500${arr.poster_path}`;
+          let p1 = document.createElement("p");
+          let p2 = document.createElement("p");
+          p1.classList.add("title");
+          p1.textContent = arr.title;
+          p2.classList.add("release_date");
+          p2.textContent = arr.release_date;
+
+          div.appendChild(img);
+          div.appendChild(p1);
+          div.appendChild(p2);
+          container.appendChild(div);
+
+          console.log("배열", arr);
+        });
+        return movies;
+      }
+
+      getMoive();
+      // npx create-react-app 01
+      // npm start 01
+    </script>
+  </body>
+</html>
