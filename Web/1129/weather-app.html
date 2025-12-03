@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="ko">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>날씨 정보 앱</title>
+    <link rel="stylesheet" href="weather-app.css" />
+  </head>
+  <body>
+    <!-- 메인 컨테이너 -->
+    <div class="container">
+      <h1>🌤️ 날씨 정보 앱</h1>
+
+      <!-- 도시 검색 영역 -->
+      <div class="search-box">
+        <input
+          id="cityInput"
+          type="text"
+          placeholder="도시 이름을 입력하세요 (예: Seoul, Tokyo, New York)"
+        />
+        <button id="searchBtn">검색</button>
+      </div>
+
+      <!-- 로딩 표시 영역 (기본적으로 숨김) -->
+      <div id="loading" class="loading" style="display: none">
+        <div class="spinner"></div>
+        <p>날씨 정보를 불러오는 중...</p>
+      </div>
+
+      <!-- 에러 메시지 영역 (기본적으로 숨김) -->
+      <div id="error" class="error" style="display: none"></div>
+
+      <!-- 날씨 정보 표시 영역 (기본적으로 숨김) -->
+      <div id="weatherInfo" class="weather-info" style="display: none">
+        <!-- 도시 정보 -->
+        <div class="location-info">
+          <h2 id="cityName">도시 이름</h2>
+          <p id="countryName">국가 이름</p>
+        </div>
+
+        <!-- 날씨 아이콘 및 온도 -->
+        <div class="weather-main">
+          <!-- 날씨 아이콘 -->
+          <img id="weatherIcon" src="" alt="날씨 아이콘" />
+          <!-- 현재 온도 -->
+          <div class="temperature">
+            <span id="temp" class="temp-value">--</span>
+            <span class="temp-unit">°C</span>
+          </div>
+          <!-- 날씨 설명 -->
+          <p id="weatherDesc" class="weather-description">--</p>
+        </div>
+
+        <!-- 상세 날씨 정보 (체감 온도, 습도, 풍속, 기압) -->
+        <div class="weather-details">
+          <!-- 체감 온도 -->
+          <div class="detail-item">
+            <span class="detail-label">🌡️ 체감 온도</span>
+            <span class="detail-value"><span id="feelsLike">--</span> °C</span>
+          </div>
+
+          <!-- 습도 -->
+          <div class="detail-item">
+            <span class="detail-label">💧 습도</span>
+            <span class="detail-value"><span id="humidity">--</span> %</span>
+          </div>
+
+          <!-- 풍속 -->
+          <div class="detail-item">
+            <span class="detail-label">💨 풍속</span>
+            <span class="detail-value"><span id="windSpeed">--</span> m/s</span>
+          </div>
+
+          <!-- 기압 -->
+          <div class="detail-item">
+            <span class="detail-label">🔽 기압</span>
+            <span class="detail-value"><span id="pressure">--</span> hPa</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- JavaScript 파일 연결 -->
+    <script src="weather-app.js"></script>
+  </body>
+</html>

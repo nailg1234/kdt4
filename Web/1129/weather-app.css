@@ -1,0 +1,269 @@
+/**
+ * 날씨 정보 앱 스타일시트
+ * 깔끔하고 현대적인 UI 디자인
+ */
+
+/* 전역 스타일 초기화 */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+/* body 스타일 */
+body {
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  min-height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 20px;
+}
+
+/* 메인 컨테이너 */
+.container {
+  background: white;
+  border-radius: 20px;
+  padding: 40px;
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+  max-width: 500px;
+  width: 100%;
+}
+
+/* 제목 스타일 */
+.container h1 {
+  text-align: center;
+  color: #333;
+  margin-bottom: 30px;
+  font-size: 32px;
+}
+
+/* 검색 박스 */
+.search-box {
+  display: flex;
+  gap: 10px;
+  margin-bottom: 30px;
+}
+
+/* 입력 필드 */
+#cityInput {
+  flex: 1;
+  padding: 12px 20px;
+  border: 2px solid #e0e0e0;
+  border-radius: 10px;
+  font-size: 16px;
+  outline: none;
+  transition: border-color 0.3s;
+}
+
+#cityInput:focus {
+  border-color: #667eea;
+}
+
+/* 검색 버튼 */
+#searchBtn {
+  padding: 12px 30px;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  color: white;
+  border: none;
+  border-radius: 10px;
+  font-size: 16px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: transform 0.2s, box-shadow 0.2s;
+}
+
+#searchBtn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 5px 15px rgba(102, 126, 234, 0.4);
+}
+
+#searchBtn:active {
+  transform: translateY(0);
+}
+
+/* 로딩 표시 */
+.loading {
+  text-align: center;
+  padding: 20px;
+}
+
+/* 로딩 스피너 애니메이션 */
+.spinner {
+  border: 4px solid #f3f3f3;
+  border-top: 4px solid #667eea;
+  border-radius: 50%;
+  width: 40px;
+  height: 40px;
+  animation: spin 1s linear infinite;
+  margin: 0 auto 10px;
+}
+
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+.loading p {
+  color: #666;
+  font-size: 14px;
+}
+
+/* 에러 메시지 */
+.error {
+  background-color: #fee;
+  color: #c33;
+  padding: 15px;
+  border-radius: 10px;
+  border-left: 4px solid #c33;
+  margin-bottom: 20px;
+  font-size: 14px;
+}
+
+/* 날씨 정보 컨테이너 */
+.weather-info {
+  animation: fadeIn 0.5s ease-in;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* 도시 정보 */
+.location-info {
+  text-align: center;
+  margin-bottom: 20px;
+  padding-bottom: 20px;
+  border-bottom: 2px solid #f0f0f0;
+}
+
+.location-info h2 {
+  font-size: 28px;
+  color: #333;
+  margin-bottom: 5px;
+}
+
+.location-info p {
+  font-size: 16px;
+  color: #999;
+  font-weight: 500;
+}
+
+/* 날씨 메인 정보 (아이콘, 온도) */
+.weather-main {
+  text-align: center;
+  margin-bottom: 30px;
+}
+
+/* 날씨 아이콘 */
+#weatherIcon {
+  width: 120px;
+  height: 120px;
+  margin-bottom: 10px;
+}
+
+/* 온도 표시 */
+.temperature {
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  gap: 5px;
+  margin-bottom: 10px;
+}
+
+.temp-value {
+  font-size: 64px;
+  font-weight: 700;
+  color: #333;
+  line-height: 1;
+}
+
+.temp-unit {
+  font-size: 32px;
+  color: #666;
+  margin-top: 10px;
+}
+
+/* 날씨 설명 */
+.weather-description {
+  font-size: 18px;
+  color: #666;
+  text-transform: capitalize;
+  margin-top: 10px;
+}
+
+/* 상세 날씨 정보 */
+.weather-details {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 15px;
+  margin-top: 20px;
+}
+
+/* 상세 정보 아이템 */
+.detail-item {
+  background-color: #f8f9fa;
+  padding: 15px;
+  border-radius: 10px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+/* 상세 정보 레이블 */
+.detail-label {
+  font-size: 14px;
+  color: #666;
+  font-weight: 500;
+}
+
+/* 상세 정보 값 */
+.detail-value {
+  font-size: 20px;
+  color: #333;
+  font-weight: 600;
+}
+
+/* 반응형 디자인 - 모바일 */
+@media (max-width: 480px) {
+  .container {
+    padding: 25px;
+  }
+
+  .container h1 {
+    font-size: 24px;
+    margin-bottom: 20px;
+  }
+
+  .search-box {
+    flex-direction: column;
+  }
+
+  #searchBtn {
+    width: 100%;
+  }
+
+  .temp-value {
+    font-size: 48px;
+  }
+
+  .temp-unit {
+    font-size: 24px;
+  }
+
+  .weather-details {
+    grid-template-columns: 1fr;
+  }
+
+  .location-info h2 {
+    font-size: 24px;
+  }
+}
