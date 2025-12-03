@@ -51,6 +51,21 @@ React를 처음 배우는 분들은 아래 순서대로 학습하시는 것을 �
 
 ---
 
+### 4️⃣ React Hooks - useState
+👉 [04-hooks-useState.md](./04-hooks-useState.md)
+
+**학습 내용**:
+- Hook이란 무엇인가
+- useState 기본 사용법
+- 일반 변수 vs useState
+- 함수형 업데이트
+- 다양한 타입의 상태 관리
+- useState 주의사항
+
+**예상 학습 시간**: 40분
+
+---
+
 ## 🎯 실습 코드
 
 학습한 내용을 실습할 수 있는 코드는 `src/` 폴더에 있습니다.
