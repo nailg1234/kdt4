@@ -98,14 +98,14 @@ print()
 # 모든 크기 1인 차원 제거
 # (1, 1, 3) → (3,)
 squeezed = np.squeeze(arr)
-print('squeeze 후:\n', squeezed)
+print('squeeze 후:\n', squeezed)  # [1 2 3]
 print('shape:', squeezed.shape)  # (3,)
 print()
 
 # 특정 축만 제거: axis=0
 # (1, 1, 3) → (1, 3)
 squeezed0 = np.squeeze(arr, axis=0)
-print('axis=0 squeeze:\n', squeezed0)
+print('axis=0 squeeze:\n', squeezed0)  # [[1 2 3]]
 print('shape:', squeezed0.shape)  # (1, 3)
 print()
 
@@ -139,6 +139,9 @@ arr = np.array([
 
 print('원본 2차원 배열:')
 print(arr)
+# [[1 2 3]
+#  [4 5 6]
+#  [7 8 9]]
 print()
 
 # flatten: 복사본 반환
@@ -149,20 +152,28 @@ print('flatten 결과:', flattened)  # [1 2 3 4 5 6 7 8 9]
 flattened[0] = 999
 print()
 print('원본 배열 (변경 없음):')
-print(arr)  # 원본은 그대로 1
+print(arr)  # 원본은 그대로
+# [[1 2 3]
+#  [4 5 6]
+#  [7 8 9]]
 print('flatten 배열:', flattened)  # 999로 변경됨
+# [999   2   3   4   5   6   7   8   9]
 print()
 
 # ravel: 뷰 반환 (원본 메모리 공유)
 raveled = arr.ravel()
-print('ravel 결과:', raveled)
+print('ravel 결과:', raveled)  # [1 2 3 4 5 6 7 8 9]
+print()
 
 # ravel로 만든 배열 수정 → 원본도 변경됨!
 raveled[0] = 999
-print()
 print('원본 배열 (변경됨!):')
 print(arr)  # 원본도 999로 변경됨
+# [[999   2   3]
+#  [  4   5   6]
+#  [  7   8   9]]
 print('ravel 배열:', raveled)
+# [999   2   3   4   5   6   7   8   9]
 print()
 
 # ravel을 사용하되 복사본이 필요한 경우
@@ -171,7 +182,11 @@ raveled_copy[1] = 888
 
 print('원본 배열:')
 print(arr)  # 999는 유지, 888은 영향 없음
+# [[999   2   3]
+#  [  4   5   6]
+#  [  7   8   9]]
 print('ravel().copy() 배열:', raveled_copy)
+# [999 888   3   4   5   6   7   8   9]
 print()
 
 
