@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html>
+  <meta charset="utf-8" />
+  <title>Web Serial ↔ Arduino</title>
+  <style>
+    body {
+      display: flex;
+      gap: 12px;
+      align-items: center;
+      justify-content: center;
+      height: 100vh;
+    }
+    button {
+      padding: 12px 18px;
+      border: 0;
+      border-radius: 12px;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.12);
+      cursor: pointer;
+    }
+    #on {
+      background: #10b981;
+      color: #fff;
+    }
+    #off {
+      background: #ef4444;
+      color: #fff;
+    }
+  </style>
+
+  <button id="connect" onclick="connect();">Connect</button>
+  <button id="on" disabled onclick="sendChar('1');">LED ON</button>
+  <button id="off" disabled onclick="sendChar('0');">LED OFF</button>
+
+  <script>
+    let port, writer;
+
+    async function connect() {
+      try {
+        port = await navigator.serial.requestPort();
+        await port.open({ baudRate: 9600 });
+        writer = port.writable.getWriter();
+
+        // 아두이노 리셋 안정화 약간 대기
+        await new Promise((r) => setTimeout(r, 1500));
+        // 정상 연결 후 on 버튼과 off 버튼 활성화
+        on.disabled = off.disabled = false;
+      } catch (e) {
+        alert("연결 실패: " + e.message);
+      }
+    }
+    async function sendChar(ch) {
+      if (!writer) return;
+      const data = new TextEncoder().encode(ch);
+      await writer.write(data);
+    }
+  </script>
+</html>

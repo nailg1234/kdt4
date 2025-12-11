@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="ko">
+  <head>
+    <meta charset="utf-8" />
+    <title>LED Control</title>
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <style>
+      body {
+        display: flex;
+        flex-direction: column;
+        gap: 12px;
+        align-items: center;
+        margin-top: 10vh;
+      }
+      .row {
+        display: flex;
+        gap: 12px;
+      }
+      button {
+        padding: 12px 20px;
+        border: 0;
+        border-radius: 12px;
+        box-shadow: 0 4px 14px rgba(0, 0, 0, 0.1);
+        cursor: pointer;
+        font-size: 16px;
+      }
+      #on {
+        background: #10b981;
+        color: white;
+      }
+      #off {
+        background: #ef4444;
+        color: white;
+      }
+      #status {
+        font-weight: 600;
+      }
+    </style>
+
+    <script>
+      async function setLed(state) {
+        try {
+          const res = await fetch("http://localhost:5000/led", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({ state: state }),
+          });
+          const json = await res.json();
+          document.getElementById("status").textContent = json.state;
+        } catch (e) {
+          alert(
+            "서버에 연결할 수 없습니다. python 코드가 실행 중인지 확인하세요."
+          );
+        }
+      }
+    </script>
+  </head>
+  <body>
+    <h1>Arduino LED Control</h1>
+    <div class="row">
+      <button id="on" onclick="setLed('on');">LED ON</button>
+      <button id="off" onclick="setLed('off');">LED OFF</button>
+    </div>
+    <p>Current: <span id="status">unknown</span></p>
+  </body>
+</html>
