@@ -35,3 +35,15 @@ void loop() {
   digitalWrite(LED_BUILTIN, LOW);   // turn the LED off by making the voltage LOW
   delay(1000);                      // wait for a second
 }
+
+/*
+  저항 7종류
+
+  22 빨 빨 검 금 갈
+  100
+  330
+  1k
+  2.4k
+  4.7k
+  10k
+*/
