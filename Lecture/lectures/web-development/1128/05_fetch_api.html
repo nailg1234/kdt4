@@ -1,0 +1,327 @@
+<!DOCTYPE html>
+<html lang="ko">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Fetch API</title>
+  </head>
+  <body>
+    <script>
+      // ============================================
+      // Fetch API
+      // ============================================
+      // 서버와 HTTP 통신을 하기 위한 Web API
+      // XMLHttpRequest의 현대적인 대체품
+      // Promise 기반으로 동작하며 async/await와 함께 사용하기 좋습니다
+
+      // ============================================
+      // 1. Fetch API 기본 사용법
+      // ============================================
+
+      // 📌 Promise 방식
+      // fetch("https://jsonplaceholder.typicode.com/users")
+      //   .then((response) => {
+      //     // response 객체를 JSON으로 변환
+      //     return response.json();
+      //   })
+      //   .then((data) => {
+      //     // 변환된 데이터 사용
+      //     console.log("data", data);
+      //   })
+      //   .catch((error) => {
+      //     // 에러 처리
+      //     console.error("에러", error);
+      //   });
+
+      // 📌 async/await 방식 (더 깔끔!)
+      async function fetchData() {
+        try {
+          // 1단계: HTTP 요청 보내기
+          const response = await fetch(
+            "https://jsonplaceholder.typicode.com/users"
+          );
+
+          // 2단계: 응답 상태 확인
+          // HTTP 상태 코드 (200: 성공, 404: 찾을 수 없음, 500: 서버 에러 등)
+          console.log("상태 코드:", response.status);
+
+          // response 객체의 주요 속성:
+          // - status: HTTP 상태 코드 (200, 404 등)
+          // - ok: 성공 여부 (200-299면 true)
+          // - headers: 응답 헤더
+          // - url: 요청한 URL
+
+          // 3단계: 응답 본문 파싱
+          // 📌 response 메서드:
+          // - json(): JSON 데이터 파싱 (API 데이터에 주로 사용)
+          // - text(): 텍스트로 파싱 (HTML, CSS 등)
+          // - blob(): 바이너리 데이터 (이미지, 파일 등)
+          // - arrayBuffer(): 원시 바이너리 데이터
+          const data = await response.json();
+          console.log("사용자 데이터:", data);
+        } catch (error) {
+          // 네트워크 에러나 파싱 에러 처리
+          console.error("에러 발생:", error);
+        }
+      }
+
+      fetchData();
+
+      // ============================================
+      // 2. HTTP 메서드
+      // ============================================
+      // GET: 데이터 조회
+      // POST: 데이터 생성
+      // PUT/PATCH: 데이터 수정
+      // DELETE: 데이터 삭제
+
+      // ============================================
+      // 3. GET 요청 - 데이터 조회
+      // ============================================
+
+      // 📌 모든 사용자 조회 (목록)
+      async function getUsers() {
+        const response = await fetch(
+          "https://jsonplaceholder.typicode.com/users"
+        );
+        const users = await response.json();
+        console.log("전체 사용자:", users);
+        return users;
+      }
+
+      // 📌 단일 사용자 조회 (특정 ID)
+      async function getUser(id) {
+        // 템플릿 리터럴로 동적 URL 생성
+        const response = await fetch(
+          `https://jsonplaceholder.typicode.com/users/${id}`
+        );
+        const user = await response.json();
+        console.log(`사용자 ${id}:`, user);
+        return user;
+      }
+
+      // 사용 예시
+      // getUser(1); // ID가 1인 사용자 조회
+
+      // ============================================
+      // 4. POST 요청 - 데이터 생성
+      // ============================================
+      // POST 요청 시 fetch의 두 번째 인자로 옵션 객체 전달
+
+      async function createPost(title, body) {
+        const response = await fetch(
+          "https://jsonplaceholder.typicode.com/posts",
+          {
+            // HTTP 메서드 지정
+            method: "POST",
+
+            // 요청 헤더 설정
+            headers: {
+              "Content-Type": "application/json", // JSON 형식임을 알림
+            },
+
+            // 요청 본문 (body)
+            // 자바스크립트 객체를 JSON 문자열로 변환
+            body: JSON.stringify({
+              title: title,
+              body: body,
+              userId: 1,
+            }),
+          }
+        );
+
+        // 생성된 게시글 데이터 받기
+        const newPost = await response.json();
+        console.log("생성된 게시글:", newPost);
+        return newPost;
+      }
+
+      // 사용 예시
+      createPost("나의 첫 게시글", "안녕하세요! 첫 게시글입니다.");
+
+      // ============================================
+      // 5. 에러 처리와 상태 확인
+      // ============================================
+
+      async function fetchWithErrorHandling(url) {
+        try {
+          const response = await fetch(url);
+
+          // HTTP 에러 체크 (404, 500 등)
+          if (!response.ok) {
+            throw new Error(`HTTP 에러! 상태: ${response.status}`);
+          }
+
+          const data = await response.json();
+          return data;
+        } catch (error) {
+          // 네트워크 에러 또는 파싱 에러
+          console.error("데이터 조회 실패:", error.message);
+          throw error;
+        }
+      }
+
+      // 사용 예시
+      // fetchWithErrorHandling("https://jsonplaceholder.typicode.com/users");
+
+      // ============================================
+      // 6. 실전 예제: 다양한 데이터 조회
+      // ============================================
+
+      // 📌 게시글 목록 조회
+      async function getPosts() {
+        const response = await fetch(
+          "https://jsonplaceholder.typicode.com/posts"
+        );
+        const posts = await response.json();
+        console.log("게시글 목록:", posts);
+        return posts;
+      }
+
+      getPosts();
+
+      // 📌 할 일 목록 조회
+      async function getTodos() {
+        const response = await fetch(
+          "https://jsonplaceholder.typicode.com/todos"
+        );
+        const todos = await response.json();
+        console.log("할 일 목록:", todos);
+        return todos;
+      }
+
+      getTodos();
+
+      // ============================================
+      // 7. 추가 HTTP 메서드 예제
+      // ============================================
+
+      // 📌 PUT 요청 - 전체 데이터 수정
+      async function updatePost(id, title, body) {
+        const response = await fetch(
+          `https://jsonplaceholder.typicode.com/posts/${id}`,
+          {
+            method: "PUT",
+            headers: {
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify({
+              id: id,
+              title: title,
+              body: body,
+              userId: 1,
+            }),
+          }
+        );
+        const updatedPost = await response.json();
+        console.log("수정된 게시글:", updatedPost);
+        return updatedPost;
+      }
+
+      // 📌 PATCH 요청 - 일부 데이터만 수정
+      async function patchPost(id, updates) {
+        const response = await fetch(
+          `https://jsonplaceholder.typicode.com/posts/${id}`,
+          {
+            method: "PATCH",
+            headers: {
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify(updates),
+          }
+        );
+        const patchedPost = await response.json();
+        console.log("부분 수정된 게시글:", patchedPost);
+        return patchedPost;
+      }
+
+      // 📌 DELETE 요청 - 데이터 삭제
+      async function deletePost(id) {
+        const response = await fetch(
+          `https://jsonplaceholder.typicode.com/posts/${id}`,
+          {
+            method: "DELETE",
+          }
+        );
+        console.log("삭제 완료:", response.status);
+        return response.ok;
+      }
+
+      // 사용 예시
+      // updatePost(1, "수정된 제목", "수정된 내용");
+      // patchPost(1, { title: "제목만 수정" });
+      // deletePost(1);
+
+      // ============================================
+      // 8. Query Parameters 사용
+      // ============================================
+
+      // URL에 쿼리 파라미터 추가하기
+      async function getPostsByUserId(userId) {
+        // 방법 1: 직접 URL에 추가
+        const response = await fetch(
+          `https://jsonplaceholder.typicode.com/posts?userId=${userId}`
+        );
+        const posts = await response.json();
+        console.log(`사용자 ${userId}의 게시글:`, posts);
+        return posts;
+      }
+
+      // 방법 2: URLSearchParams 사용 (더 깔끔!)
+      async function searchPosts(params) {
+        const queryString = new URLSearchParams(params).toString();
+        const response = await fetch(
+          `https://jsonplaceholder.typicode.com/posts?${queryString}`
+        );
+        const posts = await response.json();
+        return posts;
+      }
+
+      // 사용 예시
+      // getPostsByUserId(1);
+      // searchPosts({ userId: 1, _limit: 5 });
+
+      // ============================================
+      // 9. 여러 요청 동시 처리
+      // ============================================
+
+      async function getAllData() {
+        try {
+          // Promise.all로 여러 요청 동시 실행
+          const [users, posts, todos] = await Promise.all([
+            fetch("https://jsonplaceholder.typicode.com/users").then((r) =>
+              r.json()
+            ),
+            fetch("https://jsonplaceholder.typicode.com/posts").then((r) =>
+              r.json()
+            ),
+            fetch("https://jsonplaceholder.typicode.com/todos").then((r) =>
+              r.json()
+            ),
+          ]);
+
+          console.log("모든 데이터:", { users, posts, todos });
+          return { users, posts, todos };
+        } catch (error) {
+          console.error("데이터 조회 실패:", error);
+        }
+      }
+
+      // getAllData();
+
+      // 💡 Fetch API 핵심 정리:
+      // 1. fetch(url, options) - Promise 반환
+      // 2. response.json() - JSON 파싱
+      // 3. method: GET(기본), POST, PUT, PATCH, DELETE
+      // 4. headers: 요청 헤더 설정
+      // 5. body: 요청 본문 (JSON.stringify 필요)
+      // 6. async/await와 함께 사용하면 코드가 깔끔
+      // 7. try...catch로 에러 처리 필수!
+
+      // 💡 JSONPlaceholder:
+      // - 테스트용 가짜 REST API 서버
+      // - 실제로 데이터가 저장되지는 않음
+      // - 연습용으로 완벽!
+    </script>
+  </body>
+</html>

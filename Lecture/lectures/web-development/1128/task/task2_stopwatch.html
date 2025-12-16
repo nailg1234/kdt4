@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="ko">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>스톱워치</title>
+  </head>
+  <body>
+    <h1>⏱️ 스톱워치</h1>
+    <div id="display">00:00:00</div>
+
+    <button id="startBtn">시작</button>
+    <button id="stopBtn">정지</button>
+    <button id="resetBtn">초기화</button>
+
+    <script>
+      // ============================================
+      // 스톱워치 구현
+      // ============================================
+      // 목표: 시작/정지/초기화가 가능한 정밀한 스톱워치 만들기
+
+      // 📌 전역 변수 선언
+      let startTime = 0;
+      // 스톱워치가 시작된 시점의 타임스탬프 (밀리초)
+      // Date.now()로 받은 값이 저장됩니다
+      // 예: 1700000000000 (1970년 1월 1일부터 경과한 밀리초)
+
+      let elapsedTime = 0;
+      // 경과된 시간 (밀리초)
+      // 정지 후 다시 시작할 때 이전 시간을 유지하기 위한 변수
+      // 예: 5000 (5초가 경과했음을 의미)
+
+      let intervalId = null;
+      // setInterval의 ID를 저장
+      // clearInterval로 타이머를 중지할 때 필요합니다
+      // null이면 타이머가 실행 중이 아닙니다
+
+      let isRunning = false;
+      // 스톱워치 실행 상태를 확인하는 플래그
+      // true: 실행 중, false: 정지 상태
+      // 중복 실행 방지에 사용됩니다
+
+      // 📌 DOM 요소 선택
+      const display = document.querySelector("#display");
+      const startBtn = document.querySelector("#startBtn");
+      const stopBtn = document.querySelector("#stopBtn");
+      const resetBtn = document.querySelector("#resetBtn");
+
+      // 📌 화면 업데이트 함수
+      const updateDisplay = () => {
+        // 1단계: 현재 시간과 시작 시간의 차이로 경과 시간 계산
+        const currentTime = Date.now(); // 현재 타임스탬프
+        elapsedTime = currentTime - startTime;
+        // 예: 현재 1700000005000 - 시작 1700000000000 = 5000ms (5초 경과)
+
+        // 2단계: 밀리초를 시간 단위로 변환
+        const totalSeconds = Math.floor(elapsedTime / 1000);
+        // Math.floor: 소수점 버림 (5999ms -> 5초)
+        // 예: 5000ms / 1000 = 5초
+
+        const minutes = Math.floor(totalSeconds / 60);
+        // 총 초를 60으로 나눈 몫 = 분
+        // 예: 125초 / 60 = 2분
+
+        const seconds = totalSeconds % 60;
+        // 총 초를 60으로 나눈 나머지 = 초
+        // 예: 125초 % 60 = 5초
+        // 결과: 125초 = 2분 5초
+
+        const milliseconds = Math.floor((elapsedTime % 1000) / 10);
+        // 밀리초 부분만 추출하여 10으로 나눔 (0~99 범위)
+        // 예: 5234ms % 1000 = 234ms -> 234 / 10 = 23
+
+        // 3단계: 화면에 표시 (MM:SS:MS 형식)
+        display.textContent =
+          `${String(minutes).padStart(2, "0")}:` +
+          `${String(seconds).padStart(2, "0")}:` +
+          `${String(milliseconds).padStart(2, "0")}`;
+        // 결과 예: "02:05:23"
+      };
+
+      // 📌 시작 버튼 이벤트
+      startBtn.addEventListener("click", () => {
+        if (!isRunning) {
+          // 중복 실행 방지: 이미 실행 중이면 무시
+
+          // 핵심 로직: 이전에 멈췄던 시간을 고려하여 시작 시간 설정
+          startTime = Date.now() - elapsedTime;
+          // 예시 1) 처음 시작: elapsedTime = 0
+          //   startTime = 현재시간 - 0 = 현재시간
+          // 예시 2) 5초에서 멈추고 다시 시작: elapsedTime = 5000
+          //   startTime = 현재시간 - 5000
+          //   이렇게 하면 경과시간 계산 시 5초부터 이어서 카운트됩니다!
+
+          // 10밀리초(0.01초)마다 화면 업데이트
+          intervalId = setInterval(updateDisplay, 10);
+          // 왜 10ms? -> 밀리초 단위를 부드럽게 표시하기 위해
+
+          isRunning = true; // 실행 상태로 변경
+        }
+      });
+
+      // 📌 정지 버튼 이벤트
+      stopBtn.addEventListener("click", () => {
+        if (isRunning) {
+          // 실행 중일 때만 정지
+
+          clearInterval(intervalId); // 타이머 중지
+          isRunning = false; // 정지 상태로 변경
+
+          // 중요: elapsedTime은 그대로 유지!
+          // updateDisplay 함수에서 마지막으로 계산된 값이 남아있어서
+          // 다시 시작 버튼을 누르면 이어서 카운트됩니다
+        }
+      });
+
+      // 📌 초기화 버튼 이벤트
+      resetBtn.addEventListener("click", () => {
+        // 타이머가 실행 중이든 아니든 모두 초기화
+
+        clearInterval(intervalId); // 타이머 중지
+        elapsedTime = 0; // 경과 시간 초기화
+        isRunning = false; // 정지 상태로 변경
+        display.textContent = "00:00:00"; // 화면 초기화
+      });
+
+      // 💡 동작 흐름 예시:
+      // 1. 시작 버튼 클릭 -> 0초부터 카운트 시작
+      // 2. 5초에 정지 버튼 클릭 -> 05:00 에서 멈춤 (elapsedTime = 5000)
+      // 3. 다시 시작 버튼 클릭 -> 05:00부터 이어서 카운트
+      // 4. 초기화 버튼 클릭 -> 00:00:00으로 리셋
+    </script>
+  </body>
+</html>

@@ -1,4 +1,0 @@
-name	age	도시	salary
-John	25	서울	50000
-Jane	30	부산	60000
-Park	35	대구	55000

@@ -1,0 +1,462 @@
+<!DOCTYPE html>
+<!-- HTML5 문서임을 선언 -->
+<!-- 반드시 문서 첫 줄에 위치하여 브라우저가 올바르게 해석하도록 도움 -->
+
+<html lang="ko">
+  <!-- 실제 HTML 문서의 시작과 끝 -->
+  <!-- 모든 HTML 요소를 포함하는 최상위 태그 -->
+  <!-- lang="ko": 한글 문서이므로 ko로 변경 -->
+
+  <head>
+    <!-- HTML 문서의 메타데이터 영역 -->
+    <!-- 화면에 직접 표시되지 않는 정보 포함 -->
+    <!-- title, meta, link, script, style 등이 위치 -->
+
+    <meta charset="UTF-8" />
+    <!-- 문자 인코딩을 UTF-8로 설정 -->
+    <!-- 한글 및 다국어 표시를 위해 필수 -->
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <!-- 반응형 웹을 위한 뷰포트 설정 -->
+    <!-- width=device-width: 기기의 화면 너비에 맞춤 -->
+    <!-- initial-scale=1.0: 초기 확대/축소 비율 -->
+
+    <meta name="description" content="HTML 기초 학습 문서" />
+    <!-- 페이지 설명 (검색 엔진 최적화에 중요) -->
+
+    <meta name="keywords" content="HTML, 웹개발, 마크업" />
+    <!-- 검색 키워드 설정 -->
+
+    <meta name="author" content="윤동희" />
+    <!-- 문서 작성자 정보 -->
+
+    <title>HTML 기초 학습</title>
+    <!-- 브라우저 탭에 표시되는 제목 -->
+    <!-- 북마크 시 기본 이름으로 사용되며 SEO에 매우 중요 -->
+
+    <style>
+      /* CSS 스타일 정의 영역 */
+      body {
+        font-family: Arial, sans-serif;
+        line-height: 1.6;
+        margin: 20px;
+        background-color: #f4f4f4;
+      }
+
+      h1 {
+        color: #333;
+        border-bottom: 3px solid #4caf50;
+        padding-bottom: 10px;
+      }
+
+      h2 {
+        color: #555;
+        margin-top: 20px;
+      }
+
+      table {
+        margin: 20px auto;
+        box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+      }
+
+      input,
+      select,
+      textarea {
+        margin: 5px;
+        padding: 5px;
+      }
+
+      /* 구분선 스타일 */
+      hr {
+        border: none;
+        border-top: 2px solid #ddd;
+        margin: 30px 0;
+      }
+
+      /* 실무 팁 박스 스타일 */
+      .tip {
+        background-color: #fff3cd;
+        border-left: 4px solid #ffc107;
+        padding: 10px;
+        margin: 15px 0;
+      }
+
+      /* 예시 박스 스타일 */
+      .example {
+        background-color: #e7f3ff;
+        border-left: 4px solid #2196f3;
+        padding: 10px;
+        margin: 15px 0;
+      }
+
+      form {
+        background-color: white;
+        padding: 20px;
+        border-radius: 5px;
+        max-width: 500px;
+      }
+    </style>
+
+    <script>
+      // JavaScript 코드 작성 영역
+      // 페이지 로드 후 실행되는 함수
+      document.addEventListener("DOMContentLoaded", function () {
+        console.log("HTML 문서가 로드되었습니다.");
+      });
+    </script>
+  </head>
+
+  <body>
+    <!-- 실제 화면에 표시되는 모든 콘텐츠 영역 -->
+    <!-- 사용자가 보고 상호작용하는 모든 요소 포함 -->
+
+    <!-- ========== HTML 소개 ========== -->
+    <h1>HTML</h1>
+    <!-- Heading 1: 가장 중요한 제목 (페이지당 하나만 사용 권장) -->
+
+    <h2>HyperText Markup Language</h2>
+    <!-- Heading 2: 주요 섹션 제목 -->
+
+    <p>웹 페이지의 구조와 내용을 정의하는 마크업 언어</p>
+    <!-- Paragraph: 단락을 나타내는 블록 요소 -->
+
+    <br />
+    <!-- Break: 줄바꿈 (빈 요소) -->
+
+    <!-- ========== HyperText 설명 ========== -->
+    <h2>HyperText (하이퍼텍스트)</h2>
+    <ol>
+      <!-- Ordered List: 순서가 있는 목록 (1, 2, 3...) -->
+      <li>웹 페이지에서 다른 페이지로 연결되는 링크를 포함하는 텍스트</li>
+      <!-- List Item: 목록의 각 항목 -->
+      <li>비선형적 정보 접근 가능</li>
+      <li>예: 위키피디아의 파란색 링크들</li>
+    </ol>
+
+    <hr />
+    <!-- Horizontal Rule: 수평선 (주제 구분용) -->
+
+    <!-- ========== Markup 설명 ========== -->
+    <h2>Markup (마크업)</h2>
+    <ul>
+      <!-- Unordered List: 순서가 없는 목록 (•) -->
+      <li>태그 등을 이용하여 문서나 데이터의 구조를 명기하는 언어</li>
+      <li>
+        <i>표시(Mark)를 한다(Up)는 의미</i>
+        <!-- Italic: 기울임체 (강조의 의미) -->
+      </li>
+      <li>
+        <strong>문서의 구조와 의미를 표현</strong>
+        <!-- Strong: 강한 강조 (굵은 글씨, 중요한 내용) -->
+      </li>
+      <li>
+        <em>의미론적 강조</em>
+        <!-- Emphasis: 의미론적 강조 (기울임체) -->
+      </li>
+      <li>
+        <b>단순 굵은 글씨</b>
+        <!-- Bold: 시각적으로만 굵게 (의미 없음) -->
+      </li>
+    </ul>
+
+    <hr />
+
+    <!-- ========== 링크와 이미지 ========== -->
+    <h2>링크와 이미지</h2>
+
+    <h3>하이퍼링크 (Anchor)</h3>
+    <a href="https://www.naver.com/" target="_blank">네이버로 이동 (새 탭)</a>
+    <!-- a: 하이퍼링크 생성 -->
+    <!-- href: 연결할 URL (필수 속성) -->
+    <!-- target="_blank": 새 탭에서 열기 -->
+    <!-- target 생략 시 같은 탭에서 열림 -->
+    <br />
+    <a href="#table-section">같은 페이지 내 이동 (테이블로)</a>
+    <!-- href="#id명": 같은 페이지의 특정 위치로 이동 -->
+
+    <div class="tip">
+      <strong>실무 팁:</strong> 외부 링크는 target="_blank"로 새 탭에서 열고,
+      내부 링크는 같은 탭에서 여는 것이 일반적입니다.
+    </div>
+
+    <h3>이미지 (Image)</h3>
+    <!-- <img src="image.jpg" alt="이미지 설명" width="300" /> -->
+    <!-- img: 이미지 삽입 (빈 요소, 닫는 태그 없음) -->
+    <!-- src: 이미지 파일 경로 (필수) -->
+    <!-- alt: 대체 텍스트 - 이미지 로드 실패 시 표시, 스크린 리더가 읽음 (접근성 필수!) -->
+    <!-- width/height: 이미지 크기 (픽셀 단위, 하나만 지정 시 비율 유지) -->
+
+    <div class="example">
+      <strong>예시:</strong> 로고 이미지를 클릭하면 홈으로 이동<br />
+      &lt;a href="/"&gt;&lt;img src="logo.png" alt="사이트 로고"
+      width="150"&gt;&lt;/a&gt;
+    </div>
+
+    <hr />
+
+    <!-- ========== Form 요소들 ========== -->
+    <h2>폼 (Form) 요소</h2>
+    <!-- form: 사용자 입력을 서버로 전송하는 영역 -->
+    <!-- action: 데이터를 전송할 서버 URL -->
+    <!-- method: 전송 방식 (GET: URL에 데이터 노출, POST: 본문에 숨겨서 전송) -->
+
+    <h3>Label (레이블)</h3>
+    <p>
+      input 요소에 설명을 붙이는 태그. 클릭 시 연결된 input이 활성화되어 사용성
+      향상
+    </p>
+    <div class="example">
+      <strong>두 가지 연결 방법:</strong><br />
+      1. for 속성 사용: &lt;label for="username"&gt;이름&lt;/label&gt; &lt;input
+      id="username"&gt;<br />
+      2. 감싸기: &lt;label&gt;&lt;input&gt; 이름&lt;/label&gt;
+    </div>
+
+    <h3>Input 요소 (사용자 입력)</h3>
+    <!-- input: 사용자에게 입력을 받는 태그 -->
+    <!-- 빈 요소 (닫는 태그 없음) -->
+    <!-- type 속성으로 다양한 입력 형태 구현 -->
+
+    <!-- 주요 속성: -->
+    <!-- type: 입력 형태 지정 (text, checkbox, radio, email, password 등) -->
+    <!-- name: 입력 필드의 이름 (폼 데이터 전송 시 사용, 서버에서 구분용) -->
+    <!-- value: 초기값 또는 입력값 -->
+    <!-- placeholder: 힌트 텍스트 (입력 전 회색으로 표시) -->
+    <!-- required: 필수 입력 필드 지정 -->
+    <!-- disabled: 비활성화 (입력 불가, 회색 처리, 데이터 전송 안됨) -->
+    <!-- readonly: 읽기 전용 (수정 불가, 선택/복사 가능, 데이터 전송됨) -->
+
+    <h4>텍스트 입력</h4>
+    <input type="text" placeholder="이름을 입력하세요" />
+    <!-- text: 한 줄 텍스트 입력 (가장 기본) -->
+    <br />
+    <textarea rows="4" cols="50" placeholder="여러 줄 입력이 가능합니다"></textarea>
+    <!-- textarea: 여러 줄 텍스트 입력 (빈 요소 아님, 닫는 태그 필요) -->
+    <!-- rows: 표시할 줄 수, cols: 너비 (문자 수) -->
+
+    <h4>체크박스 (다중 선택 가능)</h4>
+    <label>
+      <input type="checkbox" name="hobby" value="reading" checked />
+      독서
+    </label>
+    <!-- checkbox: 여러 개 선택 가능 -->
+    <!-- checked: 기본 선택 상태 -->
+    <!-- 같은 name을 가진 체크박스는 배열로 전송됨 -->
+    <label>
+      <input type="checkbox" name="hobby" value="sports" />
+      운동
+    </label>
+    <label>
+      <input type="checkbox" name="hobby" value="music" />
+      음악
+    </label>
+
+    <div class="tip">
+      <strong>체크박스 vs 라디오:</strong> 취미처럼 여러 개 선택 가능하면
+      체크박스, 성별처럼 하나만 선택하면 라디오!
+    </div>
+
+    <h4>라디오 버튼 (단일 선택)</h4>
+    <label>
+      <input type="radio" name="gender" value="male" checked />
+      남성
+    </label>
+    <!-- radio: 같은 name 중 하나만 선택 가능 -->
+    <!-- name이 같아야 그룹으로 동작 (매우 중요!) -->
+    <label>
+      <input type="radio" name="gender" value="female" />
+      여성
+    </label>
+    <label>
+      <input type="radio" name="gender" value="other" />
+      기타
+    </label>
+
+    <h4>드롭다운 선택</h4>
+    <select name="city">
+      <!-- select: 드롭다운 메뉴 생성 -->
+      <option value="" disabled selected>도시를 선택하세요</option>
+      <!-- disabled selected: 선택 불가능한 안내 옵션 -->
+      <option value="seoul">서울</option>
+      <!-- option: 선택 가능한 항목 -->
+      <!-- value: 서버로 전송될 값 -->
+      <option value="busan">부산</option>
+      <option value="incheon">인천</option>
+    </select>
+
+    <h4>추가 Input 타입들</h4>
+    <input type="email" placeholder="email@example.com" />
+    <!-- email: 이메일 형식 자동 검증 (@가 있는지 확인) -->
+    <br />
+    <input type="password" placeholder="비밀번호" />
+    <!-- password: 입력 내용 숨김 처리 (●●●●) -->
+    <br />
+    <input type="number" min="1" max="10" placeholder="1-10 사이" />
+    <!-- number: 숫자만 입력, min/max로 범위 지정 -->
+    <br />
+    <input type="date" />
+    <!-- date: 날짜 선택 달력 제공 -->
+    <br />
+    <input type="file" accept="image/*" />
+    <!-- file: 파일 선택, accept로 파일 형식 제한 (image/*: 모든 이미지) -->
+    <br />
+    <input type="color" />
+    <!-- color: 색상 선택 팔레트 제공 -->
+    <br />
+    <input type="range" min="0" max="100" value="50" />
+    <!-- range: 슬라이더 (값을 시각적으로 조절) -->
+
+    <h4>버튼 (Button)</h4>
+    <button type="submit">제출</button>
+    <!-- button: 클릭 가능한 버튼 -->
+    <!-- type="submit": 폼 데이터 전송 (form 내부에서 사용) -->
+    <button type="reset">초기화</button>
+    <!-- type="reset": 폼 내용 초기화 -->
+    <button type="button">일반 버튼</button>
+    <!-- type="button": 일반 버튼 (JavaScript와 함께 사용) -->
+
+    <hr />
+
+    <!-- ========== 실무 폼 예시 ========== -->
+    <h2>회원가입 폼 예시</h2>
+    <div class="example">
+      <strong>실무에서 자주 사용되는 패턴:</strong>
+    </div>
+
+    <form action="/register" method="POST">
+      <!-- form으로 모든 입력 요소를 감싸면 한 번에 전송 가능 -->
+
+      <label for="username">이름 *</label><br />
+      <input
+        type="text"
+        id="username"
+        name="username"
+        placeholder="홍길동"
+        required
+      /><br /><br />
+
+      <label for="email">이메일 *</label><br />
+      <input
+        type="email"
+        id="email"
+        name="email"
+        placeholder="email@example.com"
+        required
+      /><br /><br />
+
+      <label for="password">비밀번호 *</label><br />
+      <input
+        type="password"
+        id="password"
+        name="password"
+        minlength="8"
+        required
+      /><br /><br />
+
+      <label for="birthdate">생년월일</label><br />
+      <input type="date" id="birthdate" name="birthdate" /><br /><br />
+
+      <label>성별</label><br />
+      <label>
+        <input type="radio" name="gender2" value="male" />
+        남성
+      </label>
+      <label>
+        <input type="radio" name="gender2" value="female" />
+        여성
+      </label>
+      <br /><br />
+
+      <label>
+        <input type="checkbox" name="agree" required />
+        이용약관에 동의합니다 *
+      </label>
+      <br /><br />
+
+      <button type="submit">회원가입</button>
+      <button type="reset">다시 작성</button>
+    </form>
+
+    <br /><br />
+
+    <!-- ========== 테이블 ========== -->
+    <h2 id="table-section">Table (표)</h2>
+    <table
+      border="2"
+      cellspacing="0"
+      width="400"
+      height="200"
+      align="center"
+      bgcolor="skyblue"
+    >
+      <!-- table: 표 전체를 감싸는 태그 -->
+      <!-- border: 테두리 두께 (픽셀) -->
+      <!-- cellspacing: 셀 간격 (테두리 사이의 간격, 0이면 붙어있음) -->
+      <!-- cellpadding: 셀 내부 여백 (내용과 테두리 사이) -->
+      <!-- width/height: 표의 크기 -->
+      <!-- align: 정렬 (left, center, right) -->
+      <!-- bgcolor: 배경색 (CSS 사용 권장) -->
+
+      <caption>
+        학생 성적표
+      </caption>
+      <!-- caption: 표의 제목 (선택사항) -->
+
+      <thead>
+        <!-- Table Head: 표의 헤더 영역 (선택사항이지만 의미론적으로 중요) -->
+        <tr>
+          <!-- Table Row: 표의 행 -->
+          <th>이름</th>
+          <!-- Table Header: 제목 칸 (자동으로 굵게, 중앙 정렬) -->
+          <th>국어</th>
+          <th>영어</th>
+        </tr>
+      </thead>
+
+      <tbody>
+        <!-- Table Body: 표의 본문 영역 -->
+        <tr>
+          <td>홍길동</td>
+          <!-- Table Data: 일반 데이터 칸 -->
+          <td>90</td>
+          <td>85</td>
+        </tr>
+
+        <tr>
+          <td colspan="2">평균 점수</td>
+          <!-- colspan (Column Span): 가로 방향으로 셀 병합 -->
+          <!-- 해당 칸이 점유하는 열(가로)의 수 지정 -->
+          <td>87.5</td>
+        </tr>
+
+        <tr>
+          <td rowspan="2">김철수</td>
+          <!-- rowspan (Row Span): 세로 방향으로 셀 병합 -->
+          <!-- 해당 칸이 점유하는 행(세로)의 수 지정 -->
+          <td>국어: 88</td>
+          <td>영어: 92</td>
+        </tr>
+
+        <tr>
+          <!-- rowspan으로 인해 첫 번째 셀은 생략 -->
+          <td colspan="2">평균: 90</td>
+        </tr>
+      </tbody>
+
+      <tfoot>
+        <!-- Table Foot: 표의 푸터 영역 (합계, 평균 등 요약 정보) -->
+        <tr>
+          <td colspan="3">* 100점 만점</td>
+        </tr>
+      </tfoot>
+    </table>
+    <!-- 테이블 작성 순서: 먼저 행(tr)을 쓰고, 행의 자식 요소로 칸(th, td)을 넣음 -->
+
+    <div class="tip">
+      <strong>테이블 사용 팁:</strong> 데이터 표현에만 사용하세요. 레이아웃
+      구성은 CSS Flexbox나 Grid를 사용하는 것이 현대적인 방법입니다!
+    </div>
+
+    <br /><br /><br />
+  </body>
+</html>

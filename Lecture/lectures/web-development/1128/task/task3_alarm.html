@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="ko">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>알림 시스템</title>
+  </head>
+  <body>
+    <h1>🔔 알림 시스템</h1>
+
+    <div>
+      <label for="seconds">알림 시간:</label>
+      <input type="number" id="seconds" min="1" max="3600" value="10" />
+      <span>초 후</span>
+    </div>
+
+    <div>
+      <label for="message">메시지:</label>
+      <input
+        type="text"
+        id="message"
+        placeholder="알림 메시지를 입력하세요"
+        value="시간이 되었습니다!"
+      />
+    </div>
+
+    <div>
+      <button id="setAlarmBtn">⏰ 알림 설정</button>
+      <button id="cancelBtn" disabled>❌ 취소</button>
+    </div>
+
+    <div id="status"></div>
+    <div id="countdown"></div>
+
+    <script>
+      // ============================================
+      // 알림 시스템 구현
+      // ============================================
+      // 목표: N초 후 알림을 울리고, 남은 시간을 카운트다운하는 시스템
+
+      // 📌 DOM 요소 선택
+      const secondsInput = document.querySelector("#seconds");
+      const messageInput = document.querySelector("#message");
+      const setAlarmBtn = document.querySelector("#setAlarmBtn");
+      const cancelBtn = document.querySelector("#cancelBtn");
+      const status = document.querySelector("#status");
+      const countdown = document.querySelector("#countdown");
+
+      // 📌 필요한 변수 선언
+      let alarmTimeout = null;
+      // setTimeout의 ID를 저장
+      // N초 후 알림을 울리는 타이머
+      // clearTimeout으로 취소할 때 필요합니다
+
+      let countdownInterval = null;
+      // setInterval의 ID를 저장
+      // 1초마다 남은 시간을 표시하는 타이머
+      // clearInterval로 중지할 때 필요합니다
+
+      let remainingSeconds = 0;
+      // 알림까지 남은 시간 (초 단위)
+      // 카운트다운 표시에 사용됩니다
+
+      // 📌 카운트다운 업데이트 함수
+      function updateCountdown() {
+        // 남은 시간 1초 감소
+        remainingSeconds--;
+        countdown.textContent = `⏱️ ${remainingSeconds}초 남음`;
+
+        // 카운트다운이 0이 되면 타이머 중지
+        if (remainingSeconds <= 0) {
+          clearInterval(countdownInterval);
+          // setTimeout이 알림을 띄우므로 여기서는 중지만 합니다
+        }
+      }
+
+      // 📌 알림 설정 버튼 클릭 이벤트
+      setAlarmBtn.addEventListener("click", () => {
+        // 1단계: 입력값 가져오기
+        const seconds = parseInt(secondsInput.value);
+        // parseInt: 문자열을 정수로 변환
+        // 예: "10" -> 10
+
+        const message = messageInput.value;
+        // 입력된 메시지 텍스트
+
+        // 2단계: 입력값 검증
+        if (seconds <= 0) {
+          alert("1초 이상 입력하세요!");
+          return; // 함수 종료 (더 이상 진행하지 않음)
+        }
+
+        if (!message.trim()) {
+          // trim(): 앞뒤 공백 제거
+          // 공백만 있거나 빈 문자열이면 true
+          alert("메시지를 입력하세요!");
+          return;
+        }
+
+        // 3단계: 알림 설정 - N초 후 실행
+        alarmTimeout = setTimeout(() => {
+          // 지정된 시간(seconds초) 후에 이 함수가 실행됩니다
+          alert(message); // 알림창 표시
+
+          // 알림 후 상태 초기화
+          status.textContent = "✅ 알림이 울렸습니다!";
+          countdown.textContent = "";
+          setAlarmBtn.disabled = false; // 알림 설정 버튼 활성화
+          cancelBtn.disabled = true; // 취소 버튼 비활성화
+        }, seconds * 1000);
+        // seconds를 밀리초로 변환 (10초 = 10 * 1000 = 10000ms)
+
+        // 4단계: 카운트다운 시작
+        remainingSeconds = seconds;
+        // 예: 10초를 설정했으면 remainingSeconds = 10
+
+        updateCountdown(); // 즉시 "10초 남음" 표시
+        // 이걸 안 하면 1초 후에 처음 표시됨
+
+        countdownInterval = setInterval(updateCountdown, 1000);
+        // 1초마다 updateCountdown 함수 실행
+        // 10초 -> 9초 -> 8초 -> ... -> 1초 -> 0초
+
+        // 5단계: UI 업데이트
+        status.textContent = `🔔 알림이 ${seconds}초 후 울립니다`;
+        setAlarmBtn.disabled = true; // 중복 설정 방지
+        cancelBtn.disabled = false; // 취소 버튼 활성화
+      });
+
+      // 📌 취소 버튼 클릭 이벤트
+      cancelBtn.addEventListener("click", () => {
+        // 1단계: 두 개의 타이머 모두 중지
+        clearTimeout(alarmTimeout);
+        // setTimeout 취소 -> 알림이 울리지 않습니다
+
+        clearInterval(countdownInterval);
+        // setInterval 취소 -> 카운트다운이 멈춥니다
+
+        // 2단계: 상태 초기화
+        status.textContent = "❌ 알림이 취소되었습니다";
+        countdown.textContent = ""; // 카운트다운 표시 지우기
+        setAlarmBtn.disabled = false; // 알림 설정 버튼 활성화
+        cancelBtn.disabled = true; // 취소 버튼 비활성화
+      });
+
+      // 💡 동작 흐름 예시:
+      // 1. 10초, "일어날 시간!" 입력 후 알림 설정 클릭
+      // 2. 상태 메시지: "알림이 10초 후 울립니다"
+      // 3. 카운트다운: 10초 남음 -> 9초 남음 -> ... -> 1초 남음 -> 0초 남음
+      // 4-A. 10초 후 alert("일어날 시간!") 실행
+      // 4-B. 또는 중간에 취소 버튼 클릭 -> 모든 타이머 중지
+      //
+      // 핵심 개념:
+      // - setTimeout: 한 번만 실행 (알림 띄우기)
+      // - setInterval: 반복 실행 (카운트다운 표시)
+      // - 두 타이머가 독립적으로 동작하지만 같은 목적을 위해 사용됩니다
+    </script>
+  </body>
+</html>

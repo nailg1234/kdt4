@@ -1,0 +1,26 @@
+/* 애니메이션 , 트랜지션 */
+
+.container {
+  display: grid;
+  grid-template-columns: repeat(3, 150px);
+  grid-template-rows: repeat(3, 150px);
+  gap: 15px;
+}
+
+.item {
+  background-color: antiquewhite;
+
+  text-align: center;
+  align-content: center;
+
+  border: 1px solid black;
+}
+
+.item1 {
+  grid-row: span 2;
+  grid-column: span 2;
+}
+
+.item4 {
+  grid-column: span 2;
+}

@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+
+    <!-- 내부 스타일 시트 (Intternal Style Sheet) -->
+    <!-- 
+        장점: 한페이지에서 쉽게 관리
+        단점: 여러 페이지에 적용 불가
+     -->
+
+    <!-- 외부 스타일 시트 (External Style Sheet)-->
+    <!-- 
+        장점
+        여러 페이지에서 재사용
+        HTML과 CSS  분리
+        유지보수 용이
+        브라우저 캐싱 가능
+    -->
+    <link rel="stylesheet" href="02-stylesheet-example.css" />
+    <style>
+      div {
+        color: yellow;
+        font-size: 30px;
+      }
+
+      .box {
+        height: 100px;
+      }
+      .red {
+        background-color: red;
+        width: 100px;
+        font-size: 20px;
+      }
+      .orange {
+        background-color: orange;
+        width: 200px;
+        font-size: 25px;
+      }
+      .yellow {
+        background-color: yellow;
+        width: 300px;
+        font-size: 30px;
+      }
+      .green {
+        background-color: green;
+        width: 400px;
+        font-size: 35px;
+      }
+      .blue {
+        background-color: blue;
+        width: 500px;
+        font-size: 40px;
+      }
+    </style>
+  </head>
+  <body>
+    <!-- CSS -->
+    <!-- Cascading Style Sheets -->
+    <!-- HTML 요소의 스타일을 정의하는 언어 입니다. -->
+
+    <!-- 
+        HTML   CSS
+        구조    디자인
+        내용    스타일
+        뼈대    외관
+    -->
+
+    <!-- 인라인 스타일 (Inline Style) -->
+    <p style="color: blue; font-size: 20px">파란색 20px 텍스트</p>
+
+    <!-- 단점 -->
+    <!--
+      재사용이 불가
+      유지보수 어려움
+      HTML 과 CSS 혼재
+      권장하지 않음
+    -->
+    <!-- 내부 스타일 시트 (Intternal Style Sheet) -->
+    <div>노란색 30px 텍스트</div>
+
+    <h1>네이비 32px 텍스트</h1>
+    <!-- <h1>무지개</h1> -->
+    <div class="box red">red</div>
+    <div class="box orange">orange</div>
+    <div class="box yellow">yellow</div>
+    <div class="box green">green</div>
+    <div class="box blue">blue</div>
+    <div class="highlight box">강조된 텍스트</div>
+    <div id="header">헤더</div>
+    <br />
+    <br />
+    <br />
+    <br />
+    <br />
+    <br />
+    <br />
+    <br />
+    <br />
+    <br />
+    <br />
+    <br />
+    <br />
+    <br />
+    <br />
+    <br />
+    <br />
+  </body>
+</html>

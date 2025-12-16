@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<!--
+  ================================================================
+  실습 1: 이미지 변경 버튼
+  ================================================================
+
+  학습 목표:
+  - DOM 요소 선택하기 (querySelector)
+  - 이미지 속성 변경하기 (src)
+  - 버튼 클릭 이벤트 처리하기
+
+  관련 개념:
+  - DOM 조작 기초
+  - 속성 변경 (setAttribute vs 직접 접근)
+  ================================================================
+-->
+<html lang="ko">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>실습: 이미지 변경</title>
+    <style>
+      /* 이미지 스타일 */
+      img {
+        width: 300px; /* 이미지 너비 */
+        height: 400px; /* 이미지 높이 */
+        object-fit: cover; /* 비율 유지하며 영역 채우기 */
+        border: 2px solid #ddd; /* 테두리 */
+        border-radius: 8px; /* 둥근 모서리 */
+      }
+
+      /* 버튼 스타일 */
+      button {
+        margin-top: 15px;
+        padding: 10px 20px;
+        background-color: #3498db;
+        color: white;
+        border: none;
+        border-radius: 4px;
+        cursor: pointer;
+        font-size: 16px;
+      }
+
+      button:hover {
+        background-color: #2980b9;
+      }
+    </style>
+  </head>
+  <body>
+    <!-- 갤러리 이미지 -->
+    <img id="gallery" src="../../../data/images/test.jpeg" alt="갤러리 이미지" />
+
+    <br />
+
+    <!-- 이미지 변경 버튼 -->
+    <!-- onclick: HTML 속성 방식 (간단하지만 비권장) -->
+    <button onclick="changeImage()">이미지 변경</button>
+
+    <script>
+      // ============================================
+      // 이미지 변경 함수
+      // ============================================
+      // 버튼 클릭 시 이미지의 src 속성을 변경하여
+      // 다른 이미지를 표시합니다.
+
+      function changeImage() {
+        // querySelector()로 id="gallery"인 이미지 요소 선택
+        const galleryImage = document.querySelector("#gallery");
+
+        // 이미지의 src 속성을 변경하여 다른 이미지 표시
+        // 직접 접근 방식 (권장)
+        galleryImage.src = "../../../data/images/test01.jpeg";
+
+        // 다른 방법: setAttribute 사용
+        // galleryImage.setAttribute("src", "../../../data/images/test01.jpeg");
+
+        // alt 속성도 함께 변경 (접근성 향상)
+        galleryImage.alt = "변경된 갤러리 이미지";
+      }
+
+      // ============================================
+      // 개선 제안
+      // ============================================
+      // 1. addEventListener 사용하기 (HTML과 JavaScript 분리)
+      // 2. 여러 이미지를 순환하며 보여주기
+      // 3. 이전/다음 버튼 추가하기
+    </script>
+  </body>
+</html>

@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="ko">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>실시간 시계</title>
+  </head>
+  <body>
+    <h1>⏰ 실시간 시계</h1>
+    <div id="clock">00:00:00</div>
+
+    <script>
+      // ============================================
+      // 실시간 시계 구현
+      // ============================================
+      // 목표: 현재 시간을 1초마다 업데이트하여 표시하는 디지털 시계
+
+      function updateClock() {
+        // 📌 1단계: 현재 시간 정보 가져오기
+        // Date 객체는 현재 날짜와 시간 정보를 담고 있습니다.
+        const now = new Date();
+        // 예: now = 2024-11-28 14:30:45
+
+        // 📌 2단계: 시, 분, 초 추출
+        // getHours(): 0~23 사이의 시간 반환
+        // getMinutes(): 0~59 사이의 분 반환
+        // getSeconds(): 0~59 사이의 초 반환
+        const hours = String(now.getHours()).padStart(2, "0");
+        // 예: 9시 -> "9" -> "09" (padStart로 2자리 만들기)
+
+        const minutes = String(now.getMinutes()).padStart(2, "0");
+        // 예: 5분 -> "5" -> "05"
+
+        const seconds = String(now.getSeconds()).padStart(2, "0");
+        // 예: 3초 -> "3" -> "03"
+
+        // padStart(2, "0") 설명:
+        // - 문자열을 2자리로 만듭니다
+        // - 부족하면 앞에 "0"을 채웁니다
+        // - "9" -> "09", "15" -> "15" (이미 2자리면 그대로)
+
+        // 📌 3단계: 화면에 표시
+        const clock = document.querySelector("#clock");
+        clock.textContent = `${hours}:${minutes}:${seconds}`;
+        // 결과 예: "14:05:03"
+      }
+
+      // 📌 실행 단계 1: 페이지 로드 시 즉시 시계 표시
+      // setInterval은 1초 후에 처음 실행되므로,
+      // 화면에 바로 시간을 표시하기 위해 먼저 한 번 호출합니다.
+      updateClock();
+
+      // 📌 실행 단계 2: 1초마다 시계 업데이트
+      // setInterval(함수, 밀리초)
+      // - 1000ms = 1초
+      // - 1초마다 updateClock 함수를 반복 실행
+      // - 이렇게 하면 실시간으로 시간이 업데이트됩니다
+      setInterval(updateClock, 1000);
+
+      // 💡 동작 흐름:
+      // 1. 페이지 로드 -> updateClock() 즉시 실행 (00:00:00 대신 현재 시간 표시)
+      // 2. 1초 후 -> updateClock() 실행 (시간 업데이트)
+      // 3. 2초 후 -> updateClock() 실행 (시간 업데이트)
+      // 4. 계속 반복...
+    </script>
+  </body>
+</html>

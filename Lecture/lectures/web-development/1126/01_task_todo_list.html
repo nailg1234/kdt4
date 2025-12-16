@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<!--
+  ================================================================
+  실습 2: 할 일 목록 (Todo List)
+  ================================================================
+
+  학습 목표:
+  - 사용자 입력값 가져오기 (input.value)
+  - 새로운 DOM 요소 생성하기 (createElement)
+  - 요소를 DOM에 추가하기 (append)
+  - 키보드 이벤트 처리하기 (keydown)
+
+  관련 개념:
+  - DOM 요소 생성 및 추가
+  - 이벤트 리스너 (addEventListener)
+  - 입력값 검증
+  ================================================================
+-->
+<html lang="ko">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>실습: 할 일 목록</title>
+    <style>
+      body {
+        font-family: Arial, sans-serif;
+        max-width: 500px;
+        margin: 50px auto;
+        padding: 20px;
+      }
+
+      h1 {
+        color: #333;
+      }
+
+      #todoInput {
+        width: 70%;
+        padding: 10px;
+        border: 1px solid #ddd;
+        border-radius: 4px;
+        font-size: 16px;
+      }
+
+      button {
+        padding: 10px 20px;
+        background-color: #27ae60;
+        color: white;
+        border: none;
+        border-radius: 4px;
+        cursor: pointer;
+        font-size: 16px;
+        margin-left: 5px;
+      }
+
+      button:hover {
+        background-color: #229954;
+      }
+
+      #todoList {
+        list-style: none;
+        padding: 0;
+        margin-top: 20px;
+      }
+
+      #todoList li {
+        padding: 10px;
+        background-color: #f8f9fa;
+        margin-bottom: 8px;
+        border-radius: 4px;
+        border-left: 3px solid #27ae60;
+      }
+    </style>
+  </head>
+  <body>
+    <h1>할 일 목록</h1>
+
+    <!-- 입력 필드 -->
+    <input id="todoInput" type="text" placeholder="할 일을 입력하세요" />
+
+    <!-- 추가 버튼 -->
+    <button onclick="addTodo()">추가</button>
+
+    <!-- 할 일 목록이 표시될 영역 -->
+    <ul id="todoList"></ul>
+
+    <script>
+      // ============================================
+      // DOM 요소 선택
+      // ============================================
+      const todoInput = document.querySelector("#todoInput");
+      const todoList = document.querySelector("#todoList");
+
+      // ============================================
+      // 할 일 추가 함수
+      // ============================================
+      function addTodo() {
+        // 입력값 가져오기 (trim()으로 앞뒤 공백 제거)
+        const todoText = todoInput.value.trim();
+
+        // 빈 값 검증
+        if (todoText === "") {
+          alert("할 일을 입력하세요");
+          return; // 함수 종료
+        }
+
+        // ============================================
+        // 새로운 <li> 요소 생성
+        // ============================================
+        // createElement(): 메모리에만 존재하는 새 요소 생성
+        const newTodoItem = document.createElement("li");
+
+        // textContent로 텍스트 내용 설정
+        // (innerHTML은 XSS 공격 위험이 있으므로 비권장)
+        newTodoItem.textContent = todoText;
+
+        // ============================================
+        // 리스트에 추가
+        // ============================================
+        // append()로 ul의 끝에 li 추가
+        todoList.append(newTodoItem);
+
+        // ============================================
+        // 입력 필드 초기화
+        // ============================================
+        // 추가 후 입력 필드를 비워서 다음 입력 준비
+        todoInput.value = "";
+
+        // 입력 필드에 포커스 (사용자 편의성)
+        todoInput.focus();
+      }
+
+      // ============================================
+      // Enter 키로 추가하기
+      // ============================================
+      // keydown 이벤트: 키를 누를 때 발생
+      // event.key: 눌린 키의 이름 ("Enter", "a", "Shift" 등)
+      todoInput.addEventListener("keydown", (event) => {
+        // Enter 키를 눌렀을 때만 실행
+        if (event.key === "Enter") {
+          addTodo();
+        }
+      });
+
+      // ============================================
+      // 개선 제안
+      // ============================================
+      // 1. 삭제 버튼 추가하기
+      //    - 각 항목에 삭제 버튼 생성
+      //    - element.remove()로 항목 제거
+      //
+      // 2. 완료 표시 기능
+      //    - 클릭 시 취소선 스타일 적용
+      //    - classList.toggle() 사용
+      //
+      // 3. localStorage에 저장하기
+      //    - 페이지 새로고침 해도 목록 유지
+      //
+      // 예시 코드 (삭제 버튼):
+      // const deleteButton = document.createElement("button");
+      // deleteButton.textContent = "삭제";
+      // deleteButton.onclick = () => newTodoItem.remove();
+      // newTodoItem.append(deleteButton);
+    </script>
+  </body>
+</html>

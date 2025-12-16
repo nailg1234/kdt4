@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>DOM 탐색과 조작</title>
+  </head>
+  <body>
+    <!-- ====================================== -->
+    <!-- 1. DOM 탐색 (부모, 형제, 자식 요소) -->
+    <!-- ====================================== -->
+    <!-- 아래 예제를 활성화하려면 주석을 해제하세요 -->
+    <!-- <div id="parent">
+      <h2>child1</h2>
+      <p id="target">child2 (target)</p>
+      <span>child3</span>
+    </div>
+
+    <!-- ====================================== -->
+    <!-- 2. HTMLCollection과 NodeList 비교 예제 -->
+    <!-- ====================================== -->
+    <!-- 아래 예제를 활성화하려면 주석을 해제하세요 -->
+    <h1 id="main-title">환영합니다!</h1>
+    <p class="intro">첫 번째 문단</p>
+    <p class="intro">두 번째 문단</p>
+    <p class="intro">세 번째 문단</p>
+    <div class="intro">첫 번째 div</div>
+    <div class="intro">두 번째 div</div>
+    <div class="intro">세 번째 div</div>
+    <div class="intro">네 번째 div</div>
+    <div class="intro">다섯 번째 div</div>
+    <p class="intro">네 번째 문단</p> -->
+
+    <!-- ====================================== -->
+    <!-- 3. CSS 선택자 활용 예제 (연습용) -->
+    <!-- ====================================== -->
+    <!-- 아래 예제를 활성화하려면 주석을 해제하세요 -->
+    <!-- <p class="highlight">첫 번째</p>
+    <p>두 번째</p>
+    <p class="highlight">세 번째</p> -->
+
+    <!-- ====================================== -->
+    <!-- 4. 활성화된 예제 - nth-child 선택자 -->
+    <!-- ====================================== -->
+    <div class="container">
+      <ul>
+        <li>항목 1</li>
+        <li>항목 2</li>
+        <li>항목 3</li>
+      </ul>
+    </div>
+
+    <script>
+      // ====================================
+      // 예제 1: DOM 탐색 (부모, 형제, 자식 요소)
+      // ====================================
+      // 아래 코드를 활성화하려면 주석을 해제하고, 해당 HTML도 주석 해제하세요
+
+      //   // target ID를 가진 요소 선택
+      //   const targetElement = document.querySelector("#target");
+      //   console.log(targetElement); // <p id="target">child2 (target)</p>
+
+      //   // 부모 요소 탐색
+      //   // parentElement: 현재 요소의 부모 요소를 반환
+      //   console.log(targetElement.parentElement); // <div id="parent">
+
+      //   // 형제 요소 탐색
+      //   // previousElementSibling: 이전 형제 요소
+      //   console.log(targetElement.previousElementSibling); // <h2>child1</h2>
+      //   // nextElementSibling: 다음 형제 요소
+      //   console.log(targetElement.nextElementSibling); //  <span>child3</span>
+
+      //   // 자식 요소 탐색 (parent를 기준으로)
+      //   const parentElement = document.getElementById("parent");
+      //   // children: 모든 자식 요소들 (HTMLCollection)
+      //   console.log(parentElement.children); // HTMLCollection(3) [h2, p#target, span]
+      //   // firstElementChild: 첫 번째 자식 요소
+      //   console.log("firstElementChild", parentElement.firstElementChild); // <h2>child1</h2>
+      //   // lastElementChild: 마지막 자식 요소
+      //   console.log("lastElementChild", parentElement.lastElementChild); // <span>child3</span>
+
+      // ====================================
+      // 예제 2: DOM 조작 - 내용 변경
+      // ====================================
+      // 아래 코드를 활성화하려면 주석을 해제하고, 해당 HTML도 주석 해제하세요
+
+      //   // 연습: title의 내용을 "반가워요!"로 변경하기
+      //   // textContent: 요소의 텍스트 내용을 가져오거나 설정
+      //   const mainTitleElement = document.querySelector("#main-title");
+      //   mainTitleElement.textContent = "반가워요!";
+
+      //   // 연습: .intro 클래스가 몇 개 있는지 확인하기
+      //   const introElements = document.querySelectorAll(".intro");
+      //   console.log(introElements.length); // 9개
+
+      // ====================================
+      // 예제 3: HTMLCollection vs NodeList 비교
+      // ====================================
+      // 아래 코드를 활성화하려면 주석을 해제하고, 해당 HTML도 주석 해제하세요
+
+      //   // querySelectorAll - NodeList 반환
+      //   const introNodeList = document.querySelectorAll(".intro");
+      //   console.log(introNodeList.length);
+      //   // NodeList 특징:
+      //   // - 정적 컬렉션 (생성 시점의 스냅샷, DOM 변경 시 자동 업데이트 안 됨)
+      //   // - forEach() 메서드 사용 가능
+      //   // - for...of 반복문 사용 가능
+
+      //   // getElementsByClassName - HTMLCollection 반환
+      //   const introHTMLCollection = document.getElementsByClassName("intro");
+      //   console.log(introHTMLCollection);
+      //   // HTMLCollection 특징:
+      //   // - 살아있는 컬렉션 (DOM 변경 시 자동 업데이트됨)
+      //   // - forEach() 메서드 없음 (배열로 변환해야 함)
+      //   // - 인덱스 접근만 가능 (introHTMLCollection[0])
+
+      // ====================================
+      // 예제 4: 다양한 선택자 연습
+      // ====================================
+      // 아래 코드를 활성화하려면 주석을 해제하고, 해당 HTML도 주석 해제하세요
+
+      //   // 모든 p 태그의 개수
+      //   console.log(document.querySelectorAll("p").length);
+
+      //   // highlight 클래스를 가진 요소의 개수
+      //   console.log(document.querySelectorAll(".highlight").length);
+
+      //   // 첫 번째 p 태그의 텍스트 내용
+      //   console.log(document.querySelector("p").textContent);
+
+      // ====================================
+      // 예제 5: CSS 선택자 심화 - nth-child와 last-child (활성화된 예제)
+      // ====================================
+
+      // .container 안의 모든 li 요소 선택
+      console.log(document.querySelectorAll(".container li"));
+      // 결과: NodeList(3) [li, li, li]
+
+      // nth-child(n) 선택자: n번째 자식 요소 선택
+      // 두 번째 li 요소 선택
+      console.log(document.querySelector(".container li:nth-child(2)"));
+      // 결과: <li>항목 2</li>
+
+      // 세 번째 li 요소 선택
+      console.log(document.querySelector(".container li:nth-child(3)"));
+      // 결과: <li>항목 3</li>
+
+      // last-child 선택자: 마지막 자식 요소 선택
+      console.log(document.querySelector(".container li:last-child"));
+      // 결과: <li>항목 3</li>
+
+      // ====================================
+      // 학습 요약
+      // ====================================
+      // 1. DOM 탐색: parentElement, previousElementSibling, nextElementSibling
+      //              children, firstElementChild, lastElementChild
+      // 2. DOM 조작: textContent로 요소의 텍스트 내용 변경
+      // 3. HTMLCollection vs NodeList:
+      //    - HTMLCollection: 살아있는 컬렉션, forEach 없음
+      //    - NodeList: 정적 컬렉션, forEach 가능
+      // 4. CSS 고급 선택자: nth-child(n), last-child, first-child 등
+      //
+      // 권장사항:
+      // - 요소 선택은 querySelector/querySelectorAll 사용
+      // - NodeList는 forEach로 순회 가능
+      // - DOM 탐색 메서드로 관련 요소 찾기
+    </script>
+  </body>
+</html>

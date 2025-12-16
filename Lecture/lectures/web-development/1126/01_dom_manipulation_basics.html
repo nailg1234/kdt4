@@ -1,0 +1,363 @@
+<!DOCTYPE html>
+<!--
+  ================================================================
+  DOM 조작 기초 학습 자료
+  ================================================================
+
+  이 파일은 JavaScript로 DOM(Document Object Model)을 조작하는
+  다양한 방법을 학습하기 위한 실습 자료입니다.
+
+  학습 내용:
+  1. 텍스트 콘텐츠 조작 (innerHTML, textContent)
+  2. 속성 조작 (getAttribute, setAttribute)
+  3. 스타일 조작 (style.property, cssText)
+  4. 클래스 조작 (classList 메서드들)
+  5. 요소 생성 및 추가 (createElement, append)
+  6. 요소 제거 (remove, removeChild)
+
+  사용 방법:
+  - 브라우저에서 파일을 열고 개발자 도구(F12)의 Console 탭에서
+    각 코드의 실행 결과를 확인할 수 있습니다.
+  - 코드를 하나씩 읽어가며 주석과 함께 이해해보세요.
+  ================================================================
+-->
+<html lang="ko">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>DOM 조작 기초</title>
+    <style>
+      /* 활성화된 상태의 박스 스타일 */
+      .active-box {
+        width: 100px;
+        height: 100px;
+        background-color: aquamarine;
+      }
+
+      /* 강조 텍스트 스타일 */
+      .text-highlight {
+        color: blue;
+        font-weight: bold;
+        font-size: 36px;
+      }
+
+      /* 큰 글씨 스타일 */
+      .text-large {
+        font-size: 48px;
+      }
+
+      /* 기본 토글 박스 스타일 */
+      .toggle-box {
+        width: 100px;
+        height: 100px;
+        background-color: gray;
+      }
+
+      /* 토글 버튼용 활성화 스타일 */
+      .box-active {
+        background: blue;
+      }
+    </style>
+  </head>
+  <body>
+    <h1>안녕하세요</h1>
+
+    <!--
+      섹션 1: 텍스트 콘텐츠 조작 실습용
+      innerHTML, textContent 등을 테스트하는 컨테이너
+    -->
+    <div id="content-container">
+      <p>DOM 조작 배우기</p>
+    </div>
+
+    <!--
+      섹션 4: 클래스 조작 실습용
+      classList.add, remove, toggle 등을 테스트하는 박스
+    -->
+    <div id="class-list-demo">
+      <p>반갑습니다.</p>
+    </div>
+
+    <!--
+      섹션 2: 속성 조작 실습용
+      getAttribute, setAttribute 등을 테스트하는 이미지
+    -->
+    <img src="../../../data/images/test.jpeg" alt="고양이" id="photo" />
+
+    <!--
+      실습: 클래스 토글 버튼
+      버튼 클릭 시 박스의 배경색이 회색 ↔ 파란색으로 변경됨
+    -->
+    <div class="toggle-box" id="toggle-box"></div>
+    <button onclick="toggleActiveClass()">토글</button>
+
+    <script>
+      // ============================================
+      // 1. 텍스트 콘텐츠 조작
+      // ============================================
+      // DOM 요소의 내용을 읽거나 변경하는 3가지 방법
+      //
+      // textContent: 요소 안의 모든 텍스트 내용 (display:none 포함)
+      //   - HTML 태그를 문자열로 취급
+      //   - 가장 안전하고 빠름 (권장)
+      //
+      // innerText: 화면에 실제로 보이는 텍스트만
+      //   - CSS로 숨겨진 텍스트는 제외
+      //   - 스타일 계산이 필요해서 느림
+      //
+      // innerHTML: HTML 태그를 포함한 전체 내용
+      //   - HTML 태그를 실제 요소로 렌더링
+      //   - ⚠️ 보안 위험: 사용자 입력을 innerHTML에 직접 넣으면 XSS 공격 가능
+      //   - 예: innerHTML = userInput; // 위험!
+
+      // querySelector()는 CSS 선택자로 첫 번째 요소를 찾아 반환
+      const contentDiv = document.querySelector("#content-container");
+
+      // innerHTML 읽기 - 태그를 포함한 문자열 반환
+      // 출력 예: "<p>DOM 조작 배우기</p>"
+      console.log(contentDiv.innerHTML);
+
+      // innerHTML로 내용 설정 - 기존 내용 완전히 대체
+      // <strong> 태그가 실제 HTML 요소로 렌더링됨
+      contentDiv.innerHTML = "<strong>굵은 글씨</strong>";
+
+      // innerHTML에 내용 추가 - 기존 내용 뒤에 추가
+      // 결과: <strong>굵은 글씨</strong><p>DOM 조작 배우기</p>
+      contentDiv.innerHTML += "<p>DOM 조작 배우기</p>";
+
+      // 문서의 첫 번째 <p> 요소 선택
+      const firstParagraph = document.querySelector("p");
+
+      // textContent 읽기 - 순수 텍스트만 반환
+      // 출력 예: "DOM 조작 배우기"
+      console.log(firstParagraph.textContent);
+
+      // textContent로 텍스트 변경 - HTML 태그를 넣어도 문자열로 표시됨
+      firstParagraph.textContent = "반갑습니다.!";
+
+      // ============================================
+      // 2. 속성(Attribute) 조작
+      // ============================================
+      // HTML 요소의 속성(src, alt, href, id, class 등)을 다루는 방법
+      //
+      // 방법 1: getAttribute/setAttribute 메서드
+      //   - 모든 속성에 사용 가능
+      //   - 항상 문자열로 반환
+      //
+      // 방법 2: 직접 프로퍼티 접근 (권장)
+      //   - 더 짧고 직관적
+      //   - 타입이 자동 변환됨 (예: checked는 boolean)
+
+      const photoImage = document.querySelector("#photo");
+
+      // getAttribute() - 속성 값을 문자열로 읽기
+      // 출력 예: "../../../data/images/test.jpeg"
+      console.log(photoImage.getAttribute("src"));
+
+      // setAttribute() - 속성 값 설정/변경
+      // 첫 번째 인자: 속성명, 두 번째 인자: 값
+      photoImage.setAttribute("src", "test.jpeg");
+
+      // removeAttribute() - 속성 완전히 제거
+      // HTML에서 alt 속성 자체가 사라짐
+      photoImage.removeAttribute("alt");
+
+      // hasAttribute() - 속성 존재 여부 확인
+      // 반환: true 또는 false
+      console.log(photoImage.hasAttribute("src")); // true
+
+      // 직접 접근 방식 (권장) - 더 간결하고 읽기 쉬움
+      // img.src처럼 프로퍼티로 직접 접근
+      photoImage.src =
+        "https://www.shutterstock.com/image-photo/anime-artistic-image-totoro-large-260nw-2648579151.jpg";
+      photoImage.alt = "새 이미지";
+
+      // ============================================
+      // 3. 스타일 조작
+      // ============================================
+      // JavaScript에서 CSS 스타일을 동적으로 변경하는 방법
+      //
+      // 방법 1: element.style.property (개별 스타일)
+      //   - 인라인 스타일로 적용됨 (높은 우선순위)
+      //   - CSS 속성명을 camelCase로 변환
+      //   - 예: background-color → backgroundColor
+      //        font-size → fontSize
+      //
+      // 방법 2: element.style.cssText (여러 스타일 한 번에)
+      //   - CSS 문법 그대로 사용 가능
+      //   - 기존 인라인 스타일 모두 덮어씀
+
+      // 개별 스타일 설정 - style.속성명 = "값"
+      // 값은 항상 문자열로 전달 (단위 포함)
+      photoImage.style.width = "100px";
+      photoImage.style.height = "110px";
+
+      // CSS 속성명을 camelCase로 변환해서 사용
+      firstParagraph.style.color = "red";
+      firstParagraph.style.backgroundColor = "yellow"; // background-color
+
+      // cssText로 여러 스타일 한 번에 설정
+      // CSS 문법 그대로 사용 (kebab-case 가능)
+      // ⚠️ 주의: 기존 인라인 스타일이 모두 사라지고 새로 설정됨
+      contentDiv.style.cssText = `
+          color: white;
+          background-color: black;
+          padding: 20px;
+          margin: 20px;
+          border-radius: 8px;
+        `;
+
+      // ============================================
+      // 4. 클래스 조작 (classList 사용 - 권장)
+      // ============================================
+      // CSS 클래스를 동적으로 추가/제거하여 스타일 변경
+      //
+      // classList의 주요 메서드:
+      //   - add(): 클래스 추가 (이미 있으면 무시)
+      //   - remove(): 클래스 제거 (없어도 에러 안남)
+      //   - toggle(): 있으면 제거, 없으면 추가 (반환값: boolean)
+      //   - contains(): 클래스 존재 확인 (반환값: boolean)
+      //   - replace(): 클래스 교체
+      //
+      // 장점: 기존 클래스를 유지하면서 추가/제거 가능
+      //       여러 클래스를 한 번에 처리 가능
+
+      const classListBox = document.querySelector("#class-list-demo");
+      console.log(classListBox);
+
+      // add() - 클래스 추가
+      // 이미 존재하면 중복으로 추가되지 않음
+      classListBox.classList.add("active-box");
+
+      // 여러 개 한 번에 추가 가능 (쉼표로 구분)
+      classListBox.classList.add("text-highlight", "text-large");
+
+      // remove() - 클래스 제거
+      // 존재하지 않는 클래스를 제거해도 에러 발생하지 않음
+      classListBox.classList.remove("text-highlight");
+
+      // toggle() - 클래스 토글 (있으면 제거, 없으면 추가)
+      // 반환값: 추가되면 true, 제거되면 false
+      // 주로 버튼 클릭 이벤트에서 사용 (메뉴 열기/닫기 등)
+      classListBox.classList.toggle("active-box");
+
+      // contains() - 클래스 존재 여부 확인
+      // 반환값: true(있음) 또는 false(없음)
+      if (classListBox.classList.contains("active-box")) {
+        console.log("active-box 클래스가 있습니다.");
+      }
+
+      // replace() - 클래스 교체 (A를 B로 변경)
+      // 첫 번째 인자: 기존 클래스, 두 번째 인자: 새 클래스
+      // 반환값: 성공 true, 실패 false
+      classListBox.classList.add("old-class");
+      classListBox.classList.replace("old-class", "new-class");
+      if (classListBox.classList.contains("old-class")) {
+        console.log("old-class 클래스가 있습니다.");
+      } else if (classListBox.classList.contains("new-class")) {
+        console.log("new-class 클래스가 있습니다.");
+      }
+
+      // ============================================
+      // className 방식 (구형 - 권장하지 않음)
+      // ============================================
+      // className은 class 속성 전체를 문자열로 다룸
+      // ⚠️ 단점: 기존 클래스를 모두 덮어쓰므로 위험함
+      //
+      // classList를 사용하는 것이 훨씬 안전하고 편리함!
+
+      // className 읽기 - 모든 클래스를 공백으로 구분된 문자열로 반환
+      // 출력 예: "new-class text-highlight"
+      console.log(classListBox.className);
+
+      // className 쓰기 - ⚠️ 기존 클래스 모두 사라지고 새로 설정됨!
+      // 기존에 있던 "new-class"가 사라지고 "text-highlight"만 남음
+      classListBox.className = "text-highlight";
+      console.log(classListBox.className);
+
+      // ============================================
+      // 5. 요소 생성 및 추가
+      // ============================================
+      // JavaScript로 새로운 HTML 요소를 만들어 페이지에 추가
+      //
+      // createElement() - 새 요소 생성 (메모리에만 존재)
+      // appendChild() - 자식 요소로 끝에 추가 (요소 1개만)
+      // append() - 자식 요소로 끝에 추가 (요소 여러 개 + 텍스트 가능)
+      // prepend() - 자식 요소로 맨 앞에 추가
+
+      // createElement()로 새 <div> 요소 생성
+      // 이 시점에는 메모리에만 있고 화면에는 보이지 않음
+      const createdElement = document.createElement("div");
+      createdElement.textContent = "새로운 div";
+      createdElement.className = "text-large";
+
+      // appendChild() - 부모 요소의 끝에 자식으로 추가
+      // 반환값: 추가된 요소
+      // 오직 하나의 요소만 전달 가능
+      classListBox.appendChild(createdElement);
+
+      const secondElement = document.createElement("div");
+      secondElement.textContent = "새로운 div2";
+
+      // append() - 끝에 추가 (최신 방식)
+      // appendChild()와 차이점:
+      //   - 여러 개를 한 번에 추가 가능
+      //   - 텍스트도 직접 추가 가능
+      //   - 반환값 없음 (undefined)
+      classListBox.append("텍스트 가능", secondElement);
+
+      // prepend() - 맨 앞에 추가
+      // append()와 반대로 첫 번째 자식으로 추가됨
+      classListBox.prepend(secondElement);
+
+      // ============================================
+      // 6. 요소 제거
+      // ============================================
+      // DOM에서 요소를 삭제하는 방법
+      //
+      // remove() - 요소 자체를 제거 (최신 방식, 권장)
+      //   - 해당 요소를 DOM에서 완전히 삭제
+      //   - 반환값 없음
+      //
+      // removeChild() - 자식 요소를 제거 (구형 방식)
+      //   - 부모 요소에서 호출해야 함
+      //   - 반환값: 제거된 요소
+
+      // 예제 1: remove() - 요소 자체를 제거
+      // const boxElement = document.querySelector("#class-list-demo");
+      // boxElement.remove();
+      // → boxElement가 DOM에서 완전히 사라짐
+
+      // 예제 2: removeChild() - 부모가 자식 요소를 제거
+      // const largeElement = document.querySelector(".text-large");
+      // boxElement.removeChild(largeElement);
+      // → boxElement 안에 있는 largeElement를 제거
+
+      // ⚠️ 주의: 위 코드는 학습용 예제로 주석 처리됨
+      //         실행하면 화면의 요소가 실제로 사라집니다!
+    </script>
+
+    <script>
+      // ============================================
+      // 실습: 토글 버튼 기능
+      // ============================================
+      // 버튼 클릭 시 박스의 배경색을 토글하는 기능
+      // classList.toggle()을 활용한 간단한 인터랙션 예제
+
+      function toggleActiveClass() {
+        // 토글할 박스 요소 선택
+        const toggleBox = document.querySelector("#toggle-box");
+
+        // box-active 클래스를 토글
+        // - 클래스가 없으면 추가 → 배경이 파란색으로 변경
+        // - 클래스가 있으면 제거 → 배경이 회색으로 복귀
+        toggleBox.classList.toggle("box-active");
+      }
+
+      // 사용 예시:
+      // 1. 버튼을 클릭하면 toggleActiveClass() 함수가 실행됨
+      // 2. toggle()이 box-active 클래스를 추가/제거
+      // 3. CSS에 정의된 .box-active 스타일이 적용/해제됨
+    </script>
+  </body>
+</html>

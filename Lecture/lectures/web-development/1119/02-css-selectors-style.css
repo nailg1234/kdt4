@@ -1,0 +1,221 @@
+/* ========================================
+   CSS 선택자 심화 학습
+   ======================================== */
+
+/* ========================================
+   1. 그룹 선택자 (Group Selector)
+   ======================================== */
+
+/* 
+  쉼표(,)로 여러 선택자를 묶어 동일한 스타일 적용
+  - 코드 중복 제거
+  - 유지보수 편리
+*/
+h1,
+h2,
+h3 {
+  color: navy;
+  /* h1, h2, h3 모두에게 동일한 색상 적용 */
+}
+
+/* ========================================
+   2. 자손 선택자 vs 자식 선택자
+   ======================================== */
+
+/* 
+  자손 선택자 (Descendant Selector) - 공백 사용
+  - 모든 하위 요소 선택 (깊이 무관)
+  - 구조: 부모 자손요소
+*/
+.container p {
+  color: darkcyan;
+  /* .container 안의 모든 p 요소 (손자, 증손자 포함) */
+}
+
+/* 
+  자식 선택자 (Child Selector) - > 사용
+  - 직계 자식만 선택
+  - 구조: 부모 > 직계자식
+*/
+.container > p {
+  color: red;
+  /* .container의 바로 아래 자식 p만 선택 */
+}
+
+/* 중첩 리스트 예제 */
+.menu li {
+  color: blue;
+  /* .menu 안의 모든 li (중첩된 li 포함) */
+}
+
+.menu > li {
+  color: red;
+  /* .menu의 직계 자식 li만 (중첩된 li 제외) */
+}
+
+/* ========================================
+   3. 형제 선택자 (Sibling Selectors)
+   ======================================== */
+
+/* 
+  인접 형제 선택자 (Adjacent Sibling) - + 사용
+  - 바로 다음 형제 요소 하나만 선택
+  - 같은 부모를 가진 요소들 사이 관계
+*/
+h2 + p {
+  font-weight: bold;
+  color: chartreuse;
+  /* h2 바로 다음에 오는 첫 번째 p만 선택 */
+}
+
+/* 
+  일반 형제 선택자 (General Sibling) - ~ 사용
+  - 이후의 모든 형제 요소 선택
+  - 바로 다음이 아니어도 됨
+*/
+h2 ~ p {
+  color: maroon;
+  /* h2 이후에 오는 모든 p 선택 */
+}
+
+/* ========================================
+   4. 속성 선택자 (Attribute Selector)
+   ======================================== */
+
+/* 
+  [속성="값"] 형태로 특정 속성을 가진 요소 선택
+  - 폼 요소 스타일링에 유용
+  - type, class, id 등 모든 속성 사용 가능
+*/
+input[type="text"] {
+  border: 1px solid gray;
+  /* type="text"인 input만 선택 */
+}
+
+input[type="password"] {
+  border: 2px dashed red;
+  /* type="password"인 input만 선택 */
+}
+
+/* ========================================
+   5. 링크 가상 클래스 (Link Pseudo-classes)
+   ======================================== */
+
+/* 
+  링크의 상태에 따른 스타일 지정
+  순서 중요! LoVe HAte 규칙 (Link-Visited-Hover-Active)
+*/
+a:link {
+  color: blue;
+  /* 방문하지 않은 링크 */
+}
+
+a:visited {
+  color: purple;
+  /* 방문한 링크 (브라우저 기록에 있음) */
+}
+
+a:hover {
+  color: red;
+  /* 마우스를 올렸을 때 */
+}
+
+a:active {
+  color: orange;
+  /* 클릭하는 순간 (마우스 누르는 동안) */
+}
+
+/* ========================================
+   6. 폼 요소 가상 클래스
+   ======================================== */
+
+/* 포커스 상태 (입력 필드 선택 시) */
+input:focus {
+  border-color: blue;
+  outline: 2px solid lightblue;
+  /* 포커스 시 테두리 강조 -> 사용성 향상 */
+}
+
+/* 비활성화 상태 */
+input:disabled {
+  background-color: blueviolet;
+  /* disabled 속성이 있는 input */
+}
+
+/* 체크된 상태 */
+input:checked {
+  transform: scale(2);
+  /* 체크박스/라디오 버튼이 선택되었을 때 */
+}
+
+/* ========================================
+   7. 구조적 가상 클래스 (Structural Pseudo-classes)
+   ======================================== */
+
+/* 첫 번째 자식 */
+li:first-child {
+  font-weight: bold;
+  /* 부모의 첫 번째 li 자식 */
+}
+
+/* 마지막 자식 */
+li:last-child {
+  background-color: red;
+  /* 부모의 마지막 li 자식 */
+}
+
+/* 
+  :nth-child() - n번째 자식 선택
+  - 숫자: nth-child(3) -> 3번째
+  - odd: 홀수 번째 (1, 3, 5, ...)
+  - even: 짝수 번째 (2, 4, 6, ...)
+  - 수식: nth-child(3n) -> 3의 배수 (3, 6, 9, ...)
+*/
+li:nth-child(3) {
+  color: blue;
+  /* 3번째 li */
+}
+
+li:nth-child(odd) {
+  color: blue;
+  /* 홀수 번째 li -> 스트라이프 효과 */
+}
+
+li:nth-child(even) {
+  color: red;
+  /* 짝수 번째 li */
+}
+
+li:nth-child(3n) {
+  color: rgb(31, 158, 5);
+  /* 3, 6, 9, 12... 번째 li */
+}
+
+/* ========================================
+   8. 가상 요소 선택자 (Pseudo-elements)
+   ======================================== */
+
+/* 
+  ::before, ::after
+  - 실제 HTML에 없는 가상 요소 생성
+  - content 속성 필수
+  - 장식, 아이콘, 인용 부호 등에 활용
+*/
+.quote::before {
+  content: '"';         /* 여는 따옴표 추가 */
+  font-size: 2em;       /* 큰 따옴표 */
+  color: gray;
+}
+
+.quote::after {
+  content: '"';         /* 닫는 따옴표 추가 */
+  font-size: 2em;
+  color: gray;
+}
+
+/* 
+  실무 활용:
+  - ::before -> 아이콘, 번호, 장식 추가
+  - ::after -> 말풍선 꼬리, 클리어픽스 등
+  - HTML을 수정하지 않고 시각적 요소 추가 가능
+*/

@@ -1,0 +1,48 @@
+/* ========================================
+   CSS 기본 스타일링 - ID 선택자와 요소 선택자
+   ======================================== */
+
+/* 
+  ID 선택자 활용 예제
+  - #으로 시작하며 페이지에서 고유한 요소 선택
+  - 주로 페이지의 주요 영역(header, footer, main 등)에 사용
+*/
+
+/* 메인 헤더 스타일 */
+#main-header {
+  background-color: #2c3e50;  /* 진한 청회색 배경 */
+  color: white;               /* 흰색 텍스트 */
+  text-align: center;         /* 텍스트 중앙 정렬 */
+  padding: 20px;              /* 안쪽 여백 20px */
+}
+
+/* 
+  자손 선택자 결합 (#main-header h1)
+  - ID 선택자와 요소 선택자를 결합
+  - #main-header 내부의 h1 요소만 선택
+  - 범위를 제한하여 다른 h1에는 영향 없음
+*/
+#main-header h1 {
+  font-size: 36px;    /* 글자 크기 36픽셀 */
+  margin: 0;          /* 기본 마진 제거 (여백 제거) */
+}
+
+/* 
+  요소 선택자 (footer)
+  - HTML 태그 이름으로 선택
+  - 모든 footer 요소에 적용
+*/
+footer {
+  background-color: #34496e;  /* 약간 밝은 청회색 */
+  color: white;
+  text-align: center;
+  padding: 15px;
+  margin-top: 30px;           /* 위쪽 외부 여백 (다른 요소와의 간격) */
+}
+
+/* 
+  실무 팁:
+  - header, footer 같은 고유 영역은 ID 사용 가능
+  - 하지만 재사용성을 위해 클래스 사용도 권장됨
+  - 색상 일관성: 비슷한 색상을 사용해 통일감 부여
+*/
