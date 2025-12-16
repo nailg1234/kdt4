@@ -5,7 +5,7 @@
 # 나쁜 방법 (커닝):
 # 시험 문제로 공부
 # 시험 문제로 시험
-# 결과 100점!
+# 결과 100점! 
 
 # 좋은 방법:
 # 연습 문제로 공부
@@ -37,11 +37,11 @@
 # |     └── 최종 성능 평가에 사용
 
 # 각 세트의 역할
-# 훈련 세트
+# 훈련 세트 
 # - 모델이 패턴을 학습
 # - "공부할 때 보는 교재"
 
-# 검증 세트
+# 검증 세트 
 # - 학습 중간에 성능 확인
 # - 하이퍼 파라미터 조정
 # - "모의고사"
@@ -53,7 +53,6 @@
 
 
 # 기본 분할 (훈련/테스트)
-from sklearn.datasets import load_iris, load_wine
 from sklearn.model_selection import train_test_split
 import numpy as np
 
@@ -96,7 +95,7 @@ print(f'테스트 데이터: {len(x_test)}')
 # 클래스 비율을 유지하면서 분할
 
 # 불균형 데이터 예시
-y = np.array([0, 0, 0, 0, 0, 0, 0, 1, 1, 1])  # 7 : 3
+y = np.array([0,0,0,0,0,0,0,1,1,1]) # 7 : 3 
 
 # stratify 옵션 사용
 x_train, x_test, y_train, y_test = train_test_split(
@@ -140,6 +139,9 @@ print()
 print()
 print()
 
+from sklearn.datasets import load_iris
+from sklearn.model_selection import train_test_split
+import numpy as np
 
 # 붓꽃 데이터 로드
 iris = load_iris()
@@ -184,26 +186,3 @@ print(f'테스트 클래스 비율: {np.bincount(y_test)}')
 #    - 대용량(10만+): 98:1:1 또는 96:2:2
 #    - 중간(1천-10만): 80:20 또는 60:20:20
 #    - 소량(1천 미만): 교차 검증(Cross-Validation) 권장
-
-
-# 와인 데이터셋으로 분할 연습
-wine = load_wine()
-x, y = wine.data, wine.target
-
-print(f"전체 데이터: {x.shape}")
-print(f"클래스: {np.unique(y)}")  # [0, 1, 2]
-
-# 1. 훈련:테스트 = 70:30으로 분할
-# 2. stratify 적용
-# 3. 각 세트의 클래스 분포 확인
-
-x_train, x_test, y_train, y_test = train_test_split(
-    x, y,
-    test_size=0.3,  # 테스트 비율
-    stratify=y,  # 클래스 비율 유지!
-    random_state=42  # 재현성을 위한 시도
-)
-
-print(f'전체 클래스 비율: {np.bincount(y)}')
-print(f'훈련 클래스 비율: {np.bincount(y_train)}')
-print(f'테스트 클래스 비율: {np.bincount(y_test)}')

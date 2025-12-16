@@ -45,7 +45,7 @@
 # 데이터 질
 # - 정확한 라벨링
 # - 결측치 최소화
-# - 대표성 (실제 상황 반영)
+# - 대표성 (실제 상황 반영) 
 
 # 3. 데이터 전처리
 # "데이터를 정리하고 변환"
@@ -66,9 +66,6 @@
 # - 불필요한 특성 제거
 # - 새로운 특성 만들기
 
-from sklearn.metrics import accuracy_score, classification_report
-from sklearn.model_selection import train_test_split
-from sklearn.linear_model import LogisticRegression
 import pandas as pd
 
 # 샘플 데이터
@@ -87,7 +84,7 @@ df['나이'].fillna(df['나이'].mean(), inplace=True)
 df['연봉'].fillna(df['연봉'].mean(), inplace=True)
 
 # 범주형 데이터 인코딩
-df['이탈'] = df['이탈'].map({'N': 0, 'Y': 1})
+df['이탈'] = df['이탈'].map({'N':0,'Y':1})
 
 print(df)
 
@@ -108,6 +105,8 @@ print(df)
 # - 결정 트리 회귀
 # - 신경망
 
+from sklearn.linear_model import LogisticRegression
+from sklearn.model_selection import train_test_split
 
 # 예시: 위에서 전처리한 데이터 사용
 # 특성(X)과 라벨(y) 준비
@@ -148,6 +147,7 @@ print(f"예측 확률: {probabilities}")
 # - R² (결정 계수)
 
 # 모델 성능 평가 예시
+from sklearn.metrics import accuracy_score, classification_report
 
 # 정확도 계산
 accuracy = accuracy_score(y_test, predictions)
