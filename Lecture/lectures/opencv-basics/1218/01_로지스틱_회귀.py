@@ -16,14 +16,14 @@
 
 # 다중 클래스 분류 (Multi-class)
 # - 세 개 이상의 클래스
-# 예: 개/고양이/새, 등급 A/B/C
+# - 예: 개/고양이/새, 등급 A/B/C
 
 # 다중 레이블 분류 (Multi-label)
 # - 여러 레이블 동시에 가능
-# 예: 영화 장르 (액션+로맨스+코미디)
+# - 예: 영화 장르 (액션+로맨스+코미디)
 
 # 선형 회귀를 쓰면 안되나?
-# 문제 : 합격(1)/불합격(0) 예측
+# 문제: 합격(1)/불합격(0) 예측
 
 # 선형 회귀 사용시:
 # y = wx + b
@@ -35,14 +35,14 @@
 
 # 해결책: 로지스틱 회귀!
 
-# 로직스틱 회귀
-# 선형 회귀 출력을 0~1 범위로 변화!
+# 로지스틱 회귀
+# 선형 회귀 출력을 0~1 범위로 변환!
 
-# 선형 : z = wx + b (범위 -∞ ~ +∞)
+# 선형: z = wx + b (범위 -∞ ~ +∞)
 #            ↓
 # 시그모이드 함수 적용
 #            ↓
-# 출력 : σ(z) = 1 / (1 + e^(-z))  (범위: 0 ~ 1)
+# 출력: σ(z) = 1 / (1 + e^(-z))  (범위: 0 ~ 1)
 
 # 출력값 = 확률로 해석이 가능!
 
@@ -50,7 +50,7 @@ import numpy as np
 import matplotlib.pyplot as plt
 
 
-# 한글 폰트 설정 추가
+# 한글 폰트 설정
 plt.rcParams['font.family'] = 'Malgun Gothic'  # Windows
 # plt.rcParams['font.family'] = 'AppleGothic'  # Mac
 plt.rcParams['axes.unicode_minus'] = False
@@ -66,7 +66,7 @@ y = sigmoid(z)
 plt.figure(figsize=(10, 6))
 plt.plot(z, y, 'b-', linewidth=2)
 plt.axhline(y=0.5, color='r', linestyle='--', label='경계 (0.5)')
-plt.axvline(x=0, color='gray', linestyle='-' ,alpha=0.3)
+plt.axvline(x=0, color='gray', linestyle='-', alpha=0.3)
 plt.xlabel('z (wx + b)')
 plt.ylabel('σ(z)')
 plt.title('시그모이드 함수')
@@ -74,22 +74,22 @@ plt.legend()
 plt.grid(True)
 plt.show()
 
-# 로지스틱 회귀 수식 
+# 로지스틱 회귀 수식
 # z = w₁x₁ + w₂x₂ + ... + wₙxₙ + b
 # P(y=1|x) = σ(z) = 1 / (1 + e^(-z))
 # P(y=1|x): x가 주어졌을 때 y=1일 확률
 
 # 손실 함수 (Binary Cross Entropy)
-# MSE 사용시 문제 : 
+# MSE 사용시 문제:
 # - 볼록하지 않은 형태 -> 경사하강법 어려움
 
-# 대안 : Log Loss (Cross Entropy)
+# 대안: Log Loss (Cross Entropy)
 
 # L = -1/n × Σ[y·log(ŷ) + (1-y)·log(1-ŷ)]
 
 # 직관
-# - y=1 일때 : -log(ŷ) -> ŷ가 1에 가까울수록 손실 작음
-# - y=0 일때 : -log(1-ŷ) -> ŷ가 0에 가까울수록 손실 작음
+# - y=1 일때: -log(ŷ) -> ŷ가 1에 가까울수록 손실 작음
+# - y=0 일때: -log(1-ŷ) -> ŷ가 0에 가까울수록 손실 작음
 
 
 from sklearn.linear_model import LogisticRegression

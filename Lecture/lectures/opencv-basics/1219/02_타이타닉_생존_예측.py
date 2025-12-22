@@ -1,7 +1,6 @@
 # 타이타닉 생존 예측
 # 누가 생존했는가? 예측하는 분류 모델을 처음부터 끝까지 만들어보는 것
 
-from sklearn.model_selection import GridSearchCV
 import numpy as np
 import pandas as pd
 import matplotlib.pyplot as plt
@@ -14,28 +13,29 @@ from sklearn.ensemble import RandomForestClassifier
 from sklearn.metrics import accuracy_score, classification_report, confusion_matrix
 
 
-# 한글 폰트 설정 추가
+# 한글 폰트 설정
 plt.rcParams['font.family'] = 'Malgun Gothic'  # Windows
 # plt.rcParams['font.family'] = 'AppleGothic'  # Mac
 plt.rcParams['axes.unicode_minus'] = False
 
 
 # 데이터 로드
-df = pd.read_csv('Prac/Python/AI/1219/Titanic1.csv')
+df = pd.read_csv('1219/Titanic1.csv')
 print(df.head())
 print(df.info())
 
-# 1단계 : 데이터 탐색(EDA)
-# 데이터 불러오기
-# 결측치가 어디에 얼마나 있는지 확인
-# 생존/사망 비율 파악
-# 성별, 객실  등급별 생존율 시각화
-# 특성 간 상관관계 히트맵 그리기
+# 1단계: 데이터 탐색(EDA)
+# - 데이터 불러오기
+# - 결측치가 어디에 얼마나 있는지 확인
+# - 생존/사망 비율 파악
+# - 성별, 객실 등급별 생존율 시각화
+# - 특성 간 상관관계 히트맵 그리기
+
 # 기본정보
-print('=== 결측치 === ')
+print('=== 결측치 ===')
 print(df.isnull().sum())
 
-# 타겟분포
+# 타겟 분포
 print('=== 생존 분포 ===')
 print(df['Survived'].value_counts())
 print(df['Survived'].value_counts(normalize=True))
@@ -74,14 +74,13 @@ sns.heatmap(corr, annot=True, cmap='coolwarm', center=0, fmt='.2f')
 plt.title('특성 간 상관관계')
 plt.show()
 
-# 2단계 데이터 전처리
-# 필요한 특성만 선택
-# 결측치 채우기
-# 범주형 데이터를 숫자로 변환
-# 훈련/ 테스트 세트 분할
+# 2단계: 데이터 전처리
+# - 필요한 특성만 선택
+# - 결측치 채우기
+# - 범주형 데이터를 숫자로 변환
+# - 훈련/테스트 세트 분할
 
 # 특성 선택
-# 사용할 특성 선택
 features = ['Pclass', 'Sex', 'Age', 'SibSp', 'Parch', 'Fare', 'Embarked']
 target = 'Survived'
 
@@ -120,20 +119,20 @@ X_train, X_test, y_train, y_test = train_test_split(
     X, y, test_size=0.2, random_state=42, stratify=y
 )
 
-# 3단계 모델 학습 및 비교
-# 3가지 모델 훈련: 로지스틱 회귀, 결정 트리, 랜덤 포레스트
-# 교차 검증로 성능 비교
-# GridSearchCV로 랜덤 포레스트 하이퍼파라미터 튜닝
+# 3단계: 모델 학습 및 비교
+# - 3가지 모델 훈련: 로지스틱 회귀, 결정 트리, 랜덤 포레스트
+# - 교차 검증으로 성능 비교
+# - GridSearchCV로 랜덤 포레스트 하이퍼파라미터 튜닝
 
 # 스케일링
 scaler = StandardScaler()
 X_train_scaled = scaler.fit_transform(X_train)
 X_test_scaled = scaler.transform(X_test)
 
-# 모델정의
+# 모델 정의
 models = {
     'Logistic': LogisticRegression(max_iter=200),
-    "Decision": DecisionTreeClassifier(max_depth=5,  random_state=42),
+    "Decision": DecisionTreeClassifier(max_depth=5, random_state=42),
     "Random Forest": RandomForestClassifier(n_estimators=100, random_state=42)
 }
 
@@ -150,8 +149,9 @@ for name, model in models.items():
 results_df = pd.DataFrame(results)
 print(results_df.sort_values('평균 정확도', ascending=False))
 
+from sklearn.model_selection import GridSearchCV
 
-# 램던 포레스트 튜닝
+# 랜덤 포레스트 튜닝
 param_grid = {
     'n_estimators': [50, 100, 200],
     'max_depth': [3, 5, 7, 10],
@@ -163,15 +163,17 @@ grid_search = GridSearchCV(rf, param_grid, cv=5, scoring='accuracy', n_jobs=-1)
 
 grid_search.fit(X_train_scaled, y_train)
 
-print(f'최적 파라미터:  {grid_search.best_params_}')
-print(f'최고 점수:  {grid_search.best_score_:.2%}')
+print(f'최적 파라미터: {grid_search.best_params_}')
+print(f'최고 점수: {grid_search.best_score_:.2%}')
 
 
-# 4단계 평가
-# 테스트 세트로 최종 정확도 측정
-# 혼동 행렬이 어디서 틀렸는지 확인
+# 4단계: 평가
+# - 테스트 세트로 최종 정확도 측정
+# - 혼동 행렬로 어디서 틀렸는지 확인
+# - 특성 중요도 확인 (어떤 특성이 생존 예측에 중요했나?)
+
+# 혼동 행렬
 # 분류 모델이 예측을 얼마나 맞췄는지를 '정답' vs '예측'을 교차표(행렬)로 정리한 표
-# 특성 중요도 확인 (어떤 특성이 생존 예측에 중요했나?)
 
 best_model = grid_search.best_estimator_
 
@@ -180,10 +182,9 @@ y_pred = best_model.predict(X_test_scaled)
 
 # 평가
 print('최종 평가')
-print(f'정확도 : {accuracy_score(y_test, y_pred):.2%}')
+print(f'정확도: {accuracy_score(y_test, y_pred):.2%}')
 print('분류 리포트:')
-print(classification_report(y_test, y_pred,
-                            target_names=['사망', '생존']))
+print(classification_report(y_test, y_pred, target_names=['사망', '생존']))
 
 # 혼동 행렬
 cm = confusion_matrix(y_test, y_pred)
