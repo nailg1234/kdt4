@@ -202,3 +202,214 @@
 # - 순전파 = 공장 생산 라인 (앞으로 진행)
 # - 역전파 = 불량품 원인 찾기 (거꾸로 추적)
 # - 경사하강법 = 산 내려가기 (오차 줄이기)
+
+
+print("\n" + "="*50)
+print("실습 문제 - 역전파 기초")
+print("="*50 + "\n")
+
+# ============================================================
+# 실습 1: 단순 선형 함수의 역전파
+# ============================================================
+print("[ 실습 1: 단순 선형 함수 ]")
+print("-" * 50)
+
+# 주어진 값:
+# y = 3x + 2
+# x = 4일 때, dy/dx를 구하시오
+
+# TODO: 1-1. 손으로 미분 계산
+# y = 3x + 2
+# dy/dx = ?
+manual_derivative = None  # 여기에 답을 적으세요
+
+# TODO: 1-2. 코드로 검증
+x = 4.0
+y = 3 * x + 2
+
+# 수치 미분 (근사값)
+h = 0.0001
+y_plus_h = 3 * (x + h) + 2
+numerical_derivative = (y_plus_h - y) / h
+
+print(f"손으로 계산한 미분: {manual_derivative}")
+print(f"수치 미분 결과: {numerical_derivative:.4f}")
+print(f"정답: 3 (상수 미분은 0, x의 계수는 3)\n")
+
+
+# ============================================================
+# 실습 2: 제곱 함수의 역전파
+# ============================================================
+print("[ 실습 2: 제곱 함수 ]")
+print("-" * 50)
+
+# 주어진 값:
+# y = x²
+# x = 5일 때, dy/dx를 구하시오
+
+# TODO: 2-1. 손으로 미분 계산
+# y = x²
+# dy/dx = ?
+x = 5.0
+manual_derivative_2 = None  # 여기에 답을 적으세요 (힌트: 2x)
+
+# TODO: 2-2. 코드로 검증
+y = x ** 2
+
+# 수치 미분
+h = 0.0001
+y_plus_h = (x + h) ** 2
+numerical_derivative_2 = (y_plus_h - y) / h
+
+print(f"손으로 계산한 미분: {manual_derivative_2}")
+print(f"수치 미분 결과: {numerical_derivative_2:.4f}")
+print(f"정답: 2x = 2 × 5 = 10\n")
+
+
+# ============================================================
+# 실습 3: 연쇄 법칙 기초
+# ============================================================
+print("[ 실습 3: 연쇄 법칙 - 두 단계 함수 ]")
+print("-" * 50)
+
+# 주어진 값:
+# z = 2x + 1
+# y = z²
+# x = 3일 때, dy/dx를 구하시오 (연쇄 법칙 사용)
+
+x = 3.0
+
+# TODO: 3-1. 손으로 계산 (연쇄 법칙 적용)
+# dy/dx = (dy/dz) × (dz/dx)
+
+# 단계 1: dz/dx = ?
+dz_dx = None  # 여기에 답을 적으세요
+
+# 단계 2: dy/dz = ?
+z = 2 * x + 1  # z 값을 먼저 계산
+dy_dz = None  # 여기에 답을 적으세요 (힌트: y = z²이므로 2z)
+
+# 단계 3: dy/dx = dy/dz × dz/dx
+dy_dx = None  # 여기에 답을 적으세요
+
+# TODO: 3-2. 코드로 검증
+y = (2 * x + 1) ** 2
+
+# 수치 미분
+h = 0.0001
+y_plus_h = (2 * (x + h) + 1) ** 2
+numerical_derivative_3 = (y_plus_h - y) / h
+
+print(f"dz/dx = {dz_dx}")
+print(f"dy/dz = {dy_dz}")
+print(f"dy/dx = {dy_dx}")
+print(f"수치 미분 결과: {numerical_derivative_3:.4f}")
+print(f"정답: 2z × 2 = 2(2×3+1) × 2 = 2×7×2 = 28\n")
+
+
+# ============================================================
+# 실습 4: 손실 함수의 역전파
+# ============================================================
+print("[ 실습 4: 손실 함수 - 실전 예제 ]")
+print("-" * 50)
+
+# 시나리오: 간단한 예측 모델
+# 예측: ŷ = w × x
+# 손실: L = (ŷ - y)²  (평균제곱오차)
+#
+# 주어진 값:
+# x = 2 (입력)
+# y = 7 (정답)
+# w = 3 (가중치)
+#
+# dL/dw를 구하시오 (w를 얼마나 조정해야 할까?)
+
+x = 2.0
+y = 7.0
+w = 3.0
+
+# TODO: 4-1. 순전파 (값 계산)
+y_pred = None  # ŷ = w × x
+loss = None    # L = (ŷ - y)²
+
+print(f"순전파:")
+print(f"  예측값 ŷ = w × x = {y_pred}")
+print(f"  손실 L = (ŷ - y)² = {loss}")
+
+# TODO: 4-2. 역전파 (미분 계산)
+# 연쇄 법칙: dL/dw = (dL/dŷ) × (dŷ/dw)
+
+# 단계 1: dŷ/dw = ?
+dy_pred_dw = None  # 힌트: ŷ = w × x를 w로 미분
+
+# 단계 2: dL/dŷ = ?
+dL_dy_pred = None  # 힌트: L = (ŷ - y)²를 ŷ로 미분 → 2(ŷ - y)
+
+# 단계 3: dL/dw = ?
+dL_dw = None  # dL/dŷ × dŷ/dw
+
+print(f"\n역전파:")
+print(f"  dŷ/dw = {dy_pred_dw}")
+print(f"  dL/dŷ = {dL_dy_pred}")
+print(f"  dL/dw = {dL_dw}")
+
+# TODO: 4-3. 경사하강법으로 가중치 업데이트
+learning_rate = 0.01
+w_new = None  # w_new = w - learning_rate × dL/dw
+
+print(f"\n경사하강법:")
+print(f"  학습률 η = {learning_rate}")
+print(f"  w_old = {w}")
+print(f"  w_new = {w_new}")
+
+# 검증: 새 가중치로 손실이 줄어드는지 확인
+if w_new is not None:
+    y_pred_new = w_new * x
+    loss_new = (y_pred_new - y) ** 2
+    print(f"\n검증:")
+    print(f"  이전 손실: {loss:.4f}")
+    print(f"  새 손실: {loss_new:.4f}")
+    print(f"  개선됨: {loss > loss_new}")
+
+
+# ============================================================
+# 실습 5: 도전 과제
+# ============================================================
+print("\n" + "="*50)
+print("[ 실습 5: 도전 과제 ]")
+print("="*50)
+
+# 3단계 함수의 역전파
+# a = 2x + 1
+# b = a²
+# c = 3b + 5
+# x = 2일 때, dc/dx를 구하시오
+
+x = 2.0
+
+# TODO: 5-1. 순전파로 각 값 계산
+a = None  # 2x + 1
+b = None  # a²
+c = None  # 3b + 5
+
+# TODO: 5-2. 역전파로 미분 계산 (연쇄 법칙 3번 적용!)
+# dc/dx = (dc/db) × (db/da) × (da/dx)
+
+da_dx = None  # da/dx
+db_da = None  # db/da (힌트: b = a²)
+dc_db = None  # dc/db
+
+dc_dx = None  # 최종 답
+
+print(f"순전파: a={a}, b={b}, c={c}")
+print(f"역전파: da/dx={da_dx}, db/da={db_da}, dc/db={dc_db}")
+print(f"최종: dc/dx = {dc_dx}")
+
+# 수치 미분으로 검증
+h = 0.0001
+a_h = 2 * (x + h) + 1
+b_h = a_h ** 2
+c_h = 3 * b_h + 5
+numerical = (c_h - c) / h
+print(f"수치 미분 검증: {numerical:.4f}")
+print(f"정답: dc/db × db/da × da/dx = 3 × 2a × 2 = 6 × 2(2×2+1) = 6 × 10 = 60\n")
