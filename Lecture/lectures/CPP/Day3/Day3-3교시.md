@@ -756,8 +756,8 @@ int main() {
 
 === Step 1 ===
 [11, 12, 22, 25, 34, 64, 90]
-  ↑               ↑           ↑
- low            mid         high
+ ↑           ↑           ↑
+low         mid         high
 
 mid = (0 + 6) / 2 = 3
 arr[3] = 25
@@ -770,16 +770,16 @@ arr[3] = 25
 
 === Step 1 ===
 [11, 12, 22, 25, 34, 64, 90]
-  ↑               ↑           ↑
- low            mid         high
+ ↑           ↑           ↑
+low         mid         high
 
 mid = 3, arr[3] = 25
 64 > 25 → 오른쪽 절반에서 검색
 
 === Step 2 ===
 [11, 12, 22, 25, 34, 64, 90]
-                      ↑   ↑   ↑
-                    low  mid high
+                 ↑   ↑   ↑
+                low mid high
 
 mid = (4 + 6) / 2 = 5
 arr[5] = 64
