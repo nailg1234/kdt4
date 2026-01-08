@@ -38,14 +38,45 @@ int linearSearchAll(int arr[], int n, int target, int results[]) {
   return count;
 }
 
+// 이진 검색 (상세 출력)
+int binarySearchVerbose(int arr[], int n, int target) {
+  int low = 0;
+  int high = n - 1;
+  int step = 1;
+
+  cout << "찾는 값: " << target << endl;
+
+  while (low <= high) {
+    int mid = low + (high - low) / 2;
+
+    cout << "\n[Step " << step++ << "]" << endl;
+    cout << "범위: [" << low << ", " << high << "]" << endl;
+    cout << "중간: mid = " << mid << ", arr[mid] = " << arr[mid] << endl;
+
+    if (arr[mid] == target) {
+      cout << "발견! 인덱스 " << mid << endl;
+      return mid;
+    } else if (arr[mid] < target) {
+      cout << arr[mid] << " < " << target << " → 오른쪽 검색" << endl;
+      low = mid + 1;
+    } else {
+      cout << arr[mid] << " > " << target << " → 왼쪽 검색" << endl;
+      high = mid - 1;
+    }
+  }
+
+  cout << "\n찾지 못함" << endl;
+  return -1;
+}
+
 int main() {
 
   // 검색
-  int arr[] = {64, 34, 25, 12, 22, 11, 90, 22};
-  int size = sizeof(arr) / sizeof(arr[0]);
-  int target;
-  cout << "찾을 숫자 입력: " << endl;
-  cin >> target;
+  // int arr[] = {64, 34, 25, 12, 22, 11, 90, 22};
+  // int size = sizeof(arr) / sizeof(arr[0]);
+  // int target;
+  // cout << "찾을 숫자 입력: " << endl;
+  // cin >> target;
 
   // 6. 선형 검색(Linear Search)
   // 6.1 동작 원리
@@ -102,6 +133,53 @@ int main() {
   // 7. 이진 검색(Binary Search)
   // 7.1 동작 원리
   // 정렬된 배열에서 중간 값과 비교하여 검색 범위를 절반씩 줄여나갑니다.
+
+  // 7.2 이진 검색 구현
+  // const int SIZE = 10;
+  // int arr2[SIZE] = {1, 2, 3, 4, 5, 6, 7, 8, 9, 10};
+  // printArray(arr2, SIZE, "원본 배열");
+  // // 원본 배열:
+  // // [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
+  // int low = 0, high = SIZE - 1, found = -1;
+  // int target2;
+  // cout << "검색할 숫자 입력: " << endl;
+  // cin >> target2;
+  // while (low <= high) {
+  //   int mid = low + (high - low) / 2; // 오버플로우 방지
+  //   if (arr2[mid] == target2) {
+  //     found = mid; // 찾음
+  //     break;
+  //   } else if (arr2[mid] < target2) {
+  //     low = mid + 1;
+  //   } else {
+  //     high = mid - 1;
+  //   }
+  // }
+  // if (found > -1) {
+  //   cout << found << "번째 에서" << target2 << " 찾음" << endl;
+  // } else {
+  //   cout << "못 찾음" << endl;
+  // }
+  // 검색할 숫자 입력:
+  // 5
+  // 4번째 에서5 찾음
+
+  // 7.3 이진 검색 상세 과정
+  // 정렬된 배열 (이진 검색 필수 조건!)
+  // int arr[] = {11, 12, 22, 25, 34, 64, 90};
+  // int n = sizeof(arr) / sizeof(arr[0]);
+  // cout << "\n=== 상세 검색 과정 ===" << endl;
+  // binarySearchVerbose(arr, n, 64);
+  // === 상세 검색 과정 ===
+  // 찾는 값: 64
+  // [Step 1]
+  // 범위: [0, 6]
+  // 중간: mid = 3, arr[mid] = 25
+  // 25 < 64 → 오른쪽 검색
+  // [Step 2]
+  // 범위: [4, 6]
+  // 중간: mid = 5, arr[mid] = 64
+  // 발견! 인덱스 5
 
   return 0;
 }
