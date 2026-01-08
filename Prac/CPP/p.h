@@ -1,5 +1,7 @@
 #include <cmath>
+#include <cstring>
 #include <iostream>
+
 using namespace std;
 
 // 배열 출력 함수
