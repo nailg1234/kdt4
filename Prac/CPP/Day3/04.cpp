@@ -1,5 +1,88 @@
 #include "../p.h"
 
+// 5. 문자열 활용 예제
+// 5.1 단어 개수 세기
+int countWords(const string &text) {
+  int count = 0;
+  bool inWord = false;
+  for (char ch : text) {
+    if (ch == '\t' || ch == '\n', ch == ' ') {
+      inWord = false;
+    } else if (!inWord) {
+      inWord = true;
+      count++;
+    }
+  }
+  return count;
+}
+
+// 5.2 문자열 뒤집기
+// 방법 1: 직접 구현
+string reverseManual(string str) {
+  int left = 0;
+  int right = str.length() - 1;
+  while (left < right) {
+    swap(str[left], str[right]);
+    left++;
+    right--;
+  }
+  return str;
+}
+// 방법 2: algorithm 헤더 사용
+string reverseSTL(string str) {
+  reverse(str.begin(), str.end());
+  return str;
+}
+
+// 5.3 회문 검사
+bool isPalindrome(const string &str) {
+  string cleaned;
+  // 알파벳만 추출하고 소문자로 변환
+  for (char ch : str) {
+    if (isalpha(ch)) {
+      cleaned += tolower(ch);
+    }
+  }
+  // 앞뒤 비교
+  int left = 0;
+  int right = cleaned.length() - 1;
+  while (left < right) {
+    if (cleaned[left] != cleaned[right]) {
+      return false;
+    }
+    left++;
+    right--;
+  }
+  return true;
+}
+
+string toUpperCase(string str) {
+  for (char &ch : str) {
+    ch = toupper(ch);
+  }
+  return str;
+}
+string toLowerCase(string str) {
+  for (char &ch : str) {
+    ch = tolower(ch);
+  }
+  return str;
+}
+string toTitleCase(string str) {
+  bool newWord = true;
+  for (char &ch : str) {
+    if (isspace(ch)) {
+      newWord = true;
+    } else if (newWord) {
+      ch = toupper(ch);
+      newWord = false;
+    } else {
+      ch = tolower(ch);
+    }
+  }
+  return str;
+}
+
 int main() {
 
   // 문자 배열과 문자열
@@ -276,5 +359,44 @@ int main() {
   //   // === 비교 ===
   //   // compare("Hello World Hello"): 0
 
+  // 5. 문자열 활용 예제
+  // 5.1 단어 개수 세기
+  // string text = "Hello   World  This is   a test";
+  // cout << "문장: \"" << text << "\"" << endl;
+  // cout << "단어 수: " << countWords(text) << endl;
+  // 문장: "Hello   World  This is   a test"
+  // 단어 수: 6
+
+  // 5.2 문자열 뒤집기
+  // string original = "Hello World";
+  // cout << "원본: " << original << endl;
+  // cout << "뒤집기 (직접): " << reverseManual(original) << endl;
+  // cout << "뒤집기 (STL): " << reverseSTL(original) << endl;
+  // 원본: Hello World
+  // 뒤집기 (직접): dlroW olleH
+  // 뒤집기 (STL): dlroW olleH
+
+  // 5.3 회문 검사
+  // string tests[] = {"level", "A man, a plan, a canal: Panama", "race a car",
+  //                   "Was it a car or a cat I saw?"};
+  // for (const string &test : tests) {
+  //   cout << "\"" << test << "\" → "
+  //        << (isPalindrome(test) ? "회문" : "회문 아님") << endl;
+  // }
+  // "level" → 회문
+  // "A man, a plan, a canal: Panama" → 회문
+  // "race a car" → 회문 아님
+  // "Was it a car or a cat I saw?" → 회문
+
+  // 5.4 문자열 대소문자 변환
+  // string text = "hello WORLD example";
+  // cout << "원본: " << text << endl;
+  // cout << "대문자: " << toUpperCase(text) << endl;
+  // cout << "소문자: " << toLowerCase(text) << endl;
+  // cout << "타이틀: " << toTitleCase(text) << endl;
+  // 원본: hello WORLD example
+  // 대문자: HELLO WORLD EXAMPLE
+  // 소문자: hello world example
+  // 타이틀: Hello World Example
   return 0;
 }
